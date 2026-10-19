@@ -1,0 +1,5 @@
+body { font-family: system-ui, sans-serif; max-width: 40rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+ol { padding-left: 1.5rem; }
+[data-state="open"] { color: #0a7d32; }
+[data-state="closed"], [data-state="gone"] { color: #b42318; }
+[role="alert"] { color: #b42318; }

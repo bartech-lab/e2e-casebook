@@ -1,0 +1,35 @@
+{
+  "name": "e2e-proving-ground",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev:server": "TEST_HOOKS=1 node --watch server/main.ts",
+    "dev:web": "vite",
+    "build": "vite build",
+    "start": "node server/main.ts",
+    "typecheck": "tsc --noEmit -p .",
+    "test:unit": "node --test \"server/**/*.test.ts\" \"web/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@fastify/static": "^10.1.6",
+    "@fastify/websocket": "^11.3.4",
+    "@tanstack/react-query": "^5.104.4",
+    "fastify": "^5.12.7",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/ws": "^8.18.2",
+    "@vitejs/plugin-react": "^6.1.2",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4"
+  }
+}
