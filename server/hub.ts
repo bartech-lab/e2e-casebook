@@ -2,6 +2,7 @@ import type { WebSocket } from 'ws';
 import type { Message } from './store.ts';
 
 export const CLOSE_RESET = 4000;
+export const CLOSE_DROPPED = 4001;
 export const CLOSE_UNKNOWN_SANDBOX = 4404;
 
 type Room = { sockets: Map<WebSocket, string>; broadcastDelayMs: number };
@@ -43,7 +44,7 @@ export function createHub() {
     },
     drop(sandbox: string, target: string) {
       for (const [socket, name] of room(sandbox).sockets) {
-        if (target === 'all' || target === name) socket.terminate();
+        if (target === 'all' || target === name) socket.close(CLOSE_DROPPED);
       }
     },
     reset(sandbox: string) {

@@ -37,7 +37,7 @@ scoped to one sandbox, so parallel tests never see each other.
 | `POST /api/sandboxes` | Creates a sandbox; returns `{ id }`. Not a hook: visitors use it too. |
 | `POST /__test__/s/:id/reset` | Deletes the sandbox's messages and closes its sockets. |
 | `POST /__test__/s/:id/seed` | `{ messages: [{ name, text }] }` stores and broadcasts messages. |
-| `POST /__test__/s/:id/fault` | `{ dropSockets: "<name>" \| "all" }` kills sockets; `{ broadcastDelayMs }` delays broadcasts. |
+| `POST /__test__/s/:id/fault` | `{ dropSockets: "<name>" \| "all" }` closes those sockets with code 4001; `{ broadcastDelayMs }` delays broadcasts. |
 
 With `TEST_HOOKS` unset, every `/__test__` path returns 404.
 
