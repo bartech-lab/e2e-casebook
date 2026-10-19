@@ -11,9 +11,10 @@ export type Card = {
   status: Status;
   version: number;
   updatedBy: string;
+  dueDate: string | null;
 };
-export type CardInput = { title: string; description?: string; status?: Status };
-export type CardChange = { title?: string; description?: string; status?: Status };
+export type CardInput = { title: string; description?: string; status?: Status; dueDate?: string | null };
+export type CardChange = { title?: string; description?: string; status?: Status; dueDate?: string | null };
 
 export const DEFAULT_CARDS: CardInput[] = [
   { title: 'Write the release notes', description: 'Cover the new export and the fixed reconnect.', status: 'todo' },
@@ -47,25 +48,33 @@ export function openStore(path: string) {
       status TEXT NOT NULL,
       version INTEGER NOT NULL,
       updated_by TEXT NOT NULL,
+      due_date TEXT,
       PRIMARY KEY (sandbox, id)
     );
   `);
-  const cardColumns = 'id, title, description, status, version, updated_by AS updatedBy';
+  const cardColumns = 'id, title, description, status, version, updated_by AS updatedBy, due_date AS dueDate';
   const insertCard = db.prepare(`
-    INSERT INTO cards (sandbox, id, title, description, status, version, updated_by)
-    VALUES (?, (SELECT COALESCE(MAX(id), 0) + 1 FROM cards WHERE sandbox = ?), ?, ?, ?, 1, 'seed')
+    INSERT INTO cards (sandbox, id, title, description, status, version, updated_by, due_date)
+    VALUES (?, (SELECT COALESCE(MAX(id), 0) + 1 FROM cards WHERE sandbox = ?), ?, ?, ?, 1, ?, ?)
+    RETURNING id
   `);
+  const selectCardByTitle = db.prepare(
+    `SELECT ${'id, title, description, status, version, updated_by AS updatedBy, due_date AS dueDate'} FROM cards WHERE sandbox = ? AND lower(title) = lower(?)`,
+  );
+  const searchCards = db.prepare(
+    `SELECT ${'id, title, description, status, version, updated_by AS updatedBy, due_date AS dueDate'} FROM cards WHERE sandbox = ? AND instr(lower(title), lower(?)) > 0 ORDER BY id`,
+  );
   const selectCards = db.prepare(`SELECT ${cardColumns} FROM cards WHERE sandbox = ? ORDER BY id`);
   const selectCard = db.prepare(`SELECT ${cardColumns} FROM cards WHERE sandbox = ? AND id = ?`);
   const updateCard = db.prepare(`
-    UPDATE cards SET title = ?, description = ?, status = ?, version = version + 1, updated_by = ?
+    UPDATE cards SET title = ?, description = ?, status = ?, due_date = ?, version = version + 1, updated_by = ?
     WHERE sandbox = ? AND id = ?
   `);
   const deleteCards = db.prepare('DELETE FROM cards WHERE sandbox = ?');
 
   function replaceCards(sandbox: string, cards: CardInput[]) {
     deleteCards.run(sandbox);
-    for (const c of cards) insertCard.run(sandbox, sandbox, c.title, c.description ?? '', c.status ?? 'todo');
+    for (const c of cards) insertCard.run(sandbox, sandbox, c.title, c.description ?? '', c.status ?? 'todo', 'seed', c.dueDate ?? null);
   }
 
 
@@ -90,8 +99,24 @@ export function openStore(path: string) {
       replaceCards(id, DEFAULT_CARDS);
     },
     replaceCards,
-    listCards(sandbox: string) {
-      return selectCards.all(sandbox) as Card[];
+    listCards(sandbox: string, query?: string) {
+      return (query ? searchCards.all(sandbox, query) : selectCards.all(sandbox)) as Card[];
+    },
+    cardByTitle(sandbox: string, title: string) {
+      return selectCardByTitle.get(sandbox, title) as Card | undefined;
+    },
+    createCard(sandbox: string, input: CardInput, by: string) {
+      touchSandbox.run(Date.now(), sandbox);
+      const { id } = insertCard.get(
+        sandbox,
+        sandbox,
+        input.title,
+        input.description ?? '',
+        input.status ?? 'todo',
+        by,
+        input.dueDate ?? null,
+      ) as { id: number };
+      return selectCard.get(sandbox, id) as Card;
     },
     getCard(sandbox: string, id: number) {
       return selectCard.get(sandbox, id) as Card | undefined;
@@ -104,6 +129,7 @@ export function openStore(path: string) {
         change.title ?? card.title,
         change.description ?? card.description,
         change.status ?? card.status,
+        change.dueDate === undefined ? card.dueDate : change.dueDate,
         by,
         sandbox,
         id,

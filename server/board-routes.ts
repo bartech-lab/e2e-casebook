@@ -1,7 +1,8 @@
 import type { FastifyInstance } from 'fastify';
 import type { Exports } from './exports.ts';
 import type { Store } from './store.ts';
-import { cardChange } from './validation.ts';
+import { byField, cardChange, cardInput } from './validation.ts';
+import type { Flags } from './flags.ts';
 
 type Params = { sandbox: string };
 type CardParams = Params & { id: string };
@@ -14,8 +15,22 @@ function ifMatchVersion(header: string | string[] | undefined) {
   return m ? Number(m[1]) : NaN;
 }
 
-export function registerBoardRoutes(scope: FastifyInstance, store: Store, exportJobs: Exports) {
-  scope.get<{ Params: Params }>('/cards', async (req) => ({ cards: store.listCards(req.params.sandbox) }));
+export function registerBoardRoutes(scope: FastifyInstance, store: Store, exportJobs: Exports, flags: Flags) {
+  scope.get<{ Params: Params; Querystring: { q?: string } }>('/cards', async (req) => ({
+    cards: store.listCards(req.params.sandbox, req.query.q?.trim() || undefined),
+  }));
+
+  scope.post<{ Params: Params }>('/cards', async (req, reply) => {
+    const input = cardInput(req.body);
+    const by = byField(req.body);
+    if (!input || by === null) return reply.code(400).send({ error: 'invalid card' });
+    const existing = store.cardByTitle(req.params.sandbox, input.title);
+    if (existing) return reply.code(409).send({ error: 'a card with this title already exists', existing });
+    const card = store.createCard(req.params.sandbox, input, by);
+    return reply.code(201).header('etag', etag(card.version)).send(card);
+  });
+
+  scope.get<{ Params: Params }>('/flags', async (req) => flags.get(req.params.sandbox));
 
   scope.get<{ Params: CardParams }>('/cards/:id', async (req, reply) => {
     const card = store.getCard(req.params.sandbox, Number(req.params.id));
@@ -34,6 +49,12 @@ export function registerBoardRoutes(scope: FastifyInstance, store: Store, export
     if (Number.isNaN(expected)) return reply.code(400).send({ error: 'malformed If-Match' });
     if (expected !== undefined && expected !== current.version) {
       return reply.code(412).header('etag', etag(current.version)).send({ error: 'version mismatch', current });
+    }
+    if (input.change.title !== undefined) {
+      const clash = store.cardByTitle(sandbox, input.change.title);
+      if (clash && clash.id !== id) {
+        return reply.code(409).send({ error: 'a card with this title already exists', existing: clash });
+      }
     }
     const card = store.updateCard(sandbox, id, input.change, input.by)!;
     return reply.header('etag', etag(card.version)).send(card);

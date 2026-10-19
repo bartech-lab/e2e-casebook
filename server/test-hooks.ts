@@ -1,21 +1,24 @@
 import type { FastifyInstance } from 'fastify';
 import type { Exports } from './exports.ts';
 import { parseHttpRules, type Faults } from './faults.ts';
+import type { Extras } from './extras.ts';
+import { CREATE_CARD_VARIANTS, type Flags } from './flags.ts';
 import type { Hub } from './hub.ts';
 import { DEFAULT_CARDS, type Store } from './store.ts';
 import { cardInput, messageInput } from './validation.ts';
 
 type Params = { sandbox: string };
-type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports };
+type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras };
 
 type FaultBody = {
   dropSockets?: unknown;
   broadcastDelayMs?: unknown;
   http?: unknown;
   exports?: { stepMs?: unknown; failAtStep?: unknown; failRuns?: unknown };
+  auth?: { tokenTtlMs?: unknown };
 };
 
-export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs }: Deps) {
+export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras }: Deps) {
   app.register(
     async (scope) => {
       scope.addHook('preHandler', async (req, reply) => {
@@ -29,6 +32,8 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         store.replaceCards(sandbox, DEFAULT_CARDS);
         exportJobs.clear(sandbox);
         faults.clear(sandbox);
+        flags.clear(sandbox);
+        extras.clear(sandbox);
         hub.reset(sandbox);
         return { ok: true };
       });
@@ -53,9 +58,32 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         return cardInputs ? { messages, cards: store.listCards(sandbox) } : { messages };
       });
 
+      scope.post<{ Params: Params; Body: { email?: unknown } }>('/login', async (req, reply) => {
+        const email = req.body?.email;
+        if (typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+          return reply.code(400).send({ error: 'invalid email' });
+        }
+        const normalized = email.trim().toLowerCase();
+        const value = extras.startSession(reply, req.params.sandbox, normalized);
+        return { email: normalized, cookie: { name: `epg_session_${req.params.sandbox}`, value } };
+      });
+
+      scope.post<{ Params: Params; Body: { createCard?: unknown } }>('/flags', async (req, reply) => {
+        const value = req.body?.createCard;
+        if (value !== null && !CREATE_CARD_VARIANTS.includes(value as never)) {
+          return reply.code(400).send({ error: 'createCard must be inline, dialog, or null' });
+        }
+        flags.set(req.params.sandbox, { createCard: value as (typeof CREATE_CARD_VARIANTS)[number] | null });
+        return flags.get(req.params.sandbox);
+      });
+
       scope.post<{ Params: Params; Body: FaultBody }>('/fault', async (req, reply) => {
         const { sandbox } = req.params;
-        const { dropSockets, broadcastDelayMs, http, exports } = req.body ?? {};
+        const { dropSockets, broadcastDelayMs, http, exports, auth } = req.body ?? {};
+        const ttl = auth?.tokenTtlMs;
+        if (auth !== undefined && (typeof ttl !== 'number' || ttl < 0 || ttl > 3_600_000)) {
+          return reply.code(400).send({ error: 'invalid auth.tokenTtlMs' });
+        }
         const rules = http === undefined ? [] : parseHttpRules(http);
         if (rules === null) return reply.code(400).send({ error: 'invalid http rules' });
         const exportChange: { stepMs?: number; failAtStep?: number | null; failRuns?: number } = {};
@@ -79,6 +107,7 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         if (typeof broadcastDelayMs === 'number') hub.setBroadcastDelay(sandbox, broadcastDelayMs);
         if (typeof dropSockets === 'string') hub.drop(sandbox, dropSockets);
         faults.addHttpRules(sandbox, rules);
+        if (typeof ttl === 'number') extras.setTokenTtl(sandbox, ttl);
         if (Object.keys(exportChange).length) faults.setExportSettings(sandbox, exportChange);
         return { ok: true };
       });
