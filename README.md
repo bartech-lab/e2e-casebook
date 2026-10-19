@@ -48,6 +48,56 @@ Cards move between columns at once, before the server answers. What the app prom
   it was.
 - The page updates while an export runs and stops checking when none does.
 
+### 5. Feature flag
+
+New cards are created with one of two variants: an inline form or a dialog. A visitor is assigned
+one at random and keeps it; a sandbox can pin one for everybody. What the app promises:
+
+- Both variants create the card in To do.
+- A visitor sees the same variant on every visit, and a pinned variant wins over the assignment.
+
+### 6. Due dates, time zones, and DST
+
+Cards can have a due date. The board shows Overdue, Due today, Due tomorrow, or Due in N days.
+What the app promises:
+
+- "Today" is the visitor's local calendar day, whatever the time zone.
+- The count is in calendar days, also across a daylight-saving change.
+- An open board updates when midnight passes.
+
+### 7. A shared environment
+
+Card titles are unique within a sandbox, and the board shows how many cards it has. Many test
+runs may use one sandbox at the same time, the way teams share a staging environment. What the
+app promises:
+
+- Two cards can never have the same title, whatever the case or surrounding spaces.
+- Search and the count reflect everything in the sandbox, including other people's cards.
+
+### 8. Magic-link sign-in
+
+The Account page signs you in with a link sent by email. Mail never leaves the app: every sandbox
+has a test inbox on the Mail page and at `GET /api/s/:id/mail`. What the app promises:
+
+- The link signs you in once; a used or expired link does not, and says so.
+- A session belongs to one sandbox, and Sign out ends it.
+
+### 9. A virtualized list
+
+The Activity page lists 10,000 entries, rendering only the rows in view and loading them in pages.
+What the app promises:
+
+- Every entry from 1 to 10,000 appears once, in order, with no gaps at page boundaries.
+- Go to entry shows the requested entry.
+
+### 10. A toast and a page that is never idle
+
+Saving Settings shows "Settings saved" for 2 seconds. Every sandbox page keeps a long-polling
+request open for notifications. What the app promises:
+
+- The toast appears only after the server has stored the settings, never when the save fails.
+- The toast disappears after 2 seconds.
+
 ## Run it
 
 ```sh
@@ -65,9 +115,11 @@ scoped to one sandbox, so parallel tests never see each other.
 | Endpoint | Effect |
 |---|---|
 | `POST /api/sandboxes` | Creates a sandbox; returns `{ id }`. Not a hook: visitors use it too. |
-| `POST /__test__/s/:id/reset` | Deletes messages, restores the four default cards, removes export jobs, clears all faults, and closes the sandbox's sockets. |
+| `POST /__test__/s/:id/reset` | Deletes messages, restores the four default cards, removes export jobs, clears faults, flags, settings, mail, and sessions, and closes the sandbox's sockets. |
 | `POST /__test__/s/:id/seed` | `{ messages: [{ name, text }] }` stores and broadcasts messages; `{ cards: [{ title, description?, status? }] }` replaces all cards. |
 | `POST /__test__/s/:id/fault` | See below. |
+| `POST /__test__/s/:id/flags` | `{ createCard: "inline" \| "dialog" \| null }` pins the create-card variant for the sandbox. |
+| `POST /__test__/s/:id/login` | `{ email }` signs in without mail; returns the session cookie `{ name, value }` and sets it. |
 
 `fault` accepts any of:
 
@@ -77,6 +129,7 @@ scoped to one sandbox, so parallel tests never see each other.
 | `broadcastDelayMs` | Delays chat broadcasts. |
 | `http: [{ method, path, status?, delayMs?, times?, always? }]` | Later API requests matching `method` and `path` (relative to `/api/s/:id`, `*` matches one segment, e.g. `cards/*`) wait `delayMs` and, with `status`, fail with that status without running. Each rule applies `times` times (default 1), or forever with `always: true`. |
 | `exports: { stepMs?, failAtStep?, failRuns? }` | Export step length (default 500 ms), and the step at which the next `failRuns` exports (default 1) fail. |
+| `auth: { tokenTtlMs }` | Lifetime of sign-in links requested afterwards (default 10 minutes). |
 
 With `TEST_HOOKS` unset, every `/__test__` path returns 404.
 
@@ -86,13 +139,21 @@ With `TEST_HOOKS` unset, every `/__test__` path returns 404.
 |---|---|
 | `GET /api/s/:id/messages?since=N` | `{ messages: [{ seq, name, text }] }` with `seq > N`. |
 | `POST /api/s/:id/messages` | `{ name, text }`; name up to 40 characters, text up to 500. |
-| `GET /api/s/:id/cards` | `{ cards: [{ id, title, description, status, version, updatedBy }] }`; `status` is `todo`, `doing`, or `done`. |
+| `GET /api/s/:id/cards?q=` | `{ cards: [{ id, title, description, status, version, updatedBy, dueDate }] }`; `status` is `todo`, `doing`, or `done`; `q` filters titles. |
+| `POST /api/s/:id/cards` | `{ title, description?, status?, dueDate?, by? }`; a duplicate title gets `409` and `{ existing }`. |
+| `GET /api/s/:id/flags` | `{ createCard }`: the pinned variant, or `null`. |
 | `GET /api/s/:id/cards/:card` | One card, with `ETag: "<version>"`. |
-| `PATCH /api/s/:id/cards/:card` | `{ title?, description?, status?, by? }`. With `If-Match: "<version>"`, an outdated version gets `412` and `{ current }`. |
+| `PATCH /api/s/:id/cards/:card` | `{ title?, description?, status?, dueDate?, by? }`. With `If-Match: "<version>"`, an outdated version gets `412` and `{ current }`. |
 | `POST /api/s/:id/exports` | Starts an export: `{ id, status, progress, error, retryOf }`. |
 | `GET /api/s/:id/exports[/:export]` | All exports (newest first) or one. |
 | `POST /api/s/:id/exports/:export/cancel` and `/retry` | Cancel a running export; retry a failed or cancelled one as a new export. |
 | `GET /api/s/:id/exports/:export/file` | The CSV, once the export is done. |
+| `GET /api/s/:id/activity?from=&limit=` | `{ total, entries: [{ n, text }] }`; `limit` up to 500. |
+| `GET` and `PUT /api/s/:id/settings` | `{ displayName, theme, emailDigest }`. |
+| `GET /api/s/:id/notifications?after=N` | `{ unread }`; with `after`, waits up to 20 s for the count to differ from `N`. |
+| `POST /api/s/:id/auth/request` | `{ email }`: sends a sign-in link to the sandbox's test inbox. |
+| `GET /api/s/:id/auth/me`, `POST /api/s/:id/auth/logout` | The signed-in email (`401` if none); sign out. |
+| `GET /api/s/:id/mail[/:message]` | The test inbox, newest first. |
 | `WS /api/s/:id/ws?name=&since=N` | Replays messages with `seq > N`, sends `{ type: "ready" }`, then pushes `{ type: "msg", seq, name, text }`. Also sends `{ type: "ping" }` every 5 s, `{ type: "reset" }` before a reset, and `{ type: "gone" }` for an unknown or expired sandbox. |
 
 ## Stack
