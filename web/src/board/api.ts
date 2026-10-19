@@ -11,9 +11,10 @@ export type Card = {
   status: Status;
   version: number;
   updatedBy: string;
+  dueDate: string | null;
 };
 
-export type CardChange = { title?: string; description?: string; status?: Status };
+export type CardChange = { title?: string; description?: string; status?: Status; dueDate?: string | null };
 
 export const cardsKey = (sandbox: string) => ['cards', sandbox] as const;
 export const cardKey = (sandbox: string, id: number) => ['card', sandbox, id] as const;
@@ -24,6 +25,20 @@ export async function fetchCards(sandbox: string) {
 
 export async function fetchCard(sandbox: string, id: number) {
   return json<Card>(await fetch(`/api/s/${sandbox}/cards/${id}`));
+}
+
+export async function createCard(
+  sandbox: string,
+  input: { title: string; description?: string; dueDate?: string | null },
+  by: string,
+) {
+  return json<Card>(await fetch(`/api/s/${sandbox}/cards`, sendJson('POST', { ...input, by })));
+}
+
+export type CreateCardVariant = 'inline' | 'dialog';
+
+export async function fetchFlags(sandbox: string) {
+  return json<{ createCard: CreateCardVariant | null }>(await fetch(`/api/s/${sandbox}/flags`));
 }
 
 export async function patchCard(sandbox: string, id: number, change: CardChange, by: string, ifVersion?: number) {

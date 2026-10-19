@@ -2,6 +2,8 @@ import { useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link } from '../router.tsx';
 import { STATUSES, STATUS_LABEL, cardsKey, fetchCard, fetchCards, patchCard, type Card, type Status } from './api.ts';
+import { CreateCard } from './CreateCard.tsx';
+import { dueLabel, useNow } from './due.ts';
 
 type Move = { card: Card; to: Status };
 type Notice = { id: number; text: string };
@@ -13,6 +15,8 @@ export function Board({ sandbox, name }: { sandbox: string; name: string }) {
   const pending = useRef(new Map<number, number>());
   const noticeId = useRef(0);
   const [notices, setNotices] = useState<Notice[]>([]);
+  const [search, setSearch] = useState('');
+  const now = useNow();
 
   const replaceCard = (card: Card) =>
     queryClient.setQueryData<Card[]>(key, (old) => old?.map((c) => (c.id === card.id ? card : c)));
@@ -43,9 +47,21 @@ export function Board({ sandbox, name }: { sandbox: string; name: string }) {
   if (cards.isPending) return <p>Loading the board…</p>;
   if (cards.isError) return <p role="alert">Could not load the board: {cards.error.message}</p>;
 
+  const needle = search.trim().toLowerCase();
+  const visible = needle ? cards.data.filter((c) => c.title.toLowerCase().includes(needle)) : cards.data;
+
   return (
     <section>
       <h1>Board</h1>
+      <CreateCard sandbox={sandbox} name={name} />
+      <p>
+        <label>
+          Search cards <input type="search" value={search} onChange={(e) => setSearch(e.target.value)} />
+        </label>{' '}
+        <span data-testid="card-count">
+          {visible.length} {visible.length === 1 ? 'card' : 'cards'}
+        </span>
+      </p>
       {notices.length > 0 && (
         <ul aria-label="Errors">
           {notices.map((n) => (
@@ -63,11 +79,17 @@ export function Board({ sandbox, name }: { sandbox: string; name: string }) {
           <section key={status} aria-label={STATUS_LABEL[status]} className="column">
             <h2>{STATUS_LABEL[status]}</h2>
             <ul>
-              {cards.data
+              {visible
                 .filter((c) => c.status === status)
                 .map((c) => (
                   <li key={c.id} data-card-id={c.id}>
                     <Link href={`/s/${sandbox}/cards/${c.id}`}>{c.title}</Link>
+                    {c.dueDate && (
+                      <span className="due" data-testid="due" title={c.dueDate}>
+                        {' '}
+                        {dueLabel(c.dueDate, now)}
+                      </span>
+                    )}
                     <div>
                       {STATUSES.filter((s) => s !== status).map((to) => (
                         <button

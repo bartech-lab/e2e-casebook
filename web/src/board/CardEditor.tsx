@@ -4,26 +4,32 @@ import { HttpError } from '../http.ts';
 import { Link } from '../router.tsx';
 import { STATUS_LABEL, cardKey, fetchCard, patchCard, type Card } from './api.ts';
 
-type Draft = { title: string; description: string };
+type Draft = { title: string; description: string; dueDate: string };
 
 export function CardEditor({ sandbox, id, name }: { sandbox: string; id: number; name: string }) {
   const queryClient = useQueryClient();
   const card = useQuery({ queryKey: cardKey(sandbox, id), queryFn: () => fetchCard(sandbox, id), staleTime: Infinity });
   const [base, setBase] = useState<Card | null>(null);
-  const [draft, setDraft] = useState<Draft>({ title: '', description: '' });
+  const [draft, setDraft] = useState<Draft>({ title: '', description: '', dueDate: '' });
   const [conflict, setConflict] = useState<Card | null>(null);
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     if (card.data && !base) {
       setBase(card.data);
-      setDraft({ title: card.data.title, description: card.data.description });
+      setDraft({ title: card.data.title, description: card.data.description, dueDate: card.data.dueDate ?? '' });
     }
   }, [card.data, base]);
 
   const save = useMutation({
     mutationFn: ({ draft, version }: { draft: Draft; version: number }) =>
-      patchCard(sandbox, id, draft, name, version),
+      patchCard(
+        sandbox,
+        id,
+        { title: draft.title, description: draft.description, dueDate: draft.dueDate || null },
+        name,
+        version,
+      ),
     onMutate: () => setSaved(false),
     onSuccess: (updated) => {
       setBase(updated);
@@ -79,12 +85,29 @@ export function CardEditor({ sandbox, id, name }: { sandbox: string; id: number;
             }}
           />
         </label>
+        <label>
+          Due date{' '}
+          <input
+            type="date"
+            value={draft.dueDate}
+            onChange={(e) => {
+              setSaved(false);
+              setDraft({ ...draft, dueDate: e.target.value });
+            }}
+          />
+        </label>
         <button type="submit" disabled={save.isPending || conflict !== null}>
           Save
         </button>
       </form>
       {saved && <p role="status">Saved.</p>}
-      {save.isError && !conflict && <p role="alert">Could not save: {save.error.message}</p>}
+      {save.isError && !conflict && (
+        <p role="alert">
+          {save.error instanceof HttpError && save.error.status === 409
+            ? `Another card is already named “${draft.title.trim()}”.`
+            : `Could not save: ${save.error.message}`}
+        </p>
+      )}
       {conflict && (
         <div role="alert" aria-label="Conflict">
           <p>
@@ -100,7 +123,7 @@ export function CardEditor({ sandbox, id, name }: { sandbox: string; id: number;
             type="button"
             onClick={() => {
               setBase(conflict);
-              setDraft({ title: conflict.title, description: conflict.description });
+              setDraft({ title: conflict.title, description: conflict.description, dueDate: conflict.dueDate ?? '' });
               setConflict(null);
               queryClient.setQueryData(cardKey(sandbox, id), conflict);
             }}

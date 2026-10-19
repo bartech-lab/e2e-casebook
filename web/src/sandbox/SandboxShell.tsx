@@ -4,7 +4,12 @@ import { Board } from '../board/Board.tsx';
 import { CardEditor } from '../board/CardEditor.tsx';
 import { fetchSandbox } from '../chat/api.ts';
 import { ChatRoom } from '../chat/ChatRoom.tsx';
+import { Account } from '../account/Account.tsx';
+import { Mail } from '../account/Mail.tsx';
+import { Activity } from '../activity/Activity.tsx';
 import { Exports } from '../exports/Exports.tsx';
+import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
+import { Settings } from '../settings/Settings.tsx';
 import { HttpError } from '../http.ts';
 import { Link } from '../router.tsx';
 
@@ -51,7 +56,9 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
     <>
       <nav aria-label="Sandbox">
         <Link href={`${base}/chat`}>Chat</Link> · <Link href={`${base}/board`}>Board</Link> ·{' '}
-        <Link href={`${base}/exports`}>Exports</Link> <span>Signed in as {name}</span>
+        <Link href={`${base}/exports`}>Exports</Link> · <Link href={`${base}/activity`}>Activity</Link> ·{' '}
+        <Link href={`${base}/settings`}>Settings</Link> · <Link href={`${base}/account`}>Account</Link> ·{' '}
+        <Link href={`${base}/mail`}>Mail</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -61,6 +68,14 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <CardEditor key={card[1]} sandbox={sandbox} id={Number(card[1])} name={name} />
       ) : page === 'exports' ? (
         <Exports sandbox={sandbox} />
+      ) : page === 'activity' ? (
+        <Activity sandbox={sandbox} />
+      ) : page === 'settings' ? (
+        <Settings sandbox={sandbox} />
+      ) : page === 'account' ? (
+        <Account sandbox={sandbox} />
+      ) : page === 'mail' ? (
+        <Mail sandbox={sandbox} />
       ) : (
         <SandboxHome base={base} />
       )}
@@ -82,6 +97,16 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/exports`}>Exports</Link>: a background export with progress, cancel, and retry.
+        </li>
+        <li>
+          <Link href={`${base}/activity`}>Activity</Link>: 10,000 entries in a virtualized list.
+        </li>
+        <li>
+          <Link href={`${base}/settings`}>Settings</Link>: a save confirmation that disappears after 2 seconds.
+        </li>
+        <li>
+          <Link href={`${base}/account`}>Account</Link> and <Link href={`${base}/mail`}>Mail</Link>: sign in
+          with a link sent to a test inbox.
         </li>
       </ul>
     </section>
