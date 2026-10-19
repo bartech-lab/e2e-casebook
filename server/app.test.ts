@@ -680,3 +680,26 @@ test('broadcastDelayMs delays broadcasts in that sandbox only', async (t) => {
   assert.ok(elapsed >= 300, `broadcast arrived after only ${elapsed}ms`);
   assert.deepEqual(ca.msgs[1], { type: 'msg', seq: 1, name: 'x', text: 'delayed' });
 });
+
+test('heartbeat pings every open socket in every sandbox', async (t) => {
+  const app = await buildApp({ dbPath: ':memory:', testHooks: true, heartbeatMs: 50 });
+  t.after(async () => {
+    for (const ws of openClients.get(app) ?? []) ws.terminate();
+    await app.close();
+  });
+  const a = await connectReady(app, await newSandbox(app));
+  const b = await connectReady(app, await newSandbox(app));
+  const [gotA, gotB] = await Promise.all([a.waitFor(3), b.waitFor(3)]);
+  assert.deepEqual(gotA.slice(1, 3), [{ type: 'ping' }, { type: 'ping' }]);
+  assert.deepEqual(gotB.slice(1, 3), [{ type: 'ping' }, { type: 'ping' }]);
+});
+
+test('connecting to an unknown sandbox announces gone before closing', async (t) => {
+  const app = await makeApp(t);
+  const base = await wsBase(app);
+  const msgs: unknown[] = [];
+  const ws = new WebSocket(`${base}/api/s/nope/ws?name=bob&since=0`);
+  ws.addEventListener('message', (e) => msgs.push(JSON.parse(String(e.data))));
+  await withTimeout(new Promise((r) => ws.addEventListener('close', r)), 2000, 'close');
+  assert.deepEqual(msgs, [{ type: 'gone' }]);
+});

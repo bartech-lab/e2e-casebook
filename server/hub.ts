@@ -9,8 +9,13 @@ type Room = { sockets: Map<WebSocket, string>; broadcastDelayMs: number };
 
 export type Hub = ReturnType<typeof createHub>;
 
-export function createHub() {
+export function createHub(heartbeatMs = 5000) {
   const rooms = new Map<string, Room>();
+  const ping = JSON.stringify({ type: 'ping' });
+  const heartbeat = setInterval(() => {
+    for (const r of rooms.values()) sendNow(r, ping);
+  }, heartbeatMs);
+  heartbeat.unref();
 
   function room(sandbox: string) {
     let r = rooms.get(sandbox);
@@ -55,10 +60,16 @@ export function createHub() {
         socket.close(CLOSE_RESET);
       }
     },
+    stop() {
+      clearInterval(heartbeat);
+    },
     remove(sandbox: string) {
       const r = rooms.get(sandbox);
       if (!r) return;
-      for (const socket of r.sockets.keys()) socket.close(CLOSE_UNKNOWN_SANDBOX);
+      for (const socket of r.sockets.keys()) {
+        if (socket.readyState === socket.OPEN) socket.send(JSON.stringify({ type: 'gone' }));
+        socket.close(CLOSE_UNKNOWN_SANDBOX);
+      }
       rooms.delete(sandbox);
     },
   };

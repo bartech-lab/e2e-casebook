@@ -47,7 +47,7 @@ With `TEST_HOOKS` unset, every `/__test__` path returns 404.
 |---|---|
 | `GET /api/s/:id/messages?since=N` | `{ messages: [{ seq, name, text }] }` with `seq > N`. |
 | `POST /api/s/:id/messages` | `{ name, text }`; name up to 40 characters, text up to 500. |
-| `WS /api/s/:id/ws?name=&since=N` | Replays messages with `seq > N`, sends `{ type: "ready" }`, then pushes `{ type: "msg", seq, name, text }`. |
+| `WS /api/s/:id/ws?name=&since=N` | Replays messages with `seq > N`, sends `{ type: "ready" }`, then pushes `{ type: "msg", seq, name, text }`. Also sends `{ type: "ping" }` every 5 s, `{ type: "reset" }` before a reset, and `{ type: "gone" }` for an unknown or expired sandbox. |
 
 ## Stack
 

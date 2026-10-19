@@ -14,13 +14,14 @@ export type AppOptions = {
   testHooks?: boolean;
   clientDir?: string;
   sandboxTtlMs?: number;
+  heartbeatMs?: number;
 };
 
 type Params = { sandbox: string };
 
 export async function buildApp(opts: AppOptions = {}) {
   const store = openStore(opts.dbPath ?? ':memory:');
-  const hub = createHub();
+  const hub = createHub(opts.heartbeatMs);
   const app = Fastify();
 
   await app.register(fastifyWebsocket);
@@ -60,6 +61,7 @@ export async function buildApp(opts: AppOptions = {}) {
         (socket, req) => {
           const { sandbox } = req.params;
           if (!store.hasSandbox(sandbox)) {
+            socket.send(JSON.stringify({ type: 'gone' }));
             socket.close(CLOSE_UNKNOWN_SANDBOX);
             return;
           }
@@ -94,6 +96,7 @@ export async function buildApp(opts: AppOptions = {}) {
 
   app.addHook('onClose', async () => {
     clearInterval(pruneTimer);
+    hub.stop();
     store.close();
   });
 

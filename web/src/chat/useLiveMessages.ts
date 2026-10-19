@@ -8,6 +8,7 @@ export type ConnectionState = 'connecting' | 'open' | 'closed' | 'gone';
 const CLOSE_RESET = 4000;
 const CLOSE_UNKNOWN_SANDBOX = 4404;
 const RECONNECT_MS = 300;
+const SILENCE_LIMIT_MS = 12_000;
 
 export const messagesKey = (sandbox: string) => ['messages', sandbox] as const;
 
@@ -27,12 +28,26 @@ export function useLiveMessages(sandbox: string, name: string | null) {
     if (!name) return;
     let socket: WebSocket | undefined;
     let retry: ReturnType<typeof setTimeout> | undefined;
-    let stopped = false;
+    let lastHeard = 0;
+
+    // Proxies in front of the server (Render's, for one) may not forward close frames,
+    // so the client never waits for a close: it drops the socket itself.
+    const abandon = (next: ConnectionState) => {
+      if (!socket) return;
+      socket.onmessage = null;
+      socket.onclose = null;
+      socket.close();
+      socket = undefined;
+      setState(next);
+      if (next === 'closed') retry = setTimeout(connect, RECONNECT_MS);
+    };
 
     const connect = () => {
       setState('connecting');
+      lastHeard = Date.now();
       socket = new WebSocket(socketUrl(sandbox, name, lastSeq(queryClient.getQueryData<Message[]>(key))));
       socket.onmessage = (event) => {
+        lastHeard = Date.now();
         const data = JSON.parse(String(event.data));
         if (data.type === 'msg') {
           queryClient.setQueryData<Message[]>(key, (old) => mergeMessages(old ?? [], [data]));
@@ -40,25 +55,30 @@ export function useLiveMessages(sandbox: string, name: string | null) {
           setState('open');
         } else if (data.type === 'reset') {
           queryClient.setQueryData<Message[]>(key, []);
+          abandon('closed');
+        } else if (data.type === 'gone') {
+          abandon('gone');
         }
       };
       socket.onclose = (event) => {
-        if (stopped) return;
-        if (event.code === CLOSE_UNKNOWN_SANDBOX) {
-          setState('gone');
-          return;
-        }
         if (event.code === CLOSE_RESET) queryClient.setQueryData<Message[]>(key, []);
-        setState('closed');
-        retry = setTimeout(connect, RECONNECT_MS);
+        abandon(event.code === CLOSE_UNKNOWN_SANDBOX ? 'gone' : 'closed');
       };
     };
 
+    const watchdog = setInterval(() => {
+      if (socket && Date.now() - lastHeard > SILENCE_LIMIT_MS) abandon('closed');
+    }, 1000);
+
     connect();
     return () => {
-      stopped = true;
+      clearInterval(watchdog);
       clearTimeout(retry);
-      socket?.close();
+      if (socket) {
+        socket.onmessage = null;
+        socket.onclose = null;
+        socket.close();
+      }
     };
   }, [sandbox, name, queryClient]);
 
