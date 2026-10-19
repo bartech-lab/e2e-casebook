@@ -32,6 +32,7 @@ function readCookie(req: FastifyRequest, name: string) {
 export type Extras = ReturnType<typeof createExtras>;
 
 export function createExtras(store: Store) {
+  let closing = false;
   const settings = new Map<string, Settings>();
   const mail = new Map<string, Mail[]>();
   const tokens = new Map<string, Map<string, Token>>();
@@ -74,9 +75,16 @@ export function createExtras(store: Store) {
       return saved;
     });
 
-    scope.get<{ Params: Params }>('/notifications', async (req) => ({
-      unread: store.messagesSince(req.params.sandbox, 0).length,
-    }));
+    scope.get<{ Params: Params; Querystring: { after?: string; waitMs?: string } }>('/notifications', async (req) => {
+      const count = () => store.messagesSince(req.params.sandbox, 0).length;
+      const after = req.query.after === undefined ? undefined : Number(req.query.after);
+      const waitMs = Math.min(Math.max(Number(req.query.waitMs ?? 20_000) || 0, 0), 25_000);
+      const deadline = Date.now() + waitMs;
+      while (after !== undefined && count() === after && Date.now() < deadline && !closing) {
+        await new Promise((r) => setTimeout(r, 250));
+      }
+      return { unread: count() };
+    });
 
     scope.get<{ Params: Params; Querystring: { from?: string; limit?: string } }>('/activity', async (req, reply) => {
       const from = req.query.from === undefined ? 1 : Number(req.query.from);
@@ -148,6 +156,9 @@ export function createExtras(store: Store) {
     register,
     startSession,
     setTokenTtl: (sandbox: string, ms: number) => tokenTtl.set(sandbox, ms),
+    stop() {
+      closing = true;
+    },
     clear(sandbox: string) {
       settings.delete(sandbox);
       mail.delete(sandbox);

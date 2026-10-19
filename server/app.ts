@@ -120,6 +120,10 @@ export async function buildApp(opts: AppOptions = {}) {
   }, Math.min(ttl, 60 * 60 * 1000));
   pruneTimer.unref();
 
+  app.addHook('preClose', async () => {
+    extras.stop();
+  });
+
   app.addHook('onClose', async () => {
     clearInterval(pruneTimer);
     hub.stop();
