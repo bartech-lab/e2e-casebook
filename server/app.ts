@@ -25,7 +25,7 @@ export async function buildApp(opts: AppOptions = {}) {
 
   await app.register(fastifyWebsocket);
 
-  app.get('/api/health', async () => ({ ok: true }));
+  app.get('/api/health', async () => ({ ok: true, commit: process.env.RENDER_GIT_COMMIT ?? null }));
 
   app.post('/api/sandboxes', async (_req, reply) => {
     const id = randomBytes(6).toString('hex');

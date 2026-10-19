@@ -132,11 +132,11 @@ async function settlesWithin(p: Promise<unknown>, ms: number): Promise<boolean> 
 
 // ---- basics ----
 
-test('GET /api/health returns 200 {ok:true}', async (t) => {
+test('GET /api/health returns 200 {ok:true, commit:null} outside Render', async (t) => {
   const app = await makeApp(t);
   const res = await app.inject({ method: 'GET', url: '/api/health' });
   assert.equal(res.statusCode, 200);
-  assert.deepEqual(res.json(), { ok: true });
+  assert.deepEqual(res.json(), { ok: true, commit: null });
 });
 
 test('POST /api/sandboxes returns 201 with distinct non-empty ids', async (t) => {
