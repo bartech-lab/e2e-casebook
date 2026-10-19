@@ -19,8 +19,10 @@ export function useLiveMessages(sandbox: string, name: string | null) {
 
   const query = useQuery({
     queryKey: key,
-    queryFn: async () =>
-      mergeMessages(queryClient.getQueryData<Message[]>(key) ?? [], await fetchMessages(sandbox)),
+    queryFn: async () => {
+      const history = await fetchMessages(sandbox);
+      return mergeMessages(queryClient.getQueryData<Message[]>(key) ?? [], history);
+    },
     staleTime: Infinity,
   });
 
