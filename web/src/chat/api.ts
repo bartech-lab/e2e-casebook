@@ -1,20 +1,6 @@
+import { json, sendJson } from '../http.ts';
+
 export type Message = { seq: number; name: string; text: string };
-
-export class HttpError extends Error {
-  readonly status: number;
-  constructor(status: number, message: string) {
-    super(message);
-    this.status = status;
-  }
-}
-
-async function json<T>(res: Response): Promise<T> {
-  if (!res.ok) {
-    const body = (await res.json().catch(() => ({}))) as { error?: string };
-    throw new HttpError(res.status, body.error ?? `HTTP ${res.status}`);
-  }
-  return res.json() as Promise<T>;
-}
 
 export async function createSandbox() {
   return json<{ id: string }>(await fetch('/api/sandboxes', { method: 'POST' }));
@@ -26,13 +12,11 @@ export async function fetchMessages(sandbox: string) {
 }
 
 export async function postMessage(sandbox: string, name: string, text: string) {
-  return json<Message>(
-    await fetch(`/api/s/${sandbox}/messages`, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ name, text }),
-    }),
-  );
+  return json<Message>(await fetch(`/api/s/${sandbox}/messages`, sendJson('POST', { name, text })));
+}
+
+export async function fetchSandbox(sandbox: string) {
+  return json<{ id: string }>(await fetch(`/api/s/${sandbox}`));
 }
 
 export function socketUrl(sandbox: string, name: string, since: number) {

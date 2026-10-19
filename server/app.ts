@@ -4,6 +4,9 @@ import { join } from 'node:path';
 import Fastify from 'fastify';
 import fastifyStatic from '@fastify/static';
 import fastifyWebsocket from '@fastify/websocket';
+import { registerBoardRoutes } from './board-routes.ts';
+import { createExports } from './exports.ts';
+import { createFaults } from './faults.ts';
 import { CLOSE_UNKNOWN_SANDBOX, createHub } from './hub.ts';
 import { openStore } from './store.ts';
 import { registerTestHooks } from './test-hooks.ts';
@@ -22,6 +25,8 @@ type Params = { sandbox: string };
 export async function buildApp(opts: AppOptions = {}) {
   const store = openStore(opts.dbPath ?? ':memory:');
   const hub = createHub(opts.heartbeatMs);
+  const faults = createFaults();
+  const exportJobs = createExports(store, faults);
   const app = Fastify();
 
   await app.register(fastifyWebsocket);
@@ -41,7 +46,17 @@ export async function buildApp(opts: AppOptions = {}) {
         if (!store.hasSandbox(sandbox) && !req.ws) {
           return reply.code(404).send({ error: 'unknown sandbox' });
         }
+        if (req.ws) return;
+        const path = req.url.split('?')[0]!.replace(`/api/s/${sandbox}`, '');
+        const fault = faults.take(sandbox, req.method, path);
+        if (!fault) return;
+        if (fault.delayMs) await new Promise((r) => setTimeout(r, fault.delayMs));
+        if (fault.status) return reply.code(fault.status).send({ error: 'injected fault' });
       });
+
+      scope.get<{ Params: Params }>('/', async (req) => ({ id: req.params.sandbox }));
+
+      registerBoardRoutes(scope, store, exportJobs);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
         messages: store.messagesSince(req.params.sandbox, Number(req.query.since ?? 0) || 0),
@@ -76,7 +91,7 @@ export async function buildApp(opts: AppOptions = {}) {
     { prefix: '/api/s/:sandbox' },
   );
 
-  if (opts.testHooks) registerTestHooks(app, store, hub);
+  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs });
 
   if (opts.clientDir && existsSync(join(opts.clientDir, 'index.html'))) {
     await app.register(fastifyStatic, { root: opts.clientDir, wildcard: false });
@@ -90,13 +105,18 @@ export async function buildApp(opts: AppOptions = {}) {
 
   const ttl = opts.sandboxTtlMs ?? 24 * 60 * 60 * 1000;
   const pruneTimer = setInterval(() => {
-    for (const id of store.pruneOlderThan(Date.now() - ttl)) hub.remove(id);
+    for (const id of store.pruneOlderThan(Date.now() - ttl)) {
+      hub.remove(id);
+      faults.clear(id);
+      exportJobs.clear(id);
+    }
   }, Math.min(ttl, 60 * 60 * 1000));
   pruneTimer.unref();
 
   app.addHook('onClose', async () => {
     clearInterval(pruneTimer);
     hub.stop();
+    exportJobs.stop();
     store.close();
   });
 

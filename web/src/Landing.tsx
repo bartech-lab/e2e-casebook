@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { navigate } from './App.tsx';
+import { navigate } from './router.tsx';
 import { createSandbox } from './chat/api.ts';
 
 export function Landing() {

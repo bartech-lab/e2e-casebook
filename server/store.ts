@@ -2,6 +2,26 @@ import { DatabaseSync } from 'node:sqlite';
 
 export type Message = { seq: number; name: string; text: string };
 
+export const STATUSES = ['todo', 'doing', 'done'] as const;
+export type Status = (typeof STATUSES)[number];
+export type Card = {
+  id: number;
+  title: string;
+  description: string;
+  status: Status;
+  version: number;
+  updatedBy: string;
+};
+export type CardInput = { title: string; description?: string; status?: Status };
+export type CardChange = { title?: string; description?: string; status?: Status };
+
+export const DEFAULT_CARDS: CardInput[] = [
+  { title: 'Write the release notes', description: 'Cover the new export and the fixed reconnect.', status: 'todo' },
+  { title: 'Fix the login redirect', description: 'Users land on the home page instead of where they started.', status: 'todo' },
+  { title: 'Review the pricing page', description: '', status: 'doing' },
+  { title: 'Archive old sandboxes', description: 'Anything unused for 24 hours.', status: 'done' },
+];
+
 export type Store = ReturnType<typeof openStore>;
 
 export function openStore(path: string) {
@@ -19,7 +39,35 @@ export function openStore(path: string) {
       text TEXT NOT NULL,
       PRIMARY KEY (sandbox, seq)
     );
+    CREATE TABLE IF NOT EXISTS cards (
+      sandbox TEXT NOT NULL REFERENCES sandboxes(id) ON DELETE CASCADE,
+      id INTEGER NOT NULL,
+      title TEXT NOT NULL,
+      description TEXT NOT NULL,
+      status TEXT NOT NULL,
+      version INTEGER NOT NULL,
+      updated_by TEXT NOT NULL,
+      PRIMARY KEY (sandbox, id)
+    );
   `);
+  const cardColumns = 'id, title, description, status, version, updated_by AS updatedBy';
+  const insertCard = db.prepare(`
+    INSERT INTO cards (sandbox, id, title, description, status, version, updated_by)
+    VALUES (?, (SELECT COALESCE(MAX(id), 0) + 1 FROM cards WHERE sandbox = ?), ?, ?, ?, 1, 'seed')
+  `);
+  const selectCards = db.prepare(`SELECT ${cardColumns} FROM cards WHERE sandbox = ? ORDER BY id`);
+  const selectCard = db.prepare(`SELECT ${cardColumns} FROM cards WHERE sandbox = ? AND id = ?`);
+  const updateCard = db.prepare(`
+    UPDATE cards SET title = ?, description = ?, status = ?, version = version + 1, updated_by = ?
+    WHERE sandbox = ? AND id = ?
+  `);
+  const deleteCards = db.prepare('DELETE FROM cards WHERE sandbox = ?');
+
+  function replaceCards(sandbox: string, cards: CardInput[]) {
+    deleteCards.run(sandbox);
+    for (const c of cards) insertCard.run(sandbox, sandbox, c.title, c.description ?? '', c.status ?? 'todo');
+  }
+
 
   const insertSandbox = db.prepare('INSERT INTO sandboxes (id, last_used) VALUES (?, ?)');
   const selectSandbox = db.prepare('SELECT 1 FROM sandboxes WHERE id = ?');
@@ -39,6 +87,28 @@ export function openStore(path: string) {
   return {
     createSandbox(id: string) {
       insertSandbox.run(id, Date.now());
+      replaceCards(id, DEFAULT_CARDS);
+    },
+    replaceCards,
+    listCards(sandbox: string) {
+      return selectCards.all(sandbox) as Card[];
+    },
+    getCard(sandbox: string, id: number) {
+      return selectCard.get(sandbox, id) as Card | undefined;
+    },
+    updateCard(sandbox: string, id: number, change: CardChange, by: string) {
+      const card = selectCard.get(sandbox, id) as Card | undefined;
+      if (!card) return undefined;
+      touchSandbox.run(Date.now(), sandbox);
+      updateCard.run(
+        change.title ?? card.title,
+        change.description ?? card.description,
+        change.status ?? card.status,
+        by,
+        sandbox,
+        id,
+      );
+      return selectCard.get(sandbox, id) as Card;
     },
     hasSandbox(id: string) {
       return selectSandbox.get(id) !== undefined;
