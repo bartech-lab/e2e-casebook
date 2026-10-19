@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: e2e-proving-ground
+    runtime: docker
+    plan: free
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: TEST_HOOKS
+        value: "1"
+      - key: PORT
+        value: "3000"
