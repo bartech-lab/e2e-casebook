@@ -1,0 +1,7 @@
+services:
+  app:
+    build: .
+    environment:
+      TEST_HOOKS: ${TEST_HOOKS:-1}
+    ports:
+      - "${PORT:-3000}:3000"
