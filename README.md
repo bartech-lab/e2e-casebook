@@ -6,6 +6,9 @@ tests, and find out what your tests would miss.
 
 Bring your own framework: Playwright, Cypress, WebdriverIO, or anything that drives a browser.
 
+**Live demo:** <https://e2e-proving-ground.onrender.com> (free tier: it sleeps after 15 minutes
+without traffic, takes about a minute to wake, and starts empty after every wake).
+
 ## Cases
 
 ### 1. Two-user realtime chat
