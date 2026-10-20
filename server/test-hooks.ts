@@ -3,12 +3,13 @@ import type { Exports } from './exports.ts';
 import { parseHttpRules, type Faults } from './faults.ts';
 import type { Extras } from './extras.ts';
 import { CREATE_CARD_VARIANTS, type Flags } from './flags.ts';
+import type { Shop } from './shop.ts';
 import type { Hub } from './hub.ts';
 import { DEFAULT_CARDS, type Store } from './store.ts';
 import { cardInput, messageInput } from './validation.ts';
 
 type Params = { sandbox: string };
-type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras };
+type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop };
 
 type FaultBody = {
   dropSockets?: unknown;
@@ -18,7 +19,7 @@ type FaultBody = {
   auth?: { tokenTtlMs?: unknown };
 };
 
-export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras }: Deps) {
+export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop }: Deps) {
   app.register(
     async (scope) => {
       scope.addHook('preHandler', async (req, reply) => {
@@ -34,6 +35,7 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         faults.clear(sandbox);
         flags.clear(sandbox);
         extras.clear(sandbox);
+        shop.clear(sandbox);
         hub.reset(sandbox);
         return { ok: true };
       });

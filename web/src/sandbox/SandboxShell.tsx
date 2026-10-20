@@ -10,6 +10,7 @@ import { Activity } from '../activity/Activity.tsx';
 import { Exports } from '../exports/Exports.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { Settings } from '../settings/Settings.tsx';
+import { Shop } from '../shop/Shop.tsx';
 import { HttpError } from '../http.ts';
 import { Link } from '../router.tsx';
 
@@ -58,7 +59,7 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/chat`}>Chat</Link> · <Link href={`${base}/board`}>Board</Link> ·{' '}
         <Link href={`${base}/exports`}>Exports</Link> · <Link href={`${base}/activity`}>Activity</Link> ·{' '}
         <Link href={`${base}/settings`}>Settings</Link> · <Link href={`${base}/account`}>Account</Link> ·{' '}
-        <Link href={`${base}/mail`}>Mail</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/mail`}>Mail</Link> · <Link href={`${base}/shop`}>Shop</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -76,6 +77,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Account sandbox={sandbox} />
       ) : page === 'mail' ? (
         <Mail sandbox={sandbox} />
+      ) : page === 'shop' ? (
+        <Shop sandbox={sandbox} />
       ) : (
         <SandboxHome base={base} />
       )}
@@ -107,6 +110,9 @@ function SandboxHome({ base }: { base: string }) {
         <li>
           <Link href={`${base}/account`}>Account</Link> and <Link href={`${base}/mail`}>Mail</Link>: sign in
           with a link sent to a test inbox.
+        </li>
+        <li>
+          <Link href={`${base}/shop`}>Shop</Link>: a cart with a discount code, VAT, and optional shipping insurance.
         </li>
       </ul>
     </section>

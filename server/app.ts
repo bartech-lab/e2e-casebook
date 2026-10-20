@@ -10,6 +10,7 @@ import { createFaults } from './faults.ts';
 import { createExtras } from './extras.ts';
 import { createFlags } from './flags.ts';
 import { CLOSE_UNKNOWN_SANDBOX, createHub } from './hub.ts';
+import { createShop } from './shop.ts';
 import { openStore } from './store.ts';
 import { registerTestHooks } from './test-hooks.ts';
 import { messageInput } from './validation.ts';
@@ -31,6 +32,7 @@ export async function buildApp(opts: AppOptions = {}) {
   const flags = createFlags();
   const extras = createExtras(store);
   const exportJobs = createExports(store, faults);
+  const shop = createShop();
   const app = Fastify({ trustProxy: true });
 
   await app.register(fastifyWebsocket);
@@ -62,6 +64,7 @@ export async function buildApp(opts: AppOptions = {}) {
 
       registerBoardRoutes(scope, store, exportJobs, flags);
       extras.register(scope);
+      shop.register(scope);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
         messages: store.messagesSince(req.params.sandbox, Number(req.query.since ?? 0) || 0),
@@ -96,7 +99,7 @@ export async function buildApp(opts: AppOptions = {}) {
     { prefix: '/api/s/:sandbox' },
   );
 
-  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras });
+  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop });
 
   if (opts.clientDir && existsSync(join(opts.clientDir, 'index.html'))) {
     await app.register(fastifyStatic, { root: opts.clientDir, wildcard: false });
@@ -115,6 +118,7 @@ export async function buildApp(opts: AppOptions = {}) {
       faults.clear(id);
       flags.clear(id);
       extras.clear(id);
+      shop.clear(id);
       exportJobs.clear(id);
     }
   }, Math.min(ttl, 60 * 60 * 1000));

@@ -98,6 +98,24 @@ request open for notifications. What the app promises:
 - The toast appears only after the server has stored the settings, never when the save fails.
 - The toast disappears after 2 seconds.
 
+### 11. Checkout total
+
+The Shop page sells three products. Prices are in PLN. What the app promises:
+
+- The code `SAVE10` takes 10.00 PLN off the subtotal, but never takes it below zero. Codes ignore
+  letter case and surrounding spaces.
+- VAT is 23% of the subtotal after the discount, rounded half up to the grosz (0.01 PLN).
+- The total is the subtotal minus the discount, plus VAT. A placed order charges exactly the total
+  shown in the summary.
+
+### 12. Shipping insurance
+
+Checkout offers shipping insurance for 4.99 PLN, with no VAT on it. What the app promises:
+
+- Insurance is added only when the customer opts in.
+- The summary lists every charge, and the total includes each one.
+- A placed order charges exactly the total shown in the summary.
+
 ## Run it
 
 ```sh
@@ -115,7 +133,7 @@ scoped to one sandbox, so parallel tests never see each other.
 | Endpoint | Effect |
 |---|---|
 | `POST /api/sandboxes` | Creates a sandbox; returns `{ id }`. Not a hook: visitors use it too. |
-| `POST /__test__/s/:id/reset` | Deletes messages, restores the four default cards, removes export jobs, clears faults, flags, settings, mail, and sessions, and closes the sandbox's sockets. |
+| `POST /__test__/s/:id/reset` | Deletes messages, restores the four default cards, removes export jobs, clears faults, flags, settings, mail, sessions, the cart, and orders, and closes the sandbox's sockets. |
 | `POST /__test__/s/:id/seed` | `{ messages: [{ name, text }] }` stores and broadcasts messages; `{ cards: [{ title, description?, status? }] }` replaces all cards. |
 | `POST /__test__/s/:id/fault` | See below. |
 | `POST /__test__/s/:id/flags` | `{ createCard: "inline" \| "dialog" \| null }` pins the create-card variant for the sandbox. `{ draw: "inline" \| "dialog" \| null }` fixes the variant a visitor without a stored assignment is assigned; `null` draws at random. Send either key or both; a key you leave out keeps its value. |
@@ -154,6 +172,13 @@ With `TEST_HOOKS` unset, every `/__test__` path returns 404.
 | `POST /api/s/:id/auth/request` | `{ email }`: sends a sign-in link to the sandbox's test inbox. |
 | `GET /api/s/:id/auth/me`, `POST /api/s/:id/auth/logout` | The signed-in email (`401` if none); sign out. |
 | `GET /api/s/:id/mail[/:message]` | The test inbox, newest first. |
+| `GET /api/s/:id/products` | `{ products: [{ sku, name, price }] }`; prices in grosze. |
+| `GET /api/s/:id/cart` | `{ lines: [{ sku, name, price, qty, lineTotal }], code, insurance, quote: { subtotal, discount, vat, insurance, total } }`; amounts in grosze. |
+| `PUT /api/s/:id/cart/items/:sku` | `{ qty }` from 0 to 99; 0 removes the line. Returns the cart. |
+| `PUT /api/s/:id/cart/code` | `{ code }`, or `{ code: null }` to remove it; an unknown code gets `400`. Returns the cart. |
+| `PUT /api/s/:id/cart/insurance` | `{ on: true \| false }`. Returns the cart. |
+| `POST /api/s/:id/orders` | Places the cart as an order and empties the cart: `{ id, lines, code, quote, placedAt }`; an empty cart gets `400`. |
+| `GET /api/s/:id/orders` | `{ orders }`, oldest first. |
 | `WS /api/s/:id/ws?name=&since=N` | Replays messages with `seq > N`, sends `{ type: "ready" }`, then pushes `{ type: "msg", seq, name, text }`. Also sends `{ type: "ping" }` every 5 s, `{ type: "reset" }` before a reset, and `{ type: "gone" }` for an unknown or expired sandbox. |
 
 ## Stack
