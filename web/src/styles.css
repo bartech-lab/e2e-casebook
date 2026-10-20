@@ -14,3 +14,8 @@ textarea { display: block; width: 100%; min-height: 6rem; }
 .toast { position: fixed; bottom: 1rem; right: 1rem; background: #0a7d32; color: #fff; padding: 0.5rem 1rem; border-radius: 4px; }
 .due { font-size: 0.8rem; color: #8a5300; }
 dialog { width: min(32rem, 90vw); }
+.picker { position: relative; margin: 0.5rem 0; }
+.picker ul { position: absolute; z-index: 1; list-style: none; margin: 0.25rem 0 0; padding: 0.25rem 0; background: #fff; border: 1px solid #ccc; border-radius: 4px; min-width: 4rem; }
+.picker li { padding: 0.25rem 0.75rem; cursor: pointer; }
+.picker li.active { background: #e6f0ff; }
+.picker li[aria-selected="true"] { font-weight: bold; }

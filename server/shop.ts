@@ -13,6 +13,8 @@ const DISCOUNT = 1000;
 const VAT_PERCENT = 23;
 const INSURANCE = 499;
 const MAX_QTY = 99;
+const MIN_PEOPLE = 2;
+const MAX_PEOPLE = 8;
 
 type Cart = { items: Map<string, number>; code: string | null; insurance: boolean };
 export type Quote = { subtotal: number; discount: number; vat: number; insurance: number; total: number };
@@ -28,6 +30,12 @@ export function quote(cart: Cart): Quote {
   const vat = roundHalfUp(subtotal * VAT_PERCENT);
   const insurance = cart.insurance ? INSURANCE : 0;
   return { subtotal, discount, vat, insurance, total: subtotal - discount + vat + insurance };
+}
+
+export function splitShares(total: number, people: number) {
+  const base = Math.floor(total / people);
+  const extra = total - base * people;
+  return Array.from({ length: people }, (_, i) => base + (i < extra ? 1 : 0));
 }
 
 function lines(cart: Cart) {
@@ -97,6 +105,16 @@ export function createShop() {
     });
 
     scope.get<{ Params: Params }>('/orders', async (req) => ({ orders: orders.get(req.params.sandbox) ?? [] }));
+
+    scope.get<{ Params: Params & { order: string }; Querystring: { people?: string } }>('/orders/:order/split', async (req, reply) => {
+      const order = (orders.get(req.params.sandbox) ?? []).find((o) => String(o.id) === req.params.order);
+      if (!order) return reply.code(404).send({ error: 'unknown order' });
+      const people = Number(req.query.people);
+      if (!Number.isInteger(people) || people < MIN_PEOPLE || people > MAX_PEOPLE) {
+        return reply.code(400).send({ error: `people must be a whole number from ${MIN_PEOPLE} to ${MAX_PEOPLE}` });
+      }
+      return { order: order.id, total: order.quote.total, people, shares: splitShares(order.quote.total, people) };
+    });
   }
 
   return {

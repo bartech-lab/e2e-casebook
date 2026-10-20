@@ -132,6 +132,26 @@ The browser that posted a review can edit it. What the app promises:
 - You can change the rating and the text of your own review. Nobody else can edit it.
 - An edited review shows "(edited)", and the average rating uses the new rating.
 
+### 15. Splitting an order
+
+Under your orders, "Split order" opens a page that divides the order total between 2 and 8 people.
+What the app promises:
+
+- Every share is a whole number of grosze, and the shares add up to exactly the order total.
+- Shares differ by at most 0.01 PLN, and the larger shares come first.
+- Changing the number of people updates the shares.
+
+### 16. The People picker
+
+The split page chooses the number of people with a list built from ARIA roles, not a native
+select. What the app promises:
+
+- A click on the People button opens the list. With the button focused, Enter, Space, or the Down
+  arrow opens it too.
+- In the open list, Up and Down move the highlight. Enter or a click chooses an option and closes
+  the list.
+- Escape closes the list without changing the number.
+
 ## Run it
 
 ```sh
@@ -195,6 +215,7 @@ With `TEST_HOOKS` unset, every `/__test__` path returns 404.
 | `PUT /api/s/:id/cart/insurance` | `{ on: true \| false }`. Returns the cart. |
 | `POST /api/s/:id/orders` | Places the cart as an order and empties the cart: `{ id, lines, code, quote, placedAt }`; an empty cart gets `400`. |
 | `GET /api/s/:id/orders` | `{ orders }`, oldest first. |
+| `GET /api/s/:id/orders/:order/split?people=N` | `{ order, total, people, shares }`, larger shares first; `people` from 2 to 8, else `400`; amounts in grosze. |
 | `GET /api/s/:id/products/:sku/reviews` | `{ average, count, reviews: [{ id, name, rating, text, createdAt, edited }] }`, newest first; `average` is `null` without reviews. |
 | `POST /api/s/:id/products/:sku/reviews` | `{ name, rating, text }`; returns the review and its `editToken`. |
 | `PATCH /api/s/:id/products/:sku/reviews/:review` | `{ rating?, text? }` with the header `x-edit-token`; another token gets `403`. |

@@ -9,7 +9,7 @@ type Quote = { subtotal: number; discount: number; vat: number; insurance: numbe
 type Cart = { lines: Line[]; code: string | null; insurance: boolean; quote: Quote };
 type Order = { id: number; quote: Quote };
 
-const pln = (grosze: number) => `${(grosze / 100).toFixed(2)} PLN`;
+export const pln = (grosze: number) => `${(grosze / 100).toFixed(2)} PLN`;
 
 export function Shop({ sandbox }: { sandbox: string }) {
   const base = `/api/s/${sandbox}`;
@@ -177,6 +177,13 @@ export function Shop({ sandbox }: { sandbox: string }) {
             {orders.data.map((o) => (
               <li key={o.id}>
                 Order #{o.id}: {pln(o.quote.total)}
+              </li>
+            ))}
+          </ul>
+          <ul aria-label="Split an order">
+            {orders.data.map((o) => (
+              <li key={o.id}>
+                <Link href={`/s/${sandbox}/shop/orders/${o.id}/split`}>Split order #{o.id}</Link>
               </li>
             ))}
           </ul>

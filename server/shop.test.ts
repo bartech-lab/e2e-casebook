@@ -104,3 +104,20 @@ test('shop: an order charges the cart quote, empties the cart, and reset clears 
   assert.deepEqual((await api(app, sb, 'GET', '/orders')).json().orders, [], 'reset clears orders');
   assert.deepEqual((await cart(app, sb)).lines, [], 'reset clears the cart');
 });
+
+test('shop: splitting an order gives whole-grosz shares that add up, larger first', async (t) => {
+  const { app, sb } = await setup(t);
+  const sb2 = (await app.inject({ method: 'POST', url: '/api/sandboxes' })).json().id as string;
+  await setQty(app, sb, 'pen', 3);
+  const order = (await api(app, sb, 'POST', '/orders')).json();
+  assert.equal(order.quote.total, 1472);
+  const split = (people: unknown) => api(app, sb, 'GET', `/orders/${order.id}/split?people=${people}`);
+  const three = await split(3);
+  assert.equal(three.statusCode, 200, three.body);
+  assert.deepEqual(three.json(), { order: 1, total: 1472, people: 3, shares: [491, 491, 490] });
+  assert.deepEqual((await split(8)).json().shares, [184, 184, 184, 184, 184, 184, 184, 184]);
+  assert.deepEqual((await split(2)).json().shares, [736, 736]);
+  for (const bad of [1, 9, 2.5, 'two', '']) assert.equal((await split(bad)).statusCode, 400, `people=${bad}`);
+  assert.equal((await api(app, sb, 'GET', '/orders/2/split?people=2')).statusCode, 404, 'unknown order');
+  assert.equal((await api(app, sb2, 'GET', `/orders/${order.id}/split?people=2`)).statusCode, 404, 'order from another sandbox');
+});
