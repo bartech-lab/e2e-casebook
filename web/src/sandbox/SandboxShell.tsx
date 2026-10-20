@@ -10,6 +10,7 @@ import { Activity } from '../activity/Activity.tsx';
 import { Exports } from '../exports/Exports.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { Settings } from '../settings/Settings.tsx';
+import { Reviews } from '../shop/Reviews.tsx';
 import { Shop } from '../shop/Shop.tsx';
 import { HttpError } from '../http.ts';
 import { Link } from '../router.tsx';
@@ -53,6 +54,7 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
 
   const base = `/s/${sandbox}`;
   const card = /^cards\/(\d+)$/.exec(page);
+  const product = /^shop\/([a-z]+)$/.exec(page);
   return (
     <>
       <nav aria-label="Sandbox">
@@ -79,6 +81,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Mail sandbox={sandbox} />
       ) : page === 'shop' ? (
         <Shop sandbox={sandbox} />
+      ) : product ? (
+        <Reviews key={product[1]} sandbox={sandbox} sku={product[1]!} name={name} />
       ) : (
         <SandboxHome base={base} />
       )}
@@ -112,7 +116,7 @@ function SandboxHome({ base }: { base: string }) {
           with a link sent to a test inbox.
         </li>
         <li>
-          <Link href={`${base}/shop`}>Shop</Link>: a cart with a discount code, VAT, and optional shipping insurance.
+          <Link href={`${base}/shop`}>Shop</Link>: a cart with a discount code, VAT, optional shipping insurance, and product reviews.
         </li>
       </ul>
     </section>

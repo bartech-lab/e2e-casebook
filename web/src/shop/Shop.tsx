@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { json, sendJson } from '../http.ts';
+import { Link } from '../router.tsx';
 
 type Product = { sku: string; name: string; price: number };
 type Line = Product & { qty: number; lineTotal: number };
@@ -60,7 +61,8 @@ export function Shop({ sandbox }: { sandbox: string }) {
             {p.name}, {pln(p.price)}{' '}
             <button type="button" aria-label={`Add ${p.name}`} onClick={() => setQty(p.sku, qtyOf(p.sku) + 1)}>
               Add to cart
-            </button>
+            </button>{' '}
+            <Link href={`/s/${sandbox}/shop/${p.sku}`}>Reviews for {p.name}</Link>
           </li>
         ))}
       </ul>
