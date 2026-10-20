@@ -248,23 +248,45 @@ test('GET /cards?q empty or whitespace returns all cards', async (t) => {
 test('flags: default null, set per sandbox, invalid -> 400, reset clears', async (t) => {
   const { app, sb } = await setup(t);
   const sb2 = await newSandbox(app);
-  assert.deepEqual((await api(app, sb, 'GET', '/flags')).json(), { createCard: null });
+  const none = { createCard: null, draw: null };
+  assert.deepEqual((await api(app, sb, 'GET', '/flags')).json(), none);
   const set = await hook(app, sb, 'flags', { createCard: 'dialog' });
   assert.equal(set.statusCode, 200, set.body);
-  assert.deepEqual(set.json(), { createCard: 'dialog' });
-  assert.deepEqual((await api(app, sb, 'GET', '/flags')).json(), { createCard: 'dialog' });
-  assert.deepEqual((await api(app, sb2, 'GET', '/flags')).json(), { createCard: null }, 'flag leaked to other sandbox');
+  assert.deepEqual(set.json(), { createCard: 'dialog', draw: null });
+  assert.deepEqual((await api(app, sb, 'GET', '/flags')).json(), { createCard: 'dialog', draw: null });
+  assert.deepEqual((await api(app, sb2, 'GET', '/flags')).json(), none, 'flag leaked to other sandbox');
   for (const bad of ['popup', 1, true, undefined]) {
     const r = await hook(app, sb, 'flags', { createCard: bad });
     assert.equal(r.statusCode, 400, `createCard ${JSON.stringify(bad)} -> ${r.statusCode}`);
   }
-  assert.deepEqual((await api(app, sb, 'GET', '/flags')).json(), { createCard: 'dialog' }, 'invalid must not change state');
+  assert.deepEqual((await api(app, sb, 'GET', '/flags')).json(), { createCard: 'dialog', draw: null }, 'invalid must not change state');
   assert.equal((await hook(app, sb, 'flags', { createCard: 'inline' })).statusCode, 200);
   await reset(app, sb);
-  assert.deepEqual((await api(app, sb, 'GET', '/flags')).json(), { createCard: null }, 'reset must clear flag');
+  assert.deepEqual((await api(app, sb, 'GET', '/flags')).json(), none, 'reset must clear flag');
   const nul = await hook(app, sb, 'flags', { createCard: null });
   assert.equal(nul.statusCode, 200);
-  assert.deepEqual(nul.json(), { createCard: null });
+  assert.deepEqual(nul.json(), none);
+});
+
+test('flags: draw is set alone, keeps the pin, rejects bad values, and resets', async (t) => {
+  const { app, sb } = await setup(t);
+  const sb2 = await newSandbox(app);
+  assert.equal((await hook(app, sb, 'flags', { createCard: 'inline' })).statusCode, 200);
+  const set = await hook(app, sb, 'flags', { draw: 'dialog' });
+  assert.equal(set.statusCode, 200, set.body);
+  assert.deepEqual(set.json(), { createCard: 'inline', draw: 'dialog' }, 'setting draw must keep the pin');
+  assert.deepEqual((await api(app, sb2, 'GET', '/flags')).json(), { createCard: null, draw: null }, 'draw leaked to other sandbox');
+  assert.deepEqual((await hook(app, sb, 'flags', { createCard: null })).json(), { createCard: null, draw: 'dialog' }, 'clearing the pin must keep draw');
+  for (const bad of ['popup', 0, false]) {
+    const r = await hook(app, sb, 'flags', { draw: bad });
+    assert.equal(r.statusCode, 400, `draw ${JSON.stringify(bad)} -> ${r.statusCode}`);
+  }
+  const mixed = await hook(app, sb, 'flags', { createCard: 'inline', draw: 'popup' });
+  assert.equal(mixed.statusCode, 400, 'one bad key rejects the whole body');
+  assert.deepEqual((await api(app, sb, 'GET', '/flags')).json(), { createCard: null, draw: 'dialog' }, 'invalid must not change state');
+  assert.equal((await hook(app, sb, 'flags', {})).statusCode, 400, 'empty body');
+  await reset(app, sb);
+  assert.deepEqual((await api(app, sb, 'GET', '/flags')).json(), { createCard: null, draw: null }, 'reset must clear draw');
 });
 
 // ---------- settings / notifications ----------

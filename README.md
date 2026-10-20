@@ -118,7 +118,7 @@ scoped to one sandbox, so parallel tests never see each other.
 | `POST /__test__/s/:id/reset` | Deletes messages, restores the four default cards, removes export jobs, clears faults, flags, settings, mail, and sessions, and closes the sandbox's sockets. |
 | `POST /__test__/s/:id/seed` | `{ messages: [{ name, text }] }` stores and broadcasts messages; `{ cards: [{ title, description?, status? }] }` replaces all cards. |
 | `POST /__test__/s/:id/fault` | See below. |
-| `POST /__test__/s/:id/flags` | `{ createCard: "inline" \| "dialog" \| null }` pins the create-card variant for the sandbox. |
+| `POST /__test__/s/:id/flags` | `{ createCard: "inline" \| "dialog" \| null }` pins the create-card variant for the sandbox. `{ draw: "inline" \| "dialog" \| null }` fixes the variant a visitor without a stored assignment is assigned; `null` draws at random. Send either key or both; a key you leave out keeps its value. |
 | `POST /__test__/s/:id/login` | `{ email }` signs in without mail; returns the session cookie `{ name, value }` and sets it. |
 
 `fault` accepts any of:
@@ -141,7 +141,7 @@ With `TEST_HOOKS` unset, every `/__test__` path returns 404.
 | `POST /api/s/:id/messages` | `{ name, text }`; name up to 40 characters, text up to 500. |
 | `GET /api/s/:id/cards?q=` | `{ cards: [{ id, title, description, status, version, updatedBy, dueDate }] }`; `status` is `todo`, `doing`, or `done`; `q` filters titles. |
 | `POST /api/s/:id/cards` | `{ title, description?, status?, dueDate?, by? }`; a duplicate title gets `409` and `{ existing }`. |
-| `GET /api/s/:id/flags` | `{ createCard }`: the pinned variant, or `null`. |
+| `GET /api/s/:id/flags` | `{ createCard, draw }`: the pinned variant and the fixed draw, each `null` when not set. |
 | `GET /api/s/:id/cards/:card` | One card, with `ETag: "<version>"`. |
 | `PATCH /api/s/:id/cards/:card` | `{ title?, description?, status?, dueDate?, by? }`. With `If-Match: "<version>"`, an outdated version gets `412` and `{ current }`. |
 | `POST /api/s/:id/exports` | Starts an export: `{ id, status, progress, error, retryOf }`. |

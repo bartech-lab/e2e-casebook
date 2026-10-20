@@ -68,12 +68,16 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         return { email: normalized, cookie: { name: `epg_session_${req.params.sandbox}`, value } };
       });
 
-      scope.post<{ Params: Params; Body: { createCard?: unknown } }>('/flags', async (req, reply) => {
-        const value = req.body?.createCard;
-        if (value !== null && !CREATE_CARD_VARIANTS.includes(value as never)) {
-          return reply.code(400).send({ error: 'createCard must be inline, dialog, or null' });
+      scope.post<{ Params: Params; Body: { createCard?: unknown; draw?: unknown } }>('/flags', async (req, reply) => {
+        const body = req.body ?? {};
+        const keys = (['createCard', 'draw'] as const).filter((k) => k in body);
+        if (!keys.length) return reply.code(400).send({ error: 'send createCard, draw, or both' });
+        for (const k of keys) {
+          if (body[k] !== null && !CREATE_CARD_VARIANTS.includes(body[k] as never)) {
+            return reply.code(400).send({ error: `${k} must be inline, dialog, or null` });
+          }
         }
-        flags.set(req.params.sandbox, { createCard: value as (typeof CREATE_CARD_VARIANTS)[number] | null });
+        flags.set(req.params.sandbox, Object.fromEntries(keys.map((k) => [k, body[k]])));
         return flags.get(req.params.sandbox);
       });
 

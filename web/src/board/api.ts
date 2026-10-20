@@ -38,7 +38,7 @@ export async function createCard(
 export type CreateCardVariant = 'inline' | 'dialog';
 
 export async function fetchFlags(sandbox: string) {
-  return json<{ createCard: CreateCardVariant | null }>(await fetch(`/api/s/${sandbox}/flags`));
+  return json<{ createCard: CreateCardVariant | null; draw: CreateCardVariant | null }>(await fetch(`/api/s/${sandbox}/flags`));
 }
 
 export async function patchCard(sandbox: string, id: number, change: CardChange, by: string, ifVersion?: number) {
