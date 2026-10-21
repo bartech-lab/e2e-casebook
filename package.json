@@ -16,7 +16,7 @@
     "test:unit": "node --test \"server/**/*.test.ts\" \"web/**/*.test.ts\""
   },
   "dependencies": {
-    "@fastify/static": "^10.1.6",
+    "@fastify/static": "^10.1.7",
     "@fastify/websocket": "^11.3.4",
     "@tanstack/react-query": "^5.104.5",
     "fastify": "^5.12.7",
@@ -31,6 +31,6 @@
     "@types/ws": "^8.18.2",
     "@vitejs/plugin-react": "^6.1.2",
     "typescript": "^7.0.2",
-    "vite": "^8.3.4"
+    "vite": "^8.3.5"
   }
 }
