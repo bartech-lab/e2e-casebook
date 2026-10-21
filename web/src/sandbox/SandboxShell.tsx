@@ -7,6 +7,7 @@ import { ChatRoom } from '../chat/ChatRoom.tsx';
 import { Account } from '../account/Account.tsx';
 import { Mail } from '../account/Mail.tsx';
 import { Activity } from '../activity/Activity.tsx';
+import { Deals } from '../deals/Deals.tsx';
 import { Exports } from '../exports/Exports.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { Settings } from '../settings/Settings.tsx';
@@ -63,7 +64,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/chat`}>Chat</Link> · <Link href={`${base}/board`}>Board</Link> ·{' '}
         <Link href={`${base}/exports`}>Exports</Link> · <Link href={`${base}/activity`}>Activity</Link> ·{' '}
         <Link href={`${base}/settings`}>Settings</Link> · <Link href={`${base}/account`}>Account</Link> ·{' '}
-        <Link href={`${base}/mail`}>Mail</Link> · <Link href={`${base}/shop`}>Shop</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/mail`}>Mail</Link> · <Link href={`${base}/shop`}>Shop</Link> ·{' '}
+        <Link href={`${base}/deals`}>Deals</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -81,6 +83,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Account sandbox={sandbox} />
       ) : page === 'mail' ? (
         <Mail sandbox={sandbox} />
+      ) : page === 'deals' ? (
+        <Deals sandbox={sandbox} />
       ) : page === 'shop' ? (
         <Shop sandbox={sandbox} />
       ) : split ? (
@@ -121,6 +125,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/shop`}>Shop</Link>: a cart with a discount code, VAT, optional shipping insurance, product reviews, and splitting an order.
+        </li>
+        <li>
+          <Link href={`${base}/deals`}>Deals</Link>: deals picked for you, after a cookie consent banner.
         </li>
       </ul>
     </section>
