@@ -185,6 +185,17 @@ The Notes page lists notes you can star, archive, or delete. What the app promis
 - Actions that do not fit in the toolbar are under **More**. Choosing one closes the menu.
 - After any action, no note is selected.
 
+### 20. Budget
+
+The Budget page keeps a list of expenses and charts them. What the app promises:
+
+- Add an expense with a category (Food, Transport, or Fun) and an amount from 0.01 to 10000 PLN,
+  grosze included. It appears in the Expenses list.
+- The chart shows one bar per category, labelled with that category's total. A category with no
+  expenses shows 0.00 PLN.
+- **Show data** shows the chart's numbers as a table.
+- Removing an expense takes it out of the list and out of the chart.
+
 ## Run it
 
 ```sh
