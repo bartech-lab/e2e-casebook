@@ -9,6 +9,7 @@ import { Mail } from '../account/Mail.tsx';
 import { Activity } from '../activity/Activity.tsx';
 import { Deals } from '../deals/Deals.tsx';
 import { Exports } from '../exports/Exports.tsx';
+import { GiftCards } from '../gifts/GiftCards.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { Settings } from '../settings/Settings.tsx';
 import { Reviews } from '../shop/Reviews.tsx';
@@ -65,7 +66,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/exports`}>Exports</Link> · <Link href={`${base}/activity`}>Activity</Link> ·{' '}
         <Link href={`${base}/settings`}>Settings</Link> · <Link href={`${base}/account`}>Account</Link> ·{' '}
         <Link href={`${base}/mail`}>Mail</Link> · <Link href={`${base}/shop`}>Shop</Link> ·{' '}
-        <Link href={`${base}/deals`}>Deals</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/deals`}>Deals</Link> ·{' '}
+        <Link href={`${base}/gifts`}>Gift cards</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -85,6 +87,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Mail sandbox={sandbox} />
       ) : page === 'deals' ? (
         <Deals sandbox={sandbox} />
+      ) : page === 'gifts' ? (
+        <GiftCards />
       ) : page === 'shop' ? (
         <Shop sandbox={sandbox} />
       ) : split ? (
@@ -128,6 +132,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/deals`}>Deals</Link>: deals picked for you, after a cookie consent banner.
+        </li>
+        <li>
+          <Link href={`${base}/gifts`}>Gift cards</Link>: buy gift cards, with optional gift wrap.
         </li>
       </ul>
     </section>
