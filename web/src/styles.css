@@ -19,3 +19,8 @@ dialog { width: min(32rem, 90vw); }
 .picker li { padding: 0.25rem 0.75rem; cursor: pointer; }
 .picker li.active { background: #e6f0ff; }
 .picker li[aria-selected="true"] { font-weight: bold; }
+.strip { display: inline-block; width: 6.5rem; overflow: hidden; white-space: nowrap; vertical-align: middle; }
+.strip button { width: 6rem; margin-right: 0.5rem; }
+.more { position: relative; }
+.more ul { position: absolute; z-index: 1; left: 0; list-style: none; margin: 0.25rem 0 0; padding: 0.25rem 0; background: #fff; border: 1px solid #ccc; border-radius: 4px; min-width: 6rem; }
+.more li button { display: block; width: 100%; text-align: left; border: 0; background: none; padding: 0.25rem 0.75rem; cursor: pointer; }

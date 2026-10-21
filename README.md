@@ -176,6 +176,15 @@ The Gift cards page sells gift cards. What the app promises:
 - Gift wrap costs 5.00 PLN per card. From 5 cards, wrapping is free.
 - The summary shows the card value, the wrapping, and the total, which is the two added together.
 
+### 19. Notes
+
+The Notes page lists notes you can star, archive, or delete. What the app promises:
+
+- Tick notes to select them. **Star** stars each selected note, or takes its star away.
+- **Archive** moves the selected notes from Notes to Archive. **Delete** removes them.
+- Actions that do not fit in the toolbar are under **More**. Choosing one closes the menu.
+- After any action, no note is selected.
+
 ## Run it
 
 ```sh
