@@ -1,4 +1,4 @@
-# e2e-proving-ground
+# e2e-casebook
 
 A small, realistic web app built to be tested end to end. Each case is a feature that is hard to
 test well: realtime updates, reconnects, ordering, and more to come. Pick an approach, write the

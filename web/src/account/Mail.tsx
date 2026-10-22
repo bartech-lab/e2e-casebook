@@ -35,7 +35,7 @@ export function Mail({ sandbox }: { sandbox: string }) {
           <p>To: {current.to}</p>
           <p>Use this link to sign in. It works once and expires in 10 minutes:</p>
           <p>
-            <a href={current.link}>Sign in to e2e-proving-ground</a>
+            <a href={current.link}>Sign in to e2e-casebook</a>
           </p>
         </article>
       )}

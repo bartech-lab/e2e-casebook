@@ -10,7 +10,7 @@ export function Landing() {
 
   return (
     <section>
-      <h1>e2e-proving-ground</h1>
+      <h1>e2e-casebook</h1>
       <p>
         Hard cases for end-to-end tests, each with several test approaches and what each one costs.
         A sandbox is your own copy of the app. Share its URL to test with a second user.
