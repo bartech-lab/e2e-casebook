@@ -356,6 +356,16 @@ promises:
 - A wrong code says "Wrong code." After 5 wrong codes in a row the vault refuses every code for 1
   minute ("Too many tries. Try again in 1 minute.").
 
+### 33. Basket
+
+The Basket page keeps a basket in the browser, without the server. What the app promises:
+
+- **+** and **−** change a product's quantity; the line "Basket: N items" counts every unit.
+- Every tab of the same sandbox in the same browser shares the basket. A change in one tab shows in
+  the others within a second, without a reload, and a new tab shows the current basket.
+- **Empty basket** empties it in every tab.
+- Each sandbox has its own basket.
+
 ## Run it
 
 ```sh

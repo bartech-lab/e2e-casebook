@@ -24,6 +24,7 @@ import { Booking, type BookingStep } from '../booking/Booking.tsx';
 import { Feed } from '../feed/Feed.tsx';
 import { Checklist } from '../checklist/Checklist.tsx';
 import { Vault } from '../vault/Vault.tsx';
+import { BasketPage } from '../basket/Basket.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { Settings } from '../settings/Settings.tsx';
 import { Reviews } from '../shop/Reviews.tsx';
@@ -96,7 +97,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/booking/dates`}>Booking</Link> ·{' '}
         <Link href={`${base}/feed`}>Feed</Link> ·{' '}
         <Link href={`${base}/checklist`}>Checklist</Link> ·{' '}
-        <Link href={`${base}/vault`}>Vault</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/vault`}>Vault</Link> ·{' '}
+        <Link href={`${base}/basket`}>Basket</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -144,6 +146,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Checklist sandbox={sandbox} />
       ) : page === 'vault' ? (
         <Vault sandbox={sandbox} />
+      ) : page === 'basket' ? (
+        <BasketPage sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -234,6 +238,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/vault`}>Vault</Link>: notes behind a code from an authenticator app.
+        </li>
+        <li>
+          <Link href={`${base}/basket`}>Basket</Link>: a basket shared by every tab.
         </li>
       </ul>
     </section>
