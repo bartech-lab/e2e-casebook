@@ -425,6 +425,15 @@ The Search page finds products as you type. What it promises:
   arrive.
 - Any text works, `&` and accents included. An empty box shows nothing.
 
+### 39. Invoices
+
+The Invoices page lists two invoices with a **Download PDF** link each. What it promises:
+
+- The link downloads that row's invoice, named after its number (for example
+  `INV-2026-0012.pdf`).
+- The PDF shows the number, date, customer, every line, the net amount, VAT at 23% rounded to the
+  nearest grosz, and the total, which is net plus VAT.
+
 ## Run it
 
 ```sh

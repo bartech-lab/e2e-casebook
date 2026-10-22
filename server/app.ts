@@ -18,6 +18,7 @@ import { createChecklist } from './checklist.ts';
 import { createVaults } from './vault.ts';
 import { createBios } from './bio.ts';
 import { registerSearch } from './search.ts';
+import { registerInvoices } from './invoices.ts';
 import { createShop } from './shop.ts';
 import { openStore } from './store.ts';
 import { registerTestHooks } from './test-hooks.ts';
@@ -88,6 +89,7 @@ export async function buildApp(opts: AppOptions = {}) {
       vaults.register(scope);
       bios.register(scope);
       registerSearch(scope);
+      registerInvoices(scope);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
         messages: store.messagesSince(req.params.sandbox, Number(req.query.since ?? 0) || 0),
