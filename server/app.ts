@@ -11,6 +11,7 @@ import { createExtras } from './extras.ts';
 import { createFlags } from './flags.ts';
 import { CLOSE_UNKNOWN_SANDBOX, createHub } from './hub.ts';
 import { createReviews } from './reviews.ts';
+import { createContacts } from './contacts.ts';
 import { createShop } from './shop.ts';
 import { openStore } from './store.ts';
 import { registerTestHooks } from './test-hooks.ts';
@@ -35,6 +36,7 @@ export async function buildApp(opts: AppOptions = {}) {
   const exportJobs = createExports(store, faults);
   const shop = createShop();
   const reviews = createReviews();
+  const contacts = createContacts();
   const app = Fastify({ trustProxy: true });
 
   await app.register(fastifyWebsocket);
@@ -68,6 +70,7 @@ export async function buildApp(opts: AppOptions = {}) {
       extras.register(scope);
       shop.register(scope);
       reviews.register(scope);
+      contacts.register(scope);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
         messages: store.messagesSince(req.params.sandbox, Number(req.query.since ?? 0) || 0),
@@ -102,7 +105,7 @@ export async function buildApp(opts: AppOptions = {}) {
     { prefix: '/api/s/:sandbox' },
   );
 
-  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews });
+  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts });
 
   if (opts.clientDir && existsSync(join(opts.clientDir, 'index.html'))) {
     await app.register(fastifyStatic, { root: opts.clientDir, wildcard: false });
@@ -123,6 +126,7 @@ export async function buildApp(opts: AppOptions = {}) {
       extras.clear(id);
       shop.clear(id);
       reviews.clear(id);
+      contacts.clear(id);
       exportJobs.clear(id);
     }
   }, Math.min(ttl, 60 * 60 * 1000));

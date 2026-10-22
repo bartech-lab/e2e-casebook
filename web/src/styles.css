@@ -99,3 +99,6 @@ main > section > ul > li > label { display: inline; margin: 0; }
 .playlist .handle { cursor: grab; touch-action: none; }
 
 .card-frame { border: 1px solid #ccc; border-radius: 6px; width: 18rem; height: 15rem; }
+
+.drop-zone { border: 2px dashed #999; border-radius: 6px; padding: 1.5rem; margin: 0.75rem 0; text-align: center; }
+.drop-zone.over { border-color: currentColor; }
