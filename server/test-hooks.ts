@@ -6,13 +6,14 @@ import { CREATE_CARD_VARIANTS, type Flags } from './flags.ts';
 import type { Reviews } from './reviews.ts';
 import type { Contacts } from './contacts.ts';
 import type { Bookings } from './bookings.ts';
+import type { Feed } from './feed.ts';
 import type { Shop } from './shop.ts';
 import type { Hub } from './hub.ts';
 import { DEFAULT_CARDS, type Store } from './store.ts';
 import { cardInput, messageInput } from './validation.ts';
 
 type Params = { sandbox: string };
-type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings };
+type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed };
 
 type FaultBody = {
   dropSockets?: unknown;
@@ -22,7 +23,7 @@ type FaultBody = {
   auth?: { tokenTtlMs?: unknown };
 };
 
-export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings }: Deps) {
+export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed }: Deps) {
   app.register(
     async (scope) => {
       scope.addHook('preHandler', async (req, reply) => {
@@ -42,6 +43,7 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         reviews.clear(sandbox);
         contacts.clear(sandbox);
         bookings.clear(sandbox);
+        feed.clear(sandbox);
         hub.reset(sandbox);
         return { ok: true };
       });

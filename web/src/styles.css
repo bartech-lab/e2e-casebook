@@ -102,3 +102,7 @@ main > section > ul > li > label { display: inline; margin: 0; }
 
 .drop-zone { border: 2px dashed #999; border-radius: 6px; padding: 1.5rem; margin: 0.75rem 0; text-align: center; }
 .drop-zone.over { border-color: currentColor; }
+
+.feed li { padding: 1.25rem 0; border-bottom: 1px solid #ddd; }
+.feed .sentinel { color: #777; border-bottom: none; }
+.new-posts { position: sticky; top: 0.5rem; }

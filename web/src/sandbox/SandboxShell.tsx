@@ -21,6 +21,7 @@ import { Contacts } from '../contacts/Contacts.tsx';
 import { Stores } from '../stores/Stores.tsx';
 import { Quote } from '../quote/Quote.tsx';
 import { Booking, type BookingStep } from '../booking/Booking.tsx';
+import { Feed } from '../feed/Feed.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { Settings } from '../settings/Settings.tsx';
 import { Reviews } from '../shop/Reviews.tsx';
@@ -90,7 +91,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/contacts`}>Contacts</Link> ·{' '}
         <Link href={`${base}/stores`}>Stores</Link> ·{' '}
         <Link href={`${base}/quote`}>Quote</Link> ·{' '}
-        <Link href={`${base}/booking/dates`}>Booking</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/booking/dates`}>Booking</Link> ·{' '}
+        <Link href={`${base}/feed`}>Feed</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -132,6 +134,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Stores />
       ) : page === 'quote' ? (
         <Quote />
+      ) : page === 'feed' ? (
+        <Feed sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -213,6 +217,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/booking/dates`}>Booking</Link>: book a room in three steps.
+        </li>
+        <li>
+          <Link href={`${base}/feed`}>Feed</Link>: an endless list of posts, with new ones arriving.
         </li>
       </ul>
     </section>

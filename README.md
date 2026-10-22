@@ -321,6 +321,17 @@ The Booking page books a room in three steps: Dates, Guests, and Review. What th
 - **Book** books once and shows "Booking BK-<n> confirmed." After that the wizard starts empty,
   and going back does not show the booked review again.
 
+### 30. Feed
+
+The Feed page lists posts, newest first. It starts with 35 posts, and anyone can add one with
+`POST /api/s/:id/feed`. What the app promises:
+
+- The page shows the 10 newest posts. Scrolling to the end loads the next 10, until every post
+  is shown; then it says "No more posts."
+- Every post appears exactly once, in order, even when new posts arrive while you scroll.
+- New posts do not move the list. Within 3 seconds a button says how many arrived ("3 new
+  posts"); clicking it puts them at the top.
+
 ## Run it
 
 ```sh
@@ -338,7 +349,7 @@ scoped to one sandbox, so parallel tests never see each other.
 | Endpoint | Effect |
 |---|---|
 | `POST /api/sandboxes` | Creates a sandbox; returns `{ id }`. Not a hook: visitors use it too. |
-| `POST /__test__/s/:id/reset` | Deletes messages, restores the four default cards, removes export jobs, clears faults, flags, settings, the playlist order, the wallet and card tokens, the draft, the calendar connection, the contacts, the bookings, mail, sessions, the cart, and orders, restores the default reviews, and closes the sandbox's sockets. |
+| `POST /__test__/s/:id/reset` | Deletes messages, restores the four default cards, removes export jobs, clears faults, flags, settings, the playlist order, the wallet and card tokens, the draft, the calendar connection, the contacts, the bookings, the feed, mail, sessions, the cart, and orders, restores the default reviews, and closes the sandbox's sockets. |
 | `POST /__test__/s/:id/seed` | `{ messages: [{ name, text }] }` stores and broadcasts messages; `{ cards: [{ title, description?, status? }] }` replaces all cards. |
 | `POST /__test__/s/:id/fault` | See below. |
 | `POST /__test__/s/:id/flags` | `{ createCard: "inline" \| "dialog" \| null }` pins the create-card variant for the sandbox. `{ draw: "inline" \| "dialog" \| null }` fixes the variant a visitor without a stored assignment is assigned; `null` draws at random. Send either key or both; a key you leave out keeps its value. |
@@ -382,6 +393,7 @@ With `TEST_HOOKS` unset, every `/__test__` path returns 404.
 | `GET /api/s/:id/contacts` | `{ contacts: [{ name, email }] }`, in import order. |
 | `POST /api/s/:id/contacts/import` | A CSV file as a `text/csv` body; returns `{ imported, errors: [{ row, message }] }`, or `400` when the first row is not `name,email`. |
 | `GET` and `POST /api/s/:id/bookings` | `{ bookings }`; `POST` takes `{ checkIn, nights, adults, children }` and returns the booking with its `id` and `total` in grosze. |
+| `GET` and `POST /api/s/:id/feed` | `GET` returns `{ posts: [{ id, text }], more }`, newest first, 10 at a time: `?before=ID` pages by id, `?offset=N` by position, and `?after=ID` returns every newer post. `POST` takes `{ text }`. |
 | `GET /api/s/:id/notifications?after=N` | `{ unread }`; with `after`, waits up to 20 s for the count to differ from `N`. |
 | `POST /api/s/:id/auth/request` | `{ email }`: sends a sign-in link to the sandbox's test inbox. |
 | `GET /api/s/:id/auth/me`, `POST /api/s/:id/auth/logout` | The signed-in email (`401` if none); sign out. |
