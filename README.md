@@ -207,6 +207,17 @@ What the app promises:
 - **Resume plan** undoes a cancel or a pause.
 - The page shows the same plan after a reload.
 
+### 22. Playlist
+
+The Playlist page lists five songs in an order you can change. What the app promises:
+
+- Drag a song by its handle. Dropping it on the upper half of another song puts it before that
+  song; the lower half puts it after.
+- With the keyboard: focus a song's handle, press Space to pick it up, move it with the up and
+  down arrow keys, and press Space to drop it. Escape puts it back where it was, also during a drag.
+- After a move, the page announces "Moved <song> to position <n> of 5."
+- The order is saved: a reload shows the same order.
+
 ## Run it
 
 ```sh
@@ -259,6 +270,7 @@ With `TEST_HOOKS` unset, every `/__test__` path returns 404.
 | `GET /api/s/:id/exports/:export/file` | The CSV, once the export is done. |
 | `GET /api/s/:id/activity?from=&limit=` | `{ total, entries: [{ n, text }] }`; `limit` up to 500. |
 | `GET` and `PUT /api/s/:id/settings` | `{ displayName, theme, emailDigest }`. |
+| `GET` and `PUT /api/s/:id/playlist` | `{ songs: [{ id, title }] }`; `PUT` takes `{ order: [id, ...] }` listing every song once, else `400`. |
 | `GET /api/s/:id/notifications?after=N` | `{ unread }`; with `after`, waits up to 20 s for the count to differ from `N`. |
 | `POST /api/s/:id/auth/request` | `{ email }`: sends a sign-in link to the sandbox's test inbox. |
 | `GET /api/s/:id/auth/me`, `POST /api/s/:id/auth/logout` | The signed-in email (`401` if none); sign out. |

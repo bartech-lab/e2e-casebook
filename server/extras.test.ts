@@ -289,6 +289,26 @@ test('flags: draw is set alone, keeps the pin, rejects bad values, and resets', 
   assert.deepEqual((await api(app, sb, 'GET', '/flags')).json(), { createCard: null, draw: null }, 'reset must clear draw');
 });
 
+// ---------- playlist ----------
+
+test('playlist: default order, saves a full reordering per sandbox, rejects partial or repeated lists, reset restores', async (t) => {
+  const { app, sb } = await setup(t);
+  const sb2 = await newSandbox(app);
+  const ids = () => api(app, sb, 'GET', '/playlist').then((r) => (r.json() as { songs: { id: number }[] }).songs.map((s) => s.id));
+  assert.deepEqual(await ids(), [1, 2, 3, 4, 5]);
+  for (const order of [[1, 2, 3, 4], [1, 2, 3, 4, 5, 1], [1, 1, 2, 3, 4], [1, 2, 3, 4, 9], '1,2,3,4,5', undefined]) {
+    assert.equal((await api(app, sb, 'PUT', '/playlist', { order })).statusCode, 400, JSON.stringify(order));
+  }
+  assert.deepEqual(await ids(), [1, 2, 3, 4, 5], 'a rejected order was saved');
+  const put = await api(app, sb, 'PUT', '/playlist', { order: [3, 1, 2, 5, 4] });
+  assert.equal(put.statusCode, 200, put.body);
+  assert.deepEqual(await ids(), [3, 1, 2, 5, 4]);
+  const other = (await api(app, sb2, 'GET', '/playlist')).json() as { songs: { id: number }[] };
+  assert.deepEqual(other.songs.map((s) => s.id), [1, 2, 3, 4, 5], 'playlist leaked across sandboxes');
+  await reset(app, sb);
+  assert.deepEqual(await ids(), [1, 2, 3, 4, 5], 'reset left the order behind');
+});
+
 // ---------- settings / notifications ----------
 
 test('settings: defaults, save with trimmed name, per sandbox, reset restores defaults', async (t) => {

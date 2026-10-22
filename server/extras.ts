@@ -7,6 +7,8 @@ type Params = { sandbox: string };
 export type Settings = { displayName: string; theme: 'light' | 'dark'; emailDigest: boolean };
 const DEFAULT_SETTINGS: Settings = { displayName: '', theme: 'light', emailDigest: false };
 
+export const SONGS = ['Northern Lights', 'Paper Boats', 'Slow Train', 'Copper Sky', 'Last Ferry'].map((title, i) => ({ id: i + 1, title }));
+
 export const ACTIVITY_TOTAL = 10_000;
 const ACTORS = ['alice', 'bob', 'carol', 'dave', 'erin'];
 const VERBS = ['created', 'moved', 'renamed', 'commented on', 'archived', 'reopened', 'assigned'];
@@ -34,6 +36,7 @@ export type Extras = ReturnType<typeof createExtras>;
 export function createExtras(store: Store) {
   let closing = false;
   const settings = new Map<string, Settings>();
+  const playlists = new Map<string, number[]>();
   const mail = new Map<string, Mail[]>();
   const tokens = new Map<string, Map<string, Token>>();
   const sessions = new Map<string, Map<string, string>>();
@@ -73,6 +76,26 @@ export function createExtras(store: Store) {
       const saved: Settings = { displayName: displayName.trim(), theme, emailDigest };
       settings.set(req.params.sandbox, saved);
       return saved;
+    });
+
+    const playlist = (sandbox: string) => ({
+      songs: (playlists.get(sandbox) ?? SONGS.map((s) => s.id)).map((id) => SONGS.find((s) => s.id === id)!),
+    });
+
+    scope.get<{ Params: Params }>('/playlist', async (req) => playlist(req.params.sandbox));
+
+    scope.put<{ Params: Params }>('/playlist', async (req, reply) => {
+      const { order } = (req.body ?? {}) as { order?: unknown };
+      if (
+        !Array.isArray(order) ||
+        order.length !== SONGS.length ||
+        !order.every((id) => SONGS.some((s) => s.id === id)) ||
+        new Set(order).size !== order.length
+      ) {
+        return reply.code(400).send({ error: 'order must list every song once' });
+      }
+      playlists.set(req.params.sandbox, order as number[]);
+      return playlist(req.params.sandbox);
     });
 
     scope.get<{ Params: Params; Querystring: { after?: string; waitMs?: string } }>('/notifications', async (req) => {
@@ -161,6 +184,7 @@ export function createExtras(store: Store) {
     },
     clear(sandbox: string) {
       settings.delete(sandbox);
+      playlists.delete(sandbox);
       mail.delete(sandbox);
       tokens.delete(sandbox);
       sessions.delete(sandbox);

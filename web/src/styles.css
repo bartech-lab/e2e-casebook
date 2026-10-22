@@ -90,3 +90,10 @@ dialog { width: min(32rem, 90vw); border: 1px solid var(--border); border-radius
 .more li button:hover { background: var(--accent-soft); }
 canvas { display: block; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
 main > section > ul > li > label { display: inline; margin: 0; }
+
+.playlist li { padding: 0.5rem 0; border-top: 2px solid transparent; border-bottom: 2px solid transparent; }
+.playlist li.dragging { opacity: 0.5; }
+.playlist li.grabbed { outline: 2px dashed currentColor; }
+.playlist li.drop-before { border-top-color: currentColor; }
+.playlist li.drop-after { border-bottom-color: currentColor; }
+.playlist .handle { cursor: grab; touch-action: none; }
