@@ -29,6 +29,8 @@ function cardError(card: Record<string, unknown>, now: Date): 'number' | 'expiry
   return null;
 }
 
+const CALENDAR_EMAIL = 'calendar@example.test';
+
 export const SONGS = ['Northern Lights', 'Paper Boats', 'Slow Train', 'Copper Sky', 'Last Ferry'].map((title, i) => ({ id: i + 1, title }));
 
 export const ACTIVITY_TOTAL = 10_000;
@@ -60,6 +62,8 @@ export function createExtras(store: Store) {
   const settings = new Map<string, Settings>();
   const playlists = new Map<string, number[]>();
   const drafts = new Map<string, { text: string; version: number }>();
+  const calendarCodes = new Map<string, Map<string, { used: boolean }>>();
+  const calendars = new Set<string>();
   const wallets = new Map<string, { balance: number; topups: { amount: number; last4: string }[] }>();
   const cardTokens = new Map<string, Map<string, { number: string; used: boolean }>>();
   const mail = new Map<string, Mail[]>();
@@ -121,6 +125,30 @@ export function createExtras(store: Store) {
       }
       playlists.set(req.params.sandbox, order as number[]);
       return playlist(req.params.sandbox);
+    });
+
+    const calendar = (sandbox: string) => (calendars.has(sandbox) ? { connected: true, email: CALENDAR_EMAIL } : { connected: false, email: null });
+
+    scope.get<{ Params: Params }>('/calendar', async (req) => calendar(req.params.sandbox));
+
+    scope.post<{ Params: Params }>('/calendar/authorize', async (req, reply) => {
+      const code = randomBytes(12).toString('base64url');
+      inner(calendarCodes, req.params.sandbox).set(code, { used: false });
+      return reply.code(201).send({ code });
+    });
+
+    scope.post<{ Params: Params }>('/calendar/connect', async (req, reply) => {
+      const { code } = (req.body ?? {}) as { code?: unknown };
+      const entry = typeof code === 'string' ? calendarCodes.get(req.params.sandbox)?.get(code) : undefined;
+      if (!entry || entry.used) return reply.code(400).send({ error: 'unknown or used code' });
+      entry.used = true;
+      calendars.add(req.params.sandbox);
+      return calendar(req.params.sandbox);
+    });
+
+    scope.delete<{ Params: Params }>('/calendar', async (req) => {
+      calendars.delete(req.params.sandbox);
+      return calendar(req.params.sandbox);
     });
 
     const draft = (sandbox: string) => drafts.get(sandbox) ?? { text: '', version: 0 };
@@ -256,6 +284,8 @@ export function createExtras(store: Store) {
       settings.delete(sandbox);
       playlists.delete(sandbox);
       drafts.delete(sandbox);
+      calendarCodes.delete(sandbox);
+      calendars.delete(sandbox);
       wallets.delete(sandbox);
       cardTokens.delete(sandbox);
       mail.delete(sandbox);

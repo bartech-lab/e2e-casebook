@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Example Calendar: sign in</title>
+    <style>
+      body { font: 16px system-ui, sans-serif; margin: 2rem; }
+      button { font: inherit; padding: 0.4rem 1rem; margin-right: 0.5rem; }
+    </style>
+  </head>
+  <body>
+    <h1>Example Calendar</h1>
+    <p>e2e-casebook wants to read your calendar.</p>
+    <button type="button" id="allow">Allow</button>
+    <button type="button" id="deny">Deny</button>
+    <script>
+      const params = new URLSearchParams(location.search);
+      const sandbox = params.get('sandbox');
+      const state = params.get('state');
+      const reply = (data) => {
+        window.opener?.postMessage({ type: 'calendar-auth', state, ...data }, location.origin);
+        window.close();
+      };
+      document.getElementById('allow').addEventListener('click', async () => {
+        const res = await fetch(`/api/s/${sandbox}/calendar/authorize`, { method: 'POST' });
+        reply(res.ok ? { code: (await res.json()).code } : { error: 'server_error' });
+      });
+      document.getElementById('deny').addEventListener('click', () => reply({ error: 'access_denied' }));
+    </script>
+  </body>
+</html>

@@ -242,6 +242,19 @@ The Draft page holds one letter that saves itself. What the app promises:
   seconds until a save succeeds.
 - A reload shows the latest saved text. A save that finishes late never replaces newer text.
 
+### 25. Calendar
+
+The Calendar page connects a calendar from Example Calendar, a separate sign-in service. What the
+app promises:
+
+- **Connect calendar** opens Example Calendar's sign-in window. **Allow** closes the window and the
+  page shows "Calendar: connected as calendar@example.test". A reload keeps the connection.
+- **Deny**, or closing the window, leaves the calendar not connected, and the page says
+  "Calendar not connected."
+- The page accepts an answer only from the sign-in window it opened for this attempt.
+- **Disconnect** removes the connection, also after a reload.
+- Each sign-in connects once: its code cannot be used again.
+
 ## Run it
 
 ```sh
@@ -259,7 +272,7 @@ scoped to one sandbox, so parallel tests never see each other.
 | Endpoint | Effect |
 |---|---|
 | `POST /api/sandboxes` | Creates a sandbox; returns `{ id }`. Not a hook: visitors use it too. |
-| `POST /__test__/s/:id/reset` | Deletes messages, restores the four default cards, removes export jobs, clears faults, flags, settings, the playlist order, the wallet and card tokens, the draft, mail, sessions, the cart, and orders, restores the default reviews, and closes the sandbox's sockets. |
+| `POST /__test__/s/:id/reset` | Deletes messages, restores the four default cards, removes export jobs, clears faults, flags, settings, the playlist order, the wallet and card tokens, the draft, the calendar connection, mail, sessions, the cart, and orders, restores the default reviews, and closes the sandbox's sockets. |
 | `POST /__test__/s/:id/seed` | `{ messages: [{ name, text }] }` stores and broadcasts messages; `{ cards: [{ title, description?, status? }] }` replaces all cards. |
 | `POST /__test__/s/:id/fault` | See below. |
 | `POST /__test__/s/:id/flags` | `{ createCard: "inline" \| "dialog" \| null }` pins the create-card variant for the sandbox. `{ draw: "inline" \| "dialog" \| null }` fixes the variant a visitor without a stored assignment is assigned; `null` draws at random. Send either key or both; a key you leave out keeps its value. |
@@ -298,6 +311,8 @@ With `TEST_HOOKS` unset, every `/__test__` path returns 404.
 | `POST /api/s/:id/card-tokens` | The card form's endpoint: `{ number, expiry, cvc }` as a `text/plain` JSON body; `201` with `{ token, last4 }`, or `400` with `{ field }`. |
 | `GET` and `POST /api/s/:id/topups` | `{ balance, topups: [{ amount, last4 }] }`, newest first, amounts in grosze; `POST` takes `{ amount, token }`, uses the token up, and answers `402` for a declined card. |
 | `GET` and `PUT /api/s/:id/draft` | `{ text, version }`; `PUT` takes text up to 5000 characters and a version from 1, keeps it only when the version is newer than the stored one, and returns the stored draft. |
+| `GET` and `DELETE /api/s/:id/calendar` | `{ connected, email }`; `DELETE` disconnects. |
+| `POST /api/s/:id/calendar/authorize` and `/calendar/connect` | The sign-in window gets a one-time `{ code }`; the page sends `{ code }` to `connect`, and a used or unknown code gets `400`. |
 | `GET /api/s/:id/notifications?after=N` | `{ unread }`; with `after`, waits up to 20 s for the count to differ from `N`. |
 | `POST /api/s/:id/auth/request` | `{ email }`: sends a sign-in link to the sandbox's test inbox. |
 | `GET /api/s/:id/auth/me`, `POST /api/s/:id/auth/logout` | The signed-in email (`401` if none); sign out. |

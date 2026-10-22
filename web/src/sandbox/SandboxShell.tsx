@@ -16,6 +16,7 @@ import { Plan } from '../plan/Plan.tsx';
 import { Playlist } from '../playlist/Playlist.tsx';
 import { TopUp } from '../topup/TopUp.tsx';
 import { Draft } from '../draft/Draft.tsx';
+import { Calendar } from '../calendar/Calendar.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { Settings } from '../settings/Settings.tsx';
 import { Reviews } from '../shop/Reviews.tsx';
@@ -79,7 +80,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/plan`}>Plan</Link> ·{' '}
         <Link href={`${base}/playlist`}>Playlist</Link> ·{' '}
         <Link href={`${base}/topup`}>Top up</Link> ·{' '}
-        <Link href={`${base}/draft`}>Draft</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/draft`}>Draft</Link> ·{' '}
+        <Link href={`${base}/calendar`}>Calendar</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -113,6 +115,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <TopUp sandbox={sandbox} />
       ) : page === 'draft' ? (
         <Draft sandbox={sandbox} />
+      ) : page === 'calendar' ? (
+        <Calendar sandbox={sandbox} />
       ) : page === 'shop' ? (
         <Shop sandbox={sandbox} />
       ) : split ? (
@@ -177,6 +181,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/draft`}>Draft</Link>: a letter that saves itself while you type.
+        </li>
+        <li>
+          <Link href={`${base}/calendar`}>Calendar</Link>: connect a calendar through a sign-in window.
         </li>
       </ul>
     </section>

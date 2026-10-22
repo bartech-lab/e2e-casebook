@@ -358,6 +358,23 @@ test('draft: empty by default, keeps only newer versions, validates, reset clear
   assert.deepEqual((await api(app, sb, 'GET', '/draft')).json(), { text: '', version: 0 });
 });
 
+// ---------- calendar ----------
+
+test('calendar: a code connects once, disconnect and reset remove the connection', async (t) => {
+  const { app, sb } = await setup(t);
+  const none = { connected: false, email: null };
+  assert.deepEqual((await api(app, sb, 'GET', '/calendar')).json(), none);
+  assert.equal((await api(app, sb, 'POST', '/calendar/connect', { code: 'made-up' })).statusCode, 400);
+  const { code } = (await api(app, sb, 'POST', '/calendar/authorize')).json() as { code: string };
+  assert.deepEqual((await api(app, sb, 'POST', '/calendar/connect', { code })).json(), { connected: true, email: 'calendar@example.test' });
+  assert.equal((await api(app, sb, 'POST', '/calendar/connect', { code })).statusCode, 400, 'a used code connected again');
+  assert.deepEqual((await api(app, sb, 'DELETE', '/calendar')).json(), none);
+  const second = (await api(app, sb, 'POST', '/calendar/authorize')).json() as { code: string };
+  await api(app, sb, 'POST', '/calendar/connect', { code: second.code });
+  await reset(app, sb);
+  assert.deepEqual((await api(app, sb, 'GET', '/calendar')).json(), none);
+});
+
 // ---------- settings / notifications ----------
 
 test('settings: defaults, save with trimmed name, per sandbox, reset restores defaults', async (t) => {
