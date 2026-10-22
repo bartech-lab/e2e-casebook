@@ -309,6 +309,18 @@ The Quote page multiplies a unit price by a quantity. It speaks the browser's la
 - A price or quantity the page cannot read shows a hint ("Enter a price like 12,50." in Polish)
   and no total.
 
+### 29. Booking
+
+The Booking page books a room in three steps: Dates, Guests, and Review. What the app promises:
+
+- Each step has its own address: `/s/:id/booking/dates`, `/guests`, and `/review`. **Next** and
+  **Back** move between steps, and so do the browser's Back and Forward buttons.
+- A step keeps what you entered when you come back to it, also after a reload.
+- Opening a step before the earlier steps are complete takes you to the first incomplete step.
+- The price is 150.00 PLN per adult and 75.00 PLN per child, per night. Review shows the total.
+- **Book** books once and shows "Booking BK-<n> confirmed." After that the wizard starts empty,
+  and going back does not show the booked review again.
+
 ## Run it
 
 ```sh
@@ -326,7 +338,7 @@ scoped to one sandbox, so parallel tests never see each other.
 | Endpoint | Effect |
 |---|---|
 | `POST /api/sandboxes` | Creates a sandbox; returns `{ id }`. Not a hook: visitors use it too. |
-| `POST /__test__/s/:id/reset` | Deletes messages, restores the four default cards, removes export jobs, clears faults, flags, settings, the playlist order, the wallet and card tokens, the draft, the calendar connection, the contacts, mail, sessions, the cart, and orders, restores the default reviews, and closes the sandbox's sockets. |
+| `POST /__test__/s/:id/reset` | Deletes messages, restores the four default cards, removes export jobs, clears faults, flags, settings, the playlist order, the wallet and card tokens, the draft, the calendar connection, the contacts, the bookings, mail, sessions, the cart, and orders, restores the default reviews, and closes the sandbox's sockets. |
 | `POST /__test__/s/:id/seed` | `{ messages: [{ name, text }] }` stores and broadcasts messages; `{ cards: [{ title, description?, status? }] }` replaces all cards. |
 | `POST /__test__/s/:id/fault` | See below. |
 | `POST /__test__/s/:id/flags` | `{ createCard: "inline" \| "dialog" \| null }` pins the create-card variant for the sandbox. `{ draw: "inline" \| "dialog" \| null }` fixes the variant a visitor without a stored assignment is assigned; `null` draws at random. Send either key or both; a key you leave out keeps its value. |
@@ -369,6 +381,7 @@ With `TEST_HOOKS` unset, every `/__test__` path returns 404.
 | `POST /api/s/:id/calendar/authorize` and `/calendar/connect` | The sign-in window gets a one-time `{ code }`; the page sends `{ code }` to `connect`, and a used or unknown code gets `400`. |
 | `GET /api/s/:id/contacts` | `{ contacts: [{ name, email }] }`, in import order. |
 | `POST /api/s/:id/contacts/import` | A CSV file as a `text/csv` body; returns `{ imported, errors: [{ row, message }] }`, or `400` when the first row is not `name,email`. |
+| `GET` and `POST /api/s/:id/bookings` | `{ bookings }`; `POST` takes `{ checkIn, nights, adults, children }` and returns the booking with its `id` and `total` in grosze. |
 | `GET /api/s/:id/notifications?after=N` | `{ unread }`; with `after`, waits up to 20 s for the count to differ from `N`. |
 | `POST /api/s/:id/auth/request` | `{ email }`: sends a sign-in link to the sandbox's test inbox. |
 | `GET /api/s/:id/auth/me`, `POST /api/s/:id/auth/logout` | The signed-in email (`401` if none); sign out. |

@@ -10,6 +10,7 @@ export function usePath() {
   useEffect(() => {
     const onPop = () => setPath(location.pathname);
     addEventListener('popstate', onPop);
+    onPop();
     return () => removeEventListener('popstate', onPop);
   }, []);
   return path;

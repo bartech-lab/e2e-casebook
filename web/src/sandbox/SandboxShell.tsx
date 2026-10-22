@@ -20,6 +20,7 @@ import { Calendar } from '../calendar/Calendar.tsx';
 import { Contacts } from '../contacts/Contacts.tsx';
 import { Stores } from '../stores/Stores.tsx';
 import { Quote } from '../quote/Quote.tsx';
+import { Booking, type BookingStep } from '../booking/Booking.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { Settings } from '../settings/Settings.tsx';
 import { Reviews } from '../shop/Reviews.tsx';
@@ -69,6 +70,7 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
   const card = /^cards\/(\d+)$/.exec(page);
   const product = /^shop\/([a-z]+)$/.exec(page);
   const split = /^shop\/orders\/(\d+)\/split$/.exec(page);
+  const booking = /^booking\/(dates|guests|review|done)$/.exec(page);
   return (
     <>
       <nav aria-label="Sandbox">
@@ -87,7 +89,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/calendar`}>Calendar</Link> ·{' '}
         <Link href={`${base}/contacts`}>Contacts</Link> ·{' '}
         <Link href={`${base}/stores`}>Stores</Link> ·{' '}
-        <Link href={`${base}/quote`}>Quote</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/quote`}>Quote</Link> ·{' '}
+        <Link href={`${base}/booking/dates`}>Booking</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -129,6 +132,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Stores />
       ) : page === 'quote' ? (
         <Quote />
+      ) : booking ? (
+        <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
         <Shop sandbox={sandbox} />
       ) : split ? (
@@ -205,6 +210,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/quote`}>Quote</Link>: a price total in your browser's language.
+        </li>
+        <li>
+          <Link href={`${base}/booking/dates`}>Booking</Link>: book a room in three steps.
         </li>
       </ul>
     </section>
