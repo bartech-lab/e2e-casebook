@@ -70,6 +70,8 @@ export function createExtras(store: Store) {
   const tokens = new Map<string, Map<string, Token>>();
   const sessions = new Map<string, Map<string, string>>();
   const tokenTtl = new Map<string, number>();
+  const expired = new Set<string>();
+  const tickets = new Map<string, { id: number; email: string; text: string }[]>();
 
   const inner = <V>(m: Map<string, Map<string, V>>, sandbox: string) => {
     let v = m.get(sandbox);
@@ -86,7 +88,7 @@ export function createExtras(store: Store) {
 
   function sessionEmail(req: FastifyRequest, sandbox: string) {
     const sid = readCookie(req, sessionCookie(sandbox));
-    return sid ? sessions.get(sandbox)?.get(sid) : undefined;
+    return sid && !expired.has(sid) ? sessions.get(sandbox)?.get(sid) : undefined;
   }
 
   function register(scope: FastifyInstance) {
@@ -109,6 +111,24 @@ export function createExtras(store: Store) {
 
     const playlist = (sandbox: string) => ({
       songs: (playlists.get(sandbox) ?? SONGS.map((s) => s.id)).map((id) => SONGS.find((s) => s.id === id)!),
+    });
+
+    scope.get<{ Params: Params }>('/support', async (req, reply) => {
+      const email = sessionEmail(req, req.params.sandbox);
+      if (!email) return reply.code(401).send({ error: 'not signed in' });
+      return { tickets: (tickets.get(req.params.sandbox) ?? []).filter((t) => t.email === email).map(({ id, text }) => ({ id, text })) };
+    });
+
+    scope.post<{ Params: Params }>('/support', async (req, reply) => {
+      const email = sessionEmail(req, req.params.sandbox);
+      if (!email) return reply.code(401).send({ error: 'not signed in' });
+      const text = (req.body as { text?: unknown } | undefined)?.text;
+      if (typeof text !== 'string' || !text.trim() || text.length > 2000) return reply.code(400).send({ error: 'text of 1 to 2000 characters' });
+      const list = tickets.get(req.params.sandbox) ?? [];
+      const ticket = { id: list.length + 1, email, text: text.trim() };
+      list.push(ticket);
+      tickets.set(req.params.sandbox, list);
+      return reply.code(201).send({ id: ticket.id, text: ticket.text });
     });
 
     scope.get<{ Params: Params }>('/playlist', async (req) => playlist(req.params.sandbox));
@@ -277,6 +297,9 @@ export function createExtras(store: Store) {
     register,
     startSession,
     setTokenTtl: (sandbox: string, ms: number) => tokenTtl.set(sandbox, ms),
+    expireSessions(sandbox: string) {
+      for (const sid of sessions.get(sandbox)?.keys() ?? []) expired.add(sid);
+    },
     stop() {
       closing = true;
     },
@@ -290,7 +313,9 @@ export function createExtras(store: Store) {
       cardTokens.delete(sandbox);
       mail.delete(sandbox);
       tokens.delete(sandbox);
+      for (const sid of sessions.get(sandbox)?.keys() ?? []) expired.delete(sid);
       sessions.delete(sandbox);
+      tickets.delete(sandbox);
       tokenTtl.delete(sandbox);
     },
   };

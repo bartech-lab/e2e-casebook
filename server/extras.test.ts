@@ -375,6 +375,21 @@ test('calendar: a code connects once, disconnect and reset remove the connection
   assert.deepEqual((await api(app, sb, 'GET', '/calendar')).json(), none);
 });
 
+// ---------- support ----------
+
+test('support: signed in only, per email, and an expired session is refused while its cookie stays', async (t) => {
+  const { app, sb } = await setup(t);
+  assert.equal((await api(app, sb, 'POST', '/support', { text: 'Hi' })).statusCode, 401);
+  const login = (await app.inject({ method: 'POST', url: `/__test__/s/${sb}/login`, payload: { email: 'ann@example.test' } })).json() as { cookie: { name: string; value: string } };
+  const cookie = { cookie: `${login.cookie.name}=${login.cookie.value}` };
+  assert.equal((await api(app, sb, 'POST', '/support', { text: '  Broken  ' }, cookie)).statusCode, 201);
+  assert.equal((await api(app, sb, 'POST', '/support', { text: ' ' }, cookie)).statusCode, 400);
+  assert.deepEqual((await api(app, sb, 'GET', '/support', undefined, cookie)).json(), { tickets: [{ id: 1, text: 'Broken' }] });
+  await app.inject({ method: 'POST', url: `/__test__/s/${sb}/expire-sessions` });
+  assert.equal((await api(app, sb, 'POST', '/support', { text: 'Again' }, cookie)).statusCode, 401, 'an expired session was accepted');
+  assert.equal((await api(app, sb, 'GET', '/auth/me', undefined, cookie)).statusCode, 401);
+});
+
 // ---------- settings / notifications ----------
 
 test('settings: defaults, save with trimmed name, per sandbox, reset restores defaults', async (t) => {

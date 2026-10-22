@@ -366,6 +366,18 @@ The Basket page keeps a basket in the browser, without the server. What the app 
 - **Empty basket** empties it in every tab.
 - Each sandbox has its own basket.
 
+### 34. Support
+
+The Support page sends a message to support. It needs you to be signed in (case 8). What the app
+promises:
+
+- The message you are writing is kept in the browser, also across a reload and a new sign-in, until
+  it is sent.
+- If your session has expired when you press **Send**, the page says "Your session has expired.
+  Sign in again; your message is kept." and nothing is sent.
+- After you sign in again, the message is still there, and **Send** sends it once. "Your messages"
+  lists what you sent, and the message field is empty again.
+
 ## Run it
 
 ```sh
@@ -383,12 +395,13 @@ scoped to one sandbox, so parallel tests never see each other.
 | Endpoint | Effect |
 |---|---|
 | `POST /api/sandboxes` | Creates a sandbox; returns `{ id }`. Not a hook: visitors use it too. |
-| `POST /__test__/s/:id/reset` | Deletes messages, restores the four default cards, removes export jobs, clears faults, flags, settings, the playlist order, the wallet and card tokens, the draft, the calendar connection, the contacts, the bookings, the feed, the checklist, the vault and its clock, mail, sessions, the cart, and orders, restores the default reviews, and closes the sandbox's sockets. |
+| `POST /__test__/s/:id/reset` | Deletes messages, restores the four default cards, removes export jobs, clears faults, flags, settings, the playlist order, the wallet and card tokens, the draft, the calendar connection, the contacts, the bookings, the feed, the checklist, the vault and its clock, support messages, mail, sessions, the cart, and orders, restores the default reviews, and closes the sandbox's sockets. |
 | `POST /__test__/s/:id/seed` | `{ messages: [{ name, text }] }` stores and broadcasts messages; `{ cards: [{ title, description?, status? }] }` replaces all cards. |
 | `POST /__test__/s/:id/fault` | See below. |
 | `POST /__test__/s/:id/flags` | `{ createCard: "inline" \| "dialog" \| null }` pins the create-card variant for the sandbox. `{ draw: "inline" \| "dialog" \| null }` fixes the variant a visitor without a stored assignment is assigned; `null` draws at random. Send either key or both; a key you leave out keeps its value. |
 | `POST /__test__/s/:id/clock` | `{ nowMs }` sets the sandbox's server time for the Vault (codes and lockout); `{ nowMs: null }` returns to the real time. |
 | `GET /__test__/s/:id/vault-code` | `{ code }`: the Vault's code for the sandbox's current server time. |
+| `POST /__test__/s/:id/expire-sessions` | Marks every session of the sandbox as expired on the server; the cookies stay in the browser. |
 | `POST /__test__/s/:id/login` | `{ email }` signs in without mail; returns the session cookie `{ name, value }` and sets it. |
 
 `fault` accepts any of:
@@ -432,6 +445,7 @@ With `TEST_HOOKS` unset, every `/__test__` path returns 404.
 | `GET` and `POST /api/s/:id/feed` | `GET` returns `{ posts: [{ id, text }], more }`, newest first, 10 at a time: `?before=ID` pages by id, `?offset=N` by position, and `?after=ID` returns every newer post. `POST` takes `{ text }`. |
 | `GET` and `POST /api/s/:id/checklist` | `{ items: [{ clientId, text }] }` in the order saved; `POST` takes `{ clientId, text }` and returns the existing item for a known `clientId`. |
 | `GET /api/s/:id/vault`, `POST /vault/setup`, `/vault/enable`, `/vault/unlock` | `{ enabled }`; setup returns `{ secret }`; enable and unlock take `{ code }`; unlock returns `{ notes }`. Wrong, used, and locked codes get `401`, `409`, and `429`. |
+| `GET` and `POST /api/s/:id/support` | Signed in only (`401` otherwise): `{ tickets: [{ id, text }] }` for your email; `POST` takes `{ text }`. |
 | `GET /api/s/:id/notifications?after=N` | `{ unread }`; with `after`, waits up to 20 s for the count to differ from `N`. |
 | `POST /api/s/:id/auth/request` | `{ email }`: sends a sign-in link to the sandbox's test inbox. |
 | `GET /api/s/:id/auth/me`, `POST /api/s/:id/auth/logout` | The signed-in email (`401` if none); sign out. |

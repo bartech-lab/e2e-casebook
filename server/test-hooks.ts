@@ -95,6 +95,11 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         return flags.get(req.params.sandbox);
       });
 
+      scope.post<{ Params: Params }>('/expire-sessions', async (req) => {
+        extras.expireSessions(req.params.sandbox);
+        return { ok: true };
+      });
+
       scope.post<{ Params: Params; Body: { nowMs?: unknown } }>('/clock', async (req, reply) => {
         const nowMs = req.body?.nowMs;
         if (nowMs !== null && (typeof nowMs !== 'number' || !Number.isFinite(nowMs) || nowMs < 0)) return reply.code(400).send({ error: 'nowMs must be a time in ms or null' });
