@@ -31,6 +31,7 @@ import { Signup } from '../signup/Signup.tsx';
 import { Bio } from '../bio/Bio.tsx';
 import { Search } from '../search/Search.tsx';
 import { Invoices } from '../invoices/Invoices.tsx';
+import { PriceFilter } from '../prices/PriceFilter.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { Settings } from '../settings/Settings.tsx';
 import { Reviews } from '../shop/Reviews.tsx';
@@ -110,7 +111,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/signup`}>Sign up</Link> ·{' '}
         <Link href={`${base}/bio`}>Bio</Link> ·{' '}
         <Link href={`${base}/search`}>Search</Link> ·{' '}
-        <Link href={`${base}/invoices`}>Invoices</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/invoices`}>Invoices</Link> ·{' '}
+        <Link href={`${base}/prices`}>Price filter</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -172,6 +174,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Search sandbox={sandbox} />
       ) : page === 'invoices' ? (
         <Invoices sandbox={sandbox} />
+      ) : page === 'prices' ? (
+        <PriceFilter />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -283,6 +287,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/invoices`}>Invoices</Link>: invoices you can download as PDF.
+        </li>
+        <li>
+          <Link href={`${base}/prices`}>Price filter</Link>: products in a price range you drag or key in.
         </li>
       </ul>
     </section>

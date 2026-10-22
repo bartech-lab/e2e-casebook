@@ -125,3 +125,8 @@ main > section > ul > li > label { display: inline; margin: 0; }
 .rich-editor { min-height: 6rem; max-width: 32rem; padding: 0.6rem 0.75rem; margin: 0.5rem 0; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
 .rich-editor:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .profile { max-width: 32rem; padding: 0.6rem 0.75rem; border: 1px dashed var(--border); border-radius: 8px; }
+
+.range { position: relative; width: 300px; height: 6px; margin: 1.5rem 0.75rem; background: var(--border); border-radius: 3px; touch-action: none; }
+.range-fill { position: absolute; top: 0; bottom: 0; background: var(--accent); border-radius: 3px; }
+.thumb { position: absolute; top: 50%; width: 18px; height: 18px; margin: -9px 0 0 -9px; background: var(--surface); border: 2px solid var(--accent); border-radius: 50%; cursor: grab; }
+.thumb:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
