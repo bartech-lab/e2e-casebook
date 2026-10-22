@@ -343,6 +343,21 @@ test('top-ups: card checks, CORS for the card form, decline charges nothing, tok
   assert.deepEqual((await api(app, sb, 'GET', '/topups')).json(), { balance: 0, topups: [] });
 });
 
+// ---------- draft ----------
+
+test('draft: empty by default, keeps only newer versions, validates, reset clears', async (t) => {
+  const { app, sb } = await setup(t);
+  assert.deepEqual((await api(app, sb, 'GET', '/draft')).json(), { text: '', version: 0 });
+  assert.deepEqual((await api(app, sb, 'PUT', '/draft', { text: 'Dear Ann, thanks.', version: 2 })).json(), { text: 'Dear Ann, thanks.', version: 2 });
+  assert.deepEqual((await api(app, sb, 'PUT', '/draft', { text: 'Dear Ann,', version: 1 })).json(), { text: 'Dear Ann, thanks.', version: 2 }, 'an older version replaced a newer one');
+  assert.deepEqual((await api(app, sb, 'PUT', '/draft', { text: 'Same version', version: 2 })).json(), { text: 'Dear Ann, thanks.', version: 2 });
+  for (const body of [{ text: 'x', version: 0 }, { text: 'x', version: 1.5 }, { text: 5, version: 3 }, { text: 'x'.repeat(5001), version: 3 }]) {
+    assert.equal((await api(app, sb, 'PUT', '/draft', body)).statusCode, 400, JSON.stringify(body).slice(0, 40));
+  }
+  await reset(app, sb);
+  assert.deepEqual((await api(app, sb, 'GET', '/draft')).json(), { text: '', version: 0 });
+});
+
 // ---------- settings / notifications ----------
 
 test('settings: defaults, save with trimmed name, per sandbox, reset restores defaults', async (t) => {

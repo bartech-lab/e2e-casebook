@@ -15,6 +15,7 @@ import { Budget } from '../budget/Budget.tsx';
 import { Plan } from '../plan/Plan.tsx';
 import { Playlist } from '../playlist/Playlist.tsx';
 import { TopUp } from '../topup/TopUp.tsx';
+import { Draft } from '../draft/Draft.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { Settings } from '../settings/Settings.tsx';
 import { Reviews } from '../shop/Reviews.tsx';
@@ -77,7 +78,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/budget`}>Budget</Link> ·{' '}
         <Link href={`${base}/plan`}>Plan</Link> ·{' '}
         <Link href={`${base}/playlist`}>Playlist</Link> ·{' '}
-        <Link href={`${base}/topup`}>Top up</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/topup`}>Top up</Link> ·{' '}
+        <Link href={`${base}/draft`}>Draft</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -109,6 +111,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Playlist sandbox={sandbox} />
       ) : page === 'topup' ? (
         <TopUp sandbox={sandbox} />
+      ) : page === 'draft' ? (
+        <Draft sandbox={sandbox} />
       ) : page === 'shop' ? (
         <Shop sandbox={sandbox} />
       ) : split ? (
@@ -170,6 +174,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/topup`}>Top up</Link>: add money to a wallet with a card entered in an embedded card form.
+        </li>
+        <li>
+          <Link href={`${base}/draft`}>Draft</Link>: a letter that saves itself while you type.
         </li>
       </ul>
     </section>

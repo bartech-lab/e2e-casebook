@@ -59,6 +59,7 @@ export function createExtras(store: Store) {
   let closing = false;
   const settings = new Map<string, Settings>();
   const playlists = new Map<string, number[]>();
+  const drafts = new Map<string, { text: string; version: number }>();
   const wallets = new Map<string, { balance: number; topups: { amount: number; last4: string }[] }>();
   const cardTokens = new Map<string, Map<string, { number: string; used: boolean }>>();
   const mail = new Map<string, Mail[]>();
@@ -120,6 +121,19 @@ export function createExtras(store: Store) {
       }
       playlists.set(req.params.sandbox, order as number[]);
       return playlist(req.params.sandbox);
+    });
+
+    const draft = (sandbox: string) => drafts.get(sandbox) ?? { text: '', version: 0 };
+
+    scope.get<{ Params: Params }>('/draft', async (req) => draft(req.params.sandbox));
+
+    scope.put<{ Params: Params }>('/draft', async (req, reply) => {
+      const { text, version } = (req.body ?? {}) as { text?: unknown; version?: unknown };
+      if (typeof text !== 'string' || text.length > 5000 || !Number.isInteger(version) || (version as number) < 1) {
+        return reply.code(400).send({ error: 'text up to 5000 characters and a version from 1 are required' });
+      }
+      if ((version as number) > draft(req.params.sandbox).version) drafts.set(req.params.sandbox, { text, version: version as number });
+      return draft(req.params.sandbox);
     });
 
     const wallet = (sandbox: string) => wallets.get(sandbox) ?? { balance: 0, topups: [] };
@@ -241,6 +255,7 @@ export function createExtras(store: Store) {
     clear(sandbox: string) {
       settings.delete(sandbox);
       playlists.delete(sandbox);
+      drafts.delete(sandbox);
       wallets.delete(sandbox);
       cardTokens.delete(sandbox);
       mail.delete(sandbox);
