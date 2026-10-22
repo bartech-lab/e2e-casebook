@@ -344,6 +344,18 @@ app promises:
 - Every item is saved once, even when a send fails after the server got it: the page retries with
   the same item id, and the server ignores an id it already has.
 
+### 32. Vault
+
+The Vault page keeps notes behind two-step verification with an authenticator app. What the app
+promises:
+
+- **Turn on two-step verification** shows a secret key (base32). Codes follow RFC 6238: HMAC-SHA1
+  over the key, 30-second steps, 6 digits, leading zeros kept. Entering a current code turns it on.
+- To unlock the vault, enter a code. The code for the current step and for the steps just before
+  and after it are accepted, each only once ("That code was already used. Wait for a new one.").
+- A wrong code says "Wrong code." After 5 wrong codes in a row the vault refuses every code for 1
+  minute ("Too many tries. Try again in 1 minute.").
+
 ## Run it
 
 ```sh
@@ -361,10 +373,12 @@ scoped to one sandbox, so parallel tests never see each other.
 | Endpoint | Effect |
 |---|---|
 | `POST /api/sandboxes` | Creates a sandbox; returns `{ id }`. Not a hook: visitors use it too. |
-| `POST /__test__/s/:id/reset` | Deletes messages, restores the four default cards, removes export jobs, clears faults, flags, settings, the playlist order, the wallet and card tokens, the draft, the calendar connection, the contacts, the bookings, the feed, the checklist, mail, sessions, the cart, and orders, restores the default reviews, and closes the sandbox's sockets. |
+| `POST /__test__/s/:id/reset` | Deletes messages, restores the four default cards, removes export jobs, clears faults, flags, settings, the playlist order, the wallet and card tokens, the draft, the calendar connection, the contacts, the bookings, the feed, the checklist, the vault and its clock, mail, sessions, the cart, and orders, restores the default reviews, and closes the sandbox's sockets. |
 | `POST /__test__/s/:id/seed` | `{ messages: [{ name, text }] }` stores and broadcasts messages; `{ cards: [{ title, description?, status? }] }` replaces all cards. |
 | `POST /__test__/s/:id/fault` | See below. |
 | `POST /__test__/s/:id/flags` | `{ createCard: "inline" \| "dialog" \| null }` pins the create-card variant for the sandbox. `{ draw: "inline" \| "dialog" \| null }` fixes the variant a visitor without a stored assignment is assigned; `null` draws at random. Send either key or both; a key you leave out keeps its value. |
+| `POST /__test__/s/:id/clock` | `{ nowMs }` sets the sandbox's server time for the Vault (codes and lockout); `{ nowMs: null }` returns to the real time. |
+| `GET /__test__/s/:id/vault-code` | `{ code }`: the Vault's code for the sandbox's current server time. |
 | `POST /__test__/s/:id/login` | `{ email }` signs in without mail; returns the session cookie `{ name, value }` and sets it. |
 
 `fault` accepts any of:
@@ -407,6 +421,7 @@ With `TEST_HOOKS` unset, every `/__test__` path returns 404.
 | `GET` and `POST /api/s/:id/bookings` | `{ bookings }`; `POST` takes `{ checkIn, nights, adults, children }` and returns the booking with its `id` and `total` in grosze. |
 | `GET` and `POST /api/s/:id/feed` | `GET` returns `{ posts: [{ id, text }], more }`, newest first, 10 at a time: `?before=ID` pages by id, `?offset=N` by position, and `?after=ID` returns every newer post. `POST` takes `{ text }`. |
 | `GET` and `POST /api/s/:id/checklist` | `{ items: [{ clientId, text }] }` in the order saved; `POST` takes `{ clientId, text }` and returns the existing item for a known `clientId`. |
+| `GET /api/s/:id/vault`, `POST /vault/setup`, `/vault/enable`, `/vault/unlock` | `{ enabled }`; setup returns `{ secret }`; enable and unlock take `{ code }`; unlock returns `{ notes }`. Wrong, used, and locked codes get `401`, `409`, and `429`. |
 | `GET /api/s/:id/notifications?after=N` | `{ unread }`; with `after`, waits up to 20 s for the count to differ from `N`. |
 | `POST /api/s/:id/auth/request` | `{ email }`: sends a sign-in link to the sandbox's test inbox. |
 | `GET /api/s/:id/auth/me`, `POST /api/s/:id/auth/logout` | The signed-in email (`401` if none); sign out. |

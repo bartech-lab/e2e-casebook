@@ -8,13 +8,14 @@ import type { Contacts } from './contacts.ts';
 import type { Bookings } from './bookings.ts';
 import type { Feed } from './feed.ts';
 import type { Checklist } from './checklist.ts';
+import type { Vaults } from './vault.ts';
 import type { Shop } from './shop.ts';
 import type { Hub } from './hub.ts';
 import { DEFAULT_CARDS, type Store } from './store.ts';
 import { cardInput, messageInput } from './validation.ts';
 
 type Params = { sandbox: string };
-type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist };
+type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults };
 
 type FaultBody = {
   dropSockets?: unknown;
@@ -24,7 +25,7 @@ type FaultBody = {
   auth?: { tokenTtlMs?: unknown };
 };
 
-export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist }: Deps) {
+export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults }: Deps) {
   app.register(
     async (scope) => {
       scope.addHook('preHandler', async (req, reply) => {
@@ -46,6 +47,7 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         bookings.clear(sandbox);
         feed.clear(sandbox);
         checklist.clear(sandbox);
+        vaults.clear(sandbox);
         hub.reset(sandbox);
         return { ok: true };
       });
@@ -91,6 +93,18 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         }
         flags.set(req.params.sandbox, Object.fromEntries(keys.map((k) => [k, body[k]])));
         return flags.get(req.params.sandbox);
+      });
+
+      scope.post<{ Params: Params; Body: { nowMs?: unknown } }>('/clock', async (req, reply) => {
+        const nowMs = req.body?.nowMs;
+        if (nowMs !== null && (typeof nowMs !== 'number' || !Number.isFinite(nowMs) || nowMs < 0)) return reply.code(400).send({ error: 'nowMs must be a time in ms or null' });
+        vaults.setClock(req.params.sandbox, nowMs);
+        return { ok: true };
+      });
+
+      scope.get<{ Params: Params }>('/vault-code', async (req, reply) => {
+        const code = vaults.currentCode(req.params.sandbox);
+        return code ? { code } : reply.code(404).send({ error: 'no vault setup' });
       });
 
       scope.post<{ Params: Params; Body: FaultBody }>('/fault', async (req, reply) => {

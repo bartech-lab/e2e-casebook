@@ -15,6 +15,7 @@ import { createContacts } from './contacts.ts';
 import { createBookings } from './bookings.ts';
 import { createFeed } from './feed.ts';
 import { createChecklist } from './checklist.ts';
+import { createVaults } from './vault.ts';
 import { createShop } from './shop.ts';
 import { openStore } from './store.ts';
 import { registerTestHooks } from './test-hooks.ts';
@@ -43,6 +44,7 @@ export async function buildApp(opts: AppOptions = {}) {
   const bookings = createBookings();
   const feed = createFeed();
   const checklist = createChecklist();
+  const vaults = createVaults();
   const app = Fastify({ trustProxy: true });
 
   await app.register(fastifyWebsocket);
@@ -80,6 +82,7 @@ export async function buildApp(opts: AppOptions = {}) {
       bookings.register(scope);
       feed.register(scope);
       checklist.register(scope);
+      vaults.register(scope);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
         messages: store.messagesSince(req.params.sandbox, Number(req.query.since ?? 0) || 0),
@@ -114,7 +117,7 @@ export async function buildApp(opts: AppOptions = {}) {
     { prefix: '/api/s/:sandbox' },
   );
 
-  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist });
+  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults });
 
   if (opts.clientDir && existsSync(join(opts.clientDir, 'index.html'))) {
     await app.register(fastifyStatic, { root: opts.clientDir, wildcard: false });
@@ -139,6 +142,7 @@ export async function buildApp(opts: AppOptions = {}) {
       bookings.clear(id);
       feed.clear(id);
       checklist.clear(id);
+      vaults.clear(id);
       exportJobs.clear(id);
     }
   }, Math.min(ttl, 60 * 60 * 1000));
