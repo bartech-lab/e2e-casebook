@@ -309,6 +309,40 @@ test('playlist: default order, saves a full reordering per sandbox, rejects part
   assert.deepEqual(await ids(), [1, 2, 3, 4, 5], 'reset left the order behind');
 });
 
+// ---------- top-ups ----------
+
+test('top-ups: card checks, CORS for the card form, decline charges nothing, tokens pay once, reset clears', async (t) => {
+  const { app, sb } = await setup(t);
+  const token = async (number: string, expiry = '12/35', cvc = '123') =>
+    app.inject({ method: 'POST', url: `/api/s/${sb}/card-tokens`, headers: { 'content-type': 'text/plain' }, payload: JSON.stringify({ number, expiry, cvc }) });
+  for (const [number, expiry, cvc, field] of [
+    ['4242 4242 4242 4241', '12/35', '123', 'number'],
+    ['4242 4242 4242 424', '12/35', '123', 'number'],
+    ['4242 4242 4242 4242', '01/20', '123', 'expiry'],
+    ['4242 4242 4242 4242', '00/35', '123', 'expiry'],
+    ['4242 4242 4242 4242', '12/35', '12', 'cvc'],
+  ]) {
+    const res = await token(number!, expiry, cvc);
+    assert.equal(res.statusCode, 400, `${number} ${expiry} ${cvc}`);
+    assert.equal(res.json().field, field);
+  }
+  const good = await token('4242 4242 4242 4242');
+  assert.equal(good.statusCode, 201, good.body);
+  assert.equal(good.headers['access-control-allow-origin'], '*');
+  assert.equal(good.json().last4, '4242');
+  const pay = (amount: unknown, tok: unknown) => api(app, sb, 'POST', '/topups', { amount, token: tok });
+  assert.equal((await pay(99, good.json().token)).statusCode, 400, 'amount below 1.00 PLN');
+  const paid = await pay(2000, good.json().token);
+  assert.equal(paid.statusCode, 200, paid.body);
+  assert.deepEqual(paid.json(), { balance: 2000, topups: [{ amount: 2000, last4: '4242' }] });
+  assert.equal((await pay(2000, good.json().token)).statusCode, 400, 'a used token paid again');
+  const declined = await token('4000 0000 0000 0002');
+  assert.equal((await pay(5000, declined.json().token)).statusCode, 402);
+  assert.equal((await api(app, sb, 'GET', '/topups')).json().balance, 2000, 'a declined card was charged');
+  await reset(app, sb);
+  assert.deepEqual((await api(app, sb, 'GET', '/topups')).json(), { balance: 0, topups: [] });
+});
+
 // ---------- settings / notifications ----------
 
 test('settings: defaults, save with trimmed name, per sandbox, reset restores defaults', async (t) => {

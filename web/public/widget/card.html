@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Card details</title>
+    <style>
+      body { font: 15px system-ui, sans-serif; margin: 0; padding: 0.5rem; }
+      label { display: block; margin-bottom: 0.5rem; }
+      input { display: block; font: inherit; padding: 0.3rem; width: 14rem; }
+      .error { color: #b00020; min-height: 1.2em; margin: 0; }
+    </style>
+  </head>
+  <body>
+    <label>Card number <input id="number" autocomplete="off" inputmode="numeric" /></label>
+    <label>Expiry (MM/YY) <input id="expiry" autocomplete="off" /></label>
+    <label>CVC <input id="cvc" autocomplete="off" inputmode="numeric" /></label>
+    <p class="error" id="error" role="alert"></p>
+    <script>
+      const sandbox = new URLSearchParams(location.search).get('sandbox');
+      const MESSAGES = { number: 'Card number is invalid.', expiry: 'Expiry date is invalid or in the past.', cvc: 'CVC must be 3 digits.' };
+      const field = (id) => document.getElementById(id);
+
+      async function tokenize() {
+        field('error').textContent = '';
+        const body = JSON.stringify({ number: field('number').value, expiry: field('expiry').value, cvc: field('cvc').value });
+        try {
+          const res = await fetch(`/api/s/${sandbox}/card-tokens`, { method: 'POST', headers: { 'content-type': 'text/plain' }, body });
+          const data = await res.json();
+          if (res.ok) return parent.postMessage({ type: 'token', token: data.token, last4: data.last4 }, '*');
+          field('error').textContent = MESSAGES[data.field] ?? 'Something went wrong.';
+        } catch {
+          field('error').textContent = 'Something went wrong.';
+        }
+        parent.postMessage({ type: 'invalid' }, '*');
+      }
+
+      window.addEventListener('message', (e) => {
+        if (e.source === parent && e.data?.type === 'tokenize') void tokenize();
+      });
+      parent.postMessage({ type: 'ready' }, '*');
+    </script>
+  </body>
+</html>

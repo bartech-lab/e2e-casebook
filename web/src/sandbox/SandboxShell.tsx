@@ -14,6 +14,7 @@ import { Notes } from '../notes/Notes.tsx';
 import { Budget } from '../budget/Budget.tsx';
 import { Plan } from '../plan/Plan.tsx';
 import { Playlist } from '../playlist/Playlist.tsx';
+import { TopUp } from '../topup/TopUp.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { Settings } from '../settings/Settings.tsx';
 import { Reviews } from '../shop/Reviews.tsx';
@@ -75,7 +76,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/notes`}>Notes</Link> ·{' '}
         <Link href={`${base}/budget`}>Budget</Link> ·{' '}
         <Link href={`${base}/plan`}>Plan</Link> ·{' '}
-        <Link href={`${base}/playlist`}>Playlist</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/playlist`}>Playlist</Link> ·{' '}
+        <Link href={`${base}/topup`}>Top up</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -105,6 +107,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Plan sandbox={sandbox} />
       ) : page === 'playlist' ? (
         <Playlist sandbox={sandbox} />
+      ) : page === 'topup' ? (
+        <TopUp sandbox={sandbox} />
       ) : page === 'shop' ? (
         <Shop sandbox={sandbox} />
       ) : split ? (
@@ -163,6 +167,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/playlist`}>Playlist</Link>: reorder songs by dragging or with the keyboard.
+        </li>
+        <li>
+          <Link href={`${base}/topup`}>Top up</Link>: add money to a wallet with a card entered in an embedded card form.
         </li>
       </ul>
     </section>

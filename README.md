@@ -218,6 +218,20 @@ The Playlist page lists five songs in an order you can change. What the app prom
 - After a move, the page announces "Moved <song> to position <n> of 5."
 - The order is saved: a reload shows the same order.
 
+### 23. Top up
+
+The Top up page adds money to a wallet. The card details go into an embedded card form from a
+separate payment provider. What the app promises:
+
+- Choose 10.00, 20.00, or 50.00 PLN and pay with a card. The balance grows by exactly that amount,
+  and the Top-ups list shows the amount and the card's last four digits.
+- The card form checks the card: a 16-digit number that passes the Luhn check, an expiry date
+  (MM/YY) that has not passed, and a 3-digit CVC. A wrong card shows an error in the card form,
+  and nothing is charged.
+- The test card 4242 4242 4242 4242 is accepted. The test card 4000 0000 0000 0002 is declined: the
+  page says "Card declined. You were not charged." and the balance does not change.
+- Each card entry pays once.
+
 ## Run it
 
 ```sh
@@ -271,6 +285,8 @@ With `TEST_HOOKS` unset, every `/__test__` path returns 404.
 | `GET /api/s/:id/activity?from=&limit=` | `{ total, entries: [{ n, text }] }`; `limit` up to 500. |
 | `GET` and `PUT /api/s/:id/settings` | `{ displayName, theme, emailDigest }`. |
 | `GET` and `PUT /api/s/:id/playlist` | `{ songs: [{ id, title }] }`; `PUT` takes `{ order: [id, ...] }` listing every song once, else `400`. |
+| `POST /api/s/:id/card-tokens` | The card form's endpoint: `{ number, expiry, cvc }` as a `text/plain` JSON body; `201` with `{ token, last4 }`, or `400` with `{ field }`. |
+| `GET` and `POST /api/s/:id/topups` | `{ balance, topups: [{ amount, last4 }] }`, newest first, amounts in grosze; `POST` takes `{ amount, token }`, uses the token up, and answers `402` for a declined card. |
 | `GET /api/s/:id/notifications?after=N` | `{ unread }`; with `after`, waits up to 20 s for the count to differ from `N`. |
 | `POST /api/s/:id/auth/request` | `{ email }`: sends a sign-in link to the sandbox's test inbox. |
 | `GET /api/s/:id/auth/me`, `POST /api/s/:id/auth/logout` | The signed-in email (`401` if none); sign out. |

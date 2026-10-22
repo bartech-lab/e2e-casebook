@@ -7,6 +7,28 @@ type Params = { sandbox: string };
 export type Settings = { displayName: string; theme: 'light' | 'dark'; emailDigest: boolean };
 const DEFAULT_SETTINGS: Settings = { displayName: '', theme: 'light', emailDigest: false };
 
+const DECLINED_CARD = '4000000000000002';
+
+function luhn(digits: string) {
+  let sum = 0;
+  for (let i = 0; i < digits.length; i++) {
+    let d = Number(digits[digits.length - 1 - i]);
+    if (i % 2 === 1) d = d * 2 > 9 ? d * 2 - 9 : d * 2;
+    sum += d;
+  }
+  return sum % 10 === 0;
+}
+
+function cardError(card: Record<string, unknown>, now: Date): 'number' | 'expiry' | 'cvc' | null {
+  const number = typeof card.number === 'string' ? card.number.replace(/\s/g, '') : '';
+  if (!/^\d{16}$/.test(number) || !luhn(number)) return 'number';
+  const expiry = typeof card.expiry === 'string' ? /^(\d{2})\/(\d{2})$/.exec(card.expiry.trim()) : null;
+  const month = expiry ? Number(expiry[1]) : 0;
+  if (!expiry || month < 1 || month > 12 || new Date(2000 + Number(expiry[2]), month, 1) <= now) return 'expiry';
+  if (typeof card.cvc !== 'string' || !/^\d{3}$/.test(card.cvc.trim())) return 'cvc';
+  return null;
+}
+
 export const SONGS = ['Northern Lights', 'Paper Boats', 'Slow Train', 'Copper Sky', 'Last Ferry'].map((title, i) => ({ id: i + 1, title }));
 
 export const ACTIVITY_TOTAL = 10_000;
@@ -37,6 +59,8 @@ export function createExtras(store: Store) {
   let closing = false;
   const settings = new Map<string, Settings>();
   const playlists = new Map<string, number[]>();
+  const wallets = new Map<string, { balance: number; topups: { amount: number; last4: string }[] }>();
+  const cardTokens = new Map<string, Map<string, { number: string; used: boolean }>>();
   const mail = new Map<string, Mail[]>();
   const tokens = new Map<string, Map<string, Token>>();
   const sessions = new Map<string, Map<string, string>>();
@@ -96,6 +120,38 @@ export function createExtras(store: Store) {
       }
       playlists.set(req.params.sandbox, order as number[]);
       return playlist(req.params.sandbox);
+    });
+
+    const wallet = (sandbox: string) => wallets.get(sandbox) ?? { balance: 0, topups: [] };
+
+    scope.post<{ Params: Params }>('/card-tokens', async (req, reply) => {
+      reply.header('access-control-allow-origin', '*');
+      let card: Record<string, unknown> = {};
+      try {
+        card = (typeof req.body === 'string' ? JSON.parse(req.body) : req.body) ?? {};
+      } catch {}
+      const field = cardError(card, new Date());
+      if (field) return reply.code(400).send({ error: 'invalid card', field });
+      const number = (card.number as string).replace(/\s/g, '');
+      const token = `tok_${randomBytes(9).toString('base64url')}`;
+      inner(cardTokens, req.params.sandbox).set(token, { number, used: false });
+      return reply.code(201).send({ token, last4: number.slice(-4) });
+    });
+
+    scope.get<{ Params: Params }>('/topups', async (req) => wallet(req.params.sandbox));
+
+    scope.post<{ Params: Params }>('/topups', async (req, reply) => {
+      const { amount, token } = (req.body ?? {}) as { amount?: unknown; token?: unknown };
+      const card = typeof token === 'string' ? cardTokens.get(req.params.sandbox)?.get(token) : undefined;
+      if (!Number.isInteger(amount) || (amount as number) < 100 || (amount as number) > 100_000 || !card || card.used) {
+        return reply.code(400).send({ error: 'amount from 100 to 100000 grosze and an unused card token are required' });
+      }
+      card.used = true;
+      if (card.number === DECLINED_CARD) return reply.code(402).send({ error: 'card declined' });
+      const before = wallet(req.params.sandbox);
+      const after = { balance: before.balance + (amount as number), topups: [{ amount: amount as number, last4: card.number.slice(-4) }, ...before.topups] };
+      wallets.set(req.params.sandbox, after);
+      return after;
     });
 
     scope.get<{ Params: Params; Querystring: { after?: string; waitMs?: string } }>('/notifications', async (req) => {
@@ -185,6 +241,8 @@ export function createExtras(store: Store) {
     clear(sandbox: string) {
       settings.delete(sandbox);
       playlists.delete(sandbox);
+      wallets.delete(sandbox);
+      cardTokens.delete(sandbox);
       mail.delete(sandbox);
       tokens.delete(sandbox);
       sessions.delete(sandbox);
