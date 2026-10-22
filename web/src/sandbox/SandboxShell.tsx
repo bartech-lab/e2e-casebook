@@ -18,6 +18,7 @@ import { TopUp } from '../topup/TopUp.tsx';
 import { Draft } from '../draft/Draft.tsx';
 import { Calendar } from '../calendar/Calendar.tsx';
 import { Contacts } from '../contacts/Contacts.tsx';
+import { Stores } from '../stores/Stores.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { Settings } from '../settings/Settings.tsx';
 import { Reviews } from '../shop/Reviews.tsx';
@@ -83,7 +84,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/topup`}>Top up</Link> ·{' '}
         <Link href={`${base}/draft`}>Draft</Link> ·{' '}
         <Link href={`${base}/calendar`}>Calendar</Link> ·{' '}
-        <Link href={`${base}/contacts`}>Contacts</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/contacts`}>Contacts</Link> ·{' '}
+        <Link href={`${base}/stores`}>Stores</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -121,6 +123,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Calendar sandbox={sandbox} />
       ) : page === 'contacts' ? (
         <Contacts sandbox={sandbox} />
+      ) : page === 'stores' ? (
+        <Stores />
       ) : page === 'shop' ? (
         <Shop sandbox={sandbox} />
       ) : split ? (
@@ -191,6 +195,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/contacts`}>Contacts</Link>: import contacts from a CSV file.
+        </li>
+        <li>
+          <Link href={`${base}/stores`}>Stores</Link>: find the stores nearest to you or to a city.
         </li>
       </ul>
     </section>
