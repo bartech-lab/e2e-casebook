@@ -332,6 +332,18 @@ The Feed page lists posts, newest first. It starts with 35 posts, and anyone can
 - New posts do not move the list. Within 3 seconds a button says how many arrived ("3 new
   posts"); clicking it puts them at the top.
 
+### 31. Checklist
+
+The Checklist page keeps a list of items and keeps working when the connection drops. What the
+app promises:
+
+- A new item appears at once. While the browser is offline, the page says "Offline. Changes will
+  sync when you are back online." and new items are marked "(not synced)".
+- Unsynced items are kept in the browser. When the connection is back, they are sent in the order
+  they were added, and the mark disappears. A send that fails is retried every 2 seconds.
+- Every item is saved once, even when a send fails after the server got it: the page retries with
+  the same item id, and the server ignores an id it already has.
+
 ## Run it
 
 ```sh
@@ -349,7 +361,7 @@ scoped to one sandbox, so parallel tests never see each other.
 | Endpoint | Effect |
 |---|---|
 | `POST /api/sandboxes` | Creates a sandbox; returns `{ id }`. Not a hook: visitors use it too. |
-| `POST /__test__/s/:id/reset` | Deletes messages, restores the four default cards, removes export jobs, clears faults, flags, settings, the playlist order, the wallet and card tokens, the draft, the calendar connection, the contacts, the bookings, the feed, mail, sessions, the cart, and orders, restores the default reviews, and closes the sandbox's sockets. |
+| `POST /__test__/s/:id/reset` | Deletes messages, restores the four default cards, removes export jobs, clears faults, flags, settings, the playlist order, the wallet and card tokens, the draft, the calendar connection, the contacts, the bookings, the feed, the checklist, mail, sessions, the cart, and orders, restores the default reviews, and closes the sandbox's sockets. |
 | `POST /__test__/s/:id/seed` | `{ messages: [{ name, text }] }` stores and broadcasts messages; `{ cards: [{ title, description?, status? }] }` replaces all cards. |
 | `POST /__test__/s/:id/fault` | See below. |
 | `POST /__test__/s/:id/flags` | `{ createCard: "inline" \| "dialog" \| null }` pins the create-card variant for the sandbox. `{ draw: "inline" \| "dialog" \| null }` fixes the variant a visitor without a stored assignment is assigned; `null` draws at random. Send either key or both; a key you leave out keeps its value. |
@@ -394,6 +406,7 @@ With `TEST_HOOKS` unset, every `/__test__` path returns 404.
 | `POST /api/s/:id/contacts/import` | A CSV file as a `text/csv` body; returns `{ imported, errors: [{ row, message }] }`, or `400` when the first row is not `name,email`. |
 | `GET` and `POST /api/s/:id/bookings` | `{ bookings }`; `POST` takes `{ checkIn, nights, adults, children }` and returns the booking with its `id` and `total` in grosze. |
 | `GET` and `POST /api/s/:id/feed` | `GET` returns `{ posts: [{ id, text }], more }`, newest first, 10 at a time: `?before=ID` pages by id, `?offset=N` by position, and `?after=ID` returns every newer post. `POST` takes `{ text }`. |
+| `GET` and `POST /api/s/:id/checklist` | `{ items: [{ clientId, text }] }` in the order saved; `POST` takes `{ clientId, text }` and returns the existing item for a known `clientId`. |
 | `GET /api/s/:id/notifications?after=N` | `{ unread }`; with `after`, waits up to 20 s for the count to differ from `N`. |
 | `POST /api/s/:id/auth/request` | `{ email }`: sends a sign-in link to the sandbox's test inbox. |
 | `GET /api/s/:id/auth/me`, `POST /api/s/:id/auth/logout` | The signed-in email (`401` if none); sign out. |
