@@ -116,3 +116,8 @@ main > section > ul > li > label { display: inline; margin: 0; }
 .receipt tfoot tr { border-top: 2px dashed currentColor; }
 .receipt .total th, .receipt .total td { font-weight: 700; padding-top: 0.5rem; }
 .receipt.dark { background: #1d1f24; color: #ececec; border-color: #444; }
+
+.field { display: flex; flex-direction: column; gap: 0.25rem; max-width: 22rem; }
+.field-error { color: var(--error); font-size: 0.85rem; }
+.modal-backdrop { position: fixed; inset: 0; background: rgb(0 0 0 / 0.4); display: grid; place-items: center; }
+.modal { background: var(--surface); padding: 1.25rem 1.5rem; border-radius: var(--radius); width: min(26rem, 90vw); }

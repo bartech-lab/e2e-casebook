@@ -27,6 +27,7 @@ import { Vault } from '../vault/Vault.tsx';
 import { BasketPage } from '../basket/Basket.tsx';
 import { Support } from '../support/Support.tsx';
 import { Receipt } from '../receipt/Receipt.tsx';
+import { Signup } from '../signup/Signup.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { Settings } from '../settings/Settings.tsx';
 import { Reviews } from '../shop/Reviews.tsx';
@@ -102,7 +103,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/vault`}>Vault</Link> ·{' '}
         <Link href={`${base}/basket`}>Basket</Link> ·{' '}
         <Link href={`${base}/support`}>Support</Link> ·{' '}
-        <Link href={`${base}/receipt`}>Receipt</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/receipt`}>Receipt</Link> ·{' '}
+        <Link href={`${base}/signup`}>Sign up</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -156,6 +158,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Support sandbox={sandbox} />
       ) : page === 'receipt' ? (
         <Receipt />
+      ) : page === 'signup' ? (
+        <Signup />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -255,6 +259,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/receipt`}>Receipt</Link>: a printable receipt, in light and dark.
+        </li>
+        <li>
+          <Link href={`${base}/signup`}>Sign up</Link>: a form that has to work with a keyboard and a screen reader.
         </li>
       </ul>
     </section>
