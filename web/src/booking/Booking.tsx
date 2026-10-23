@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { json, sendJson } from '../http.ts';
 import { navigate } from '../router.tsx';
 
@@ -29,6 +29,8 @@ export function Booking({ sandbox, step }: { sandbox: string; step: BookingStep 
   const base = `/s/${sandbox}/booking`;
   const [draft, setDraft] = useState(() => load(sandbox));
   const [error, setError] = useState('');
+  const [booking, setBooking] = useState(false);
+  const inFlight = useRef(false);
 
   useEffect(() => {
     if (step === 'done') return;
@@ -45,6 +47,9 @@ export function Booking({ sandbox, step }: { sandbox: string; step: BookingStep 
   }
 
   async function book() {
+    if (inFlight.current) return;
+    inFlight.current = true;
+    setBooking(true);
     setError('');
     try {
       const { id } = await json<{ id: string }>(
@@ -54,6 +59,9 @@ export function Booking({ sandbox, step }: { sandbox: string; step: BookingStep 
       navigate(`${base}/done?id=${id}`);
     } catch {
       setError('The booking failed. Try again.');
+    } finally {
+      inFlight.current = false;
+      setBooking(false);
     }
   }
 
@@ -116,7 +124,7 @@ export function Booking({ sandbox, step }: { sandbox: string; step: BookingStep 
           <button type="button" onClick={() => navigate(`${base}/guests`)}>
             Back
           </button>{' '}
-          <button type="button" onClick={() => void book()}>
+          <button type="button" disabled={booking} onClick={() => void book()}>
             Book
           </button>
           {error && <p role="alert">{error}</p>}
