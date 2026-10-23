@@ -68,6 +68,7 @@ import { Delivery } from '../delivery/Delivery.tsx';
 import { Import } from '../import/Import.tsx';
 import { Packing } from '../packing/Packing.tsx';
 import { Help } from '../help/Help.tsx';
+import { Review } from '../review/Review.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -170,7 +171,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/delivery`}>Delivery</Link> ·{' '}
         <Link href={`${base}/import`}>Import</Link> ·{' '}
         <Link href={`${base}/packing`}>Packing list</Link> ·{' '}
-        <Link href={`${base}/help`}>Help centre</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/help`}>Help centre</Link> ·{' '}
+        <Link href={`${base}/review`}>Order review</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -292,6 +294,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Packing />
       ) : page === 'help' ? (
         <Help sandbox={sandbox} />
+      ) : page === 'review' ? (
+        <Review />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -493,6 +497,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/help`}>Help centre</Link>: help articles that open without reloading the page.
+        </li>
+        <li>
+          <Link href={`${base}/review`}>Order review</Link>: a long order with a header and a pay bar that stay on screen.
         </li>
       </ul>
     </section>

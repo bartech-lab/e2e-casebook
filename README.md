@@ -758,6 +758,17 @@ The Help centre opens articles without reloading the page. What it promises:
 - Opening a link to an article directly shows it, without moving focus.
 - The article list marks the one you are reading.
 
+### 70. Order review
+
+The Order review page lists 12 items under a header that stays at the top, with a pay bar that
+stays at the bottom. What it promises:
+
+- The total in the pay bar follows the quantities, and **Pay now** waits until you accept the
+  terms.
+- The pay bar is always on screen.
+- Nothing you move to with the keyboard, and no section you jump to, ends up hidden behind the
+  header or the pay bar.
+
 ## Run it
 
 ```sh
