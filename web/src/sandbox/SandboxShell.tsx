@@ -52,6 +52,7 @@ import { Itinerary } from '../itinerary/Itinerary.tsx';
 import { Verify } from '../verify/Verify.tsx';
 import { Summary } from '../summary/Summary.tsx';
 import { Shipping } from '../shipping/Shipping.tsx';
+import { Gallery } from '../gallery/Gallery.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -138,7 +139,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/itinerary`}>Itinerary</Link> ·{' '}
         <Link href={`${base}/verify`}>Verify phone</Link> ·{' '}
         <Link href={`${base}/summary`}>Order summary</Link> ·{' '}
-        <Link href={`${base}/shipping`}>Shipping address</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/shipping`}>Shipping address</Link> ·{' '}
+        <Link href={`${base}/gallery`}>Gallery</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -228,6 +230,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Summary sandbox={sandbox} />
       ) : page === 'shipping' ? (
         <Shipping sandbox={sandbox} />
+      ) : page === 'gallery' ? (
+        <Gallery sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -381,6 +385,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/shipping`}>Shipping address</Link>: an address form that changes with the country.
+        </li>
+        <li>
+          <Link href={`${base}/gallery`}>Gallery</Link>: 24 photos that load as you scroll.
         </li>
       </ul>
     </section>

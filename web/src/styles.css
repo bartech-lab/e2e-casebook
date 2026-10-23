@@ -144,3 +144,7 @@ main > section > ul > li > label { display: inline; margin: 0; }
 }
 
 .summary-actions { display: flex; justify-content: flex-start; gap: 0.5rem; max-width: 30rem; }
+
+.gallery { display: grid; grid-template-columns: repeat(2, 240px); gap: 1rem; }
+.photo { width: 240px; height: 160px; background: var(--border); border-radius: 6px; overflow: hidden; }
+.photo p { padding: 0.75rem; font-size: 0.85rem; }

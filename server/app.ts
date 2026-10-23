@@ -31,6 +31,7 @@ import { createOrders } from './orders.ts';
 import { createFiles } from './files.ts';
 import { createSms } from './sms.ts';
 import { createShipping } from './shipping.ts';
+import { registerPhotos } from './photos.ts';
 
 export type AppOptions = {
   dbPath?: string;
@@ -114,6 +115,7 @@ export async function buildApp(opts: AppOptions = {}) {
       files.register(scope);
       sms.register(scope);
       shipping.register(scope);
+      registerPhotos(scope);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
         messages: store.messagesSince(req.params.sandbox, Number(req.query.since ?? 0) || 0),
