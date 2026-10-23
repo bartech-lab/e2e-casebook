@@ -479,6 +479,17 @@ The Feedback page sends a star rating and an optional comment. The stars are a r
 - **Send feedback** without a rating says "Choose a rating." and sends nothing.
 - After sending, the page says "Thanks! You rated us N of 5." with the rating the server saved.
 
+### 44. Share
+
+The Share page shows an invite link with **Copy link** and **New link** buttons. What it
+promises:
+
+- **Copy link** puts the full link, starting with `http`, on the clipboard and says "Link
+  copied."
+- **New link** replaces the link; after that, **Copy link** copies the new one.
+- If the browser refuses to copy, the page says so, selects the link, and asks you to press
+  Ctrl+C. It never says "Link copied." when nothing was copied.
+
 ## Run it
 
 ```sh
