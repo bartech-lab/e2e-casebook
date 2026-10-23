@@ -26,11 +26,12 @@ import type { Meetings } from './meetings.ts';
 import type { Otps } from './otp.ts';
 import type { Passkeys } from './passkeys.ts';
 import type { Deliveries } from './delivery.ts';
+import type { Imports } from './imports.ts';
 import { DEFAULT_CARDS, type Store } from './store.ts';
 import { cardInput, messageInput } from './validation.ts';
 
 type Params = { sandbox: string };
-type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts; teams: Teams; meetings: Meetings; otps: Otps; passkeys: Passkeys; deliveries: Deliveries };
+type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts; teams: Teams; meetings: Meetings; otps: Otps; passkeys: Passkeys; deliveries: Deliveries; imports: Imports };
 
 type FaultBody = {
   dropSockets?: unknown;
@@ -40,7 +41,7 @@ type FaultBody = {
   auth?: { tokenTtlMs?: unknown };
 };
 
-export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries }: Deps) {
+export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports }: Deps) {
   app.register(
     async (scope) => {
       scope.addHook('preHandler', async (req, reply) => {
@@ -78,6 +79,7 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         otps.clear(sandbox);
         passkeys.clear(sandbox);
         deliveries.clear(sandbox);
+        imports.clear(sandbox);
         hub.reset(sandbox);
         return { ok: true };
       });
@@ -153,6 +155,20 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
       });
 
       scope.get<{ Params: Params }>('/otp', async (req) => ({ code: otps.code(req.params.sandbox) }));
+
+      scope.post<{ Params: Params }>('/import-mode', async (req) => {
+        imports.setManual(req.params.sandbox, (req.body as { manual?: unknown } | undefined)?.manual === true);
+        return { ok: true };
+      });
+
+      scope.post<{ Params: Params }>('/import-step', async (req, reply) => {
+        const rows = (req.body as { rows?: unknown } | undefined)?.rows;
+        if (typeof rows !== 'number' || !Number.isInteger(rows) || rows < 1) return reply.code(400).send({ error: 'rows must be a positive integer' });
+        imports.step(req.params.sandbox, rows);
+        return { ok: true };
+      });
+
+      scope.post<{ Params: Params }>('/import-drop', async (req) => ({ dropped: imports.drop(req.params.sandbox) }));
 
       scope.post<{ Params: Params }>('/expire-sessions', async (req) => {
         extras.expireSessions(req.params.sandbox);

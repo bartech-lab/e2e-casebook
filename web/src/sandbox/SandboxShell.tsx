@@ -65,6 +65,7 @@ import { ConfirmEmail } from '../confirm-email/ConfirmEmail.tsx';
 import { Plurals } from '../plurals/Plurals.tsx';
 import { Passkeys } from '../passkeys/Passkeys.tsx';
 import { Delivery } from '../delivery/Delivery.tsx';
+import { Import } from '../import/Import.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -164,7 +165,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/confirm-email`}>Confirm email</Link> ·{' '}
         <Link href={`${base}/messages`}>Messages</Link> ·{' '}
         <Link href={`${base}/passkeys`}>Passkeys</Link> ·{' '}
-        <Link href={`${base}/delivery`}>Delivery</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/delivery`}>Delivery</Link> ·{' '}
+        <Link href={`${base}/import`}>Import</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -280,6 +282,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Passkeys sandbox={sandbox} />
       ) : page === 'delivery' ? (
         <Delivery sandbox={sandbox} />
+      ) : page === 'import' ? (
+        <Import sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -472,6 +476,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/delivery`}>Delivery</Link>: sign for a parcel on a signature pad, or type your name.
+        </li>
+        <li>
+          <Link href={`${base}/import`}>Import</Link>: import 100 customers and watch the progress live.
         </li>
       </ul>
     </section>

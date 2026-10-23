@@ -730,6 +730,15 @@ The Delivery page asks you to sign for a parcel. What it promises:
 - You can type your full name instead.
 - The signature you confirm is the one that is kept.
 
+### 67. Import
+
+The Import page imports 100 customers and shows the progress as it happens. What it promises:
+
+- The progress bar and the list of rows with errors follow the server, live.
+- If the connection drops, the page reconnects by itself and carries on where it stopped: nothing
+  is missed and nothing is shown twice.
+- At the end, the page says how many rows were imported and stops listening.
+
 ## Run it
 
 ```sh
