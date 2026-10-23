@@ -719,6 +719,17 @@ The Passkeys page creates passkeys for ann and signs in with them. What it promi
   signature, and a counter that only goes up, so a copied passkey is caught.
 - Where passkeys cannot work, the page says why.
 
+### 66. Delivery
+
+The Delivery page asks you to sign for a parcel. What it promises:
+
+- The line appears exactly under the pointer, on any screen, sharp on high-resolution ones.
+  Separate strokes stay separate, and the line stops when you let go, even outside the pad.
+- A dot or a scribble is not a signature: **Confirm delivery** waits for a real one. **Clear**
+  starts again.
+- You can type your full name instead.
+- The signature you confirm is the one that is kept.
+
 ## Run it
 
 ```sh

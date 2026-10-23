@@ -176,3 +176,5 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 
 .otp { display: flex; gap: 0.5rem; margin: 1rem 0; }
 .otp input { width: 2.5rem; height: 3rem; text-align: center; font-size: 1.5rem; padding: 0; }
+
+.signature { display: block; border: 1px solid var(--border); border-radius: 6px; background: #fff; touch-action: none; cursor: crosshair; }
