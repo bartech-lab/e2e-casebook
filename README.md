@@ -548,6 +548,17 @@ The Tasks page is a small to-do list with keyboard shortcuts. What it promises:
   and puts the cursor back where it was.
 - N jumps to **New task**, except while you are typing in a field, where it is just the letter n.
 
+### 50. Itinerary
+
+The Itinerary page shows a three-day trip with a **Print itinerary** button. What it promises:
+
+- **Print itinerary** opens the browser's print dialog.
+- On paper, the site navigation and the button are left out. The booking reference, every
+  day, and the total are printed.
+- Each day starts on a new page.
+- Each link prints its address after its text, for example "Hotel website
+  (https://hotel-wawel.example/)".
+
 ## Run it
 
 ```sh

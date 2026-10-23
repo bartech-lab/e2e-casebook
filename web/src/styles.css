@@ -134,3 +134,11 @@ main > section > ul > li > label { display: inline; margin: 0; }
 #command-list { list-style: none; padding: 0; margin: 0.5rem 0 0; }
 #command-list [role="option"] { padding: 0.35rem 0.5rem; border-radius: 6px; cursor: pointer; }
 #command-list [aria-selected="true"] { background: var(--accent-soft); }
+
+@media print {
+  body:has(.itinerary) nav,
+  .itinerary .no-print { display: none; }
+  .itinerary .day { break-before: page; }
+  .itinerary .day:first-of-type { break-before: auto; }
+  .itinerary a[href^="http"]::after { content: " (" attr(href) ")"; }
+}
