@@ -806,6 +806,14 @@ The Timesheet page is a grid of hours per day and project. What it promises:
   moves down; Escape cancels.
 - Hours are whole numbers from 0 to 24. The totals follow every change.
 
+### 75. Shop reviews
+
+The Shop reviews page shows a reviews widget in a sandboxed frame. What it promises:
+
+- The frame always fits the widget, with no scroll bar inside it: when you show more reviews, and
+  when the window gets narrower or wider.
+- Only the widget can change the frame's size, and never beyond reason.
+
 ## Run it
 
 ```sh

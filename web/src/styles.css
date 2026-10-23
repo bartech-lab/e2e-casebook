@@ -203,3 +203,5 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .timesheet td { min-width: 5rem; text-align: right; }
 .timesheet td:focus { outline: 2px solid var(--accent); outline-offset: -2px; }
 .timesheet td input { width: 4rem; text-align: right; }
+
+.embed { box-sizing: content-box; display: block; width: 100%; max-width: 40rem; border: 1px solid var(--border); border-radius: var(--radius); }
