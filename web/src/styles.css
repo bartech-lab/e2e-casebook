@@ -178,3 +178,8 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .otp input { width: 2.5rem; height: 3rem; text-align: center; font-size: 1.5rem; padding: 0; }
 
 .signature { display: block; border: 1px solid var(--border); border-radius: 6px; background: #fff; touch-action: none; cursor: crosshair; }
+
+.packing { list-style: none; padding: 0; }
+.packing li { display: flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0; }
+.packing .name { min-width: 8rem; }
+.packing output { min-width: 1.5rem; text-align: center; }

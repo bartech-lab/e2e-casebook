@@ -66,6 +66,7 @@ import { Plurals } from '../plurals/Plurals.tsx';
 import { Passkeys } from '../passkeys/Passkeys.tsx';
 import { Delivery } from '../delivery/Delivery.tsx';
 import { Import } from '../import/Import.tsx';
+import { Packing } from '../packing/Packing.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -166,7 +167,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/messages`}>Messages</Link> ·{' '}
         <Link href={`${base}/passkeys`}>Passkeys</Link> ·{' '}
         <Link href={`${base}/delivery`}>Delivery</Link> ·{' '}
-        <Link href={`${base}/import`}>Import</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/import`}>Import</Link> ·{' '}
+        <Link href={`${base}/packing`}>Packing list</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -284,6 +286,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Delivery sandbox={sandbox} />
       ) : page === 'import' ? (
         <Import sandbox={sandbox} />
+      ) : page === 'packing' ? (
+        <Packing />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -479,6 +483,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/import`}>Import</Link>: import 100 customers and watch the progress live.
+        </li>
+        <li>
+          <Link href={`${base}/packing`}>Packing list</Link>: a packing list where every change can be undone and redone.
         </li>
       </ul>
     </section>
