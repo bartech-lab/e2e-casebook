@@ -41,6 +41,7 @@ import { createDeliveries } from './delivery.ts';
 import { createImports } from './imports.ts';
 import { createUploads } from './uploads.ts';
 import { createTickets } from './tickets.ts';
+import { createAppearances } from './appearance.ts';
 
 export type AppOptions = {
   dbPath?: string;
@@ -84,6 +85,7 @@ export async function buildApp(opts: AppOptions = {}) {
   const imports = createImports();
   const uploads = createUploads();
   const tickets = createTickets();
+  const appearances = createAppearances();
   const app = Fastify({ trustProxy: true });
 
   await app.register(fastifyWebsocket);
@@ -143,6 +145,7 @@ export async function buildApp(opts: AppOptions = {}) {
       imports.register(scope);
       uploads.register(scope);
       tickets.register(scope);
+      appearances.register(scope);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
         messages: store.messagesSince(req.params.sandbox, Number(req.query.since ?? 0) || 0),
@@ -177,7 +180,7 @@ export async function buildApp(opts: AppOptions = {}) {
     { prefix: '/api/s/:sandbox' },
   );
 
-  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets });
+  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances });
 
   if (opts.clientDir && existsSync(join(opts.clientDir, 'index.html'))) {
     await app.register(fastifyStatic, { root: opts.clientDir, wildcard: false });
@@ -222,6 +225,7 @@ export async function buildApp(opts: AppOptions = {}) {
       imports.clear(id);
       uploads.clear(id);
       tickets.clear(id);
+      appearances.clear(id);
     }
   }, Math.min(ttl, 60 * 60 * 1000));
   pruneTimer.unref();
