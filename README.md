@@ -447,6 +447,17 @@ that has two handles. What it promises:
 - The list shows every product whose price is in the range, both ends included.
 - The range is kept in the address (`?min=100&max=300`), so a copied link opens the same range.
 
+### 41. Reminders
+
+The Reminders page reminds you about something in 1, 5, 15 or 60 minutes. What it promises:
+
+- It asks for permission to show notifications only when you press **Remind me**, never on its
+  own.
+- When the time comes, a system notification titled "Reminder" shows your text. If notifications
+  are blocked, the page shows "Reminder: <your text>" instead.
+- A reminder never fires early, and a cancelled reminder never fires.
+- Pending reminders survive a reload of the page.
+
 ## Run it
 
 ```sh
