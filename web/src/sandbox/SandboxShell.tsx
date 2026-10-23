@@ -44,6 +44,7 @@ import { Shop } from '../shop/Shop.tsx';
 import { Split } from '../shop/Split.tsx';
 import { HttpError } from '../http.ts';
 import { Link } from '../router.tsx';
+import { Inbox } from '../inbox/Inbox.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -122,7 +123,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/address`}>Address</Link> ·{' '}
         <Link href={`${base}/feedback`}>Feedback</Link> ·{' '}
         <Link href={`${base}/share`}>Share</Link> ·{' '}
-        <Link href={`${base}/updates`}>Updates</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/updates`}>Updates</Link> ·{' '}
+        <Link href={`${base}/inbox`}>Inbox</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -196,6 +198,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Share sandbox={sandbox} />
       ) : page === 'updates' ? (
         <Updates sandbox={sandbox} />
+      ) : page === 'inbox' ? (
+        <Inbox sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -325,6 +329,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/updates`}>Updates</Link>: tells you when a new version of the app is out.
+        </li>
+        <li>
+          <Link href={`${base}/inbox`}>Inbox</Link>: pick many messages at once and archive them.
         </li>
       </ul>
     </section>

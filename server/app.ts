@@ -26,6 +26,7 @@ import { createShop } from './shop.ts';
 import { openStore } from './store.ts';
 import { registerTestHooks } from './test-hooks.ts';
 import { messageInput } from './validation.ts';
+import { createInbox } from './inbox.ts';
 
 export type AppOptions = {
   dbPath?: string;
@@ -55,6 +56,7 @@ export async function buildApp(opts: AppOptions = {}) {
   const feedback = createFeedback();
   const invites = createInvites();
   const releases = createReleases();
+  const inbox = createInbox();
   const app = Fastify({ trustProxy: true });
 
   await app.register(fastifyWebsocket);
@@ -99,6 +101,7 @@ export async function buildApp(opts: AppOptions = {}) {
       feedback.register(scope);
       invites.register(scope);
       releases.register(scope);
+      inbox.register(scope);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
         messages: store.messagesSince(req.params.sandbox, Number(req.query.since ?? 0) || 0),
@@ -133,7 +136,7 @@ export async function buildApp(opts: AppOptions = {}) {
     { prefix: '/api/s/:sandbox' },
   );
 
-  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases });
+  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox });
 
   if (opts.clientDir && existsSync(join(opts.clientDir, 'index.html'))) {
     await app.register(fastifyStatic, { root: opts.clientDir, wildcard: false });
@@ -164,6 +167,7 @@ export async function buildApp(opts: AppOptions = {}) {
       invites.clear(id);
       releases.clear(id);
       exportJobs.clear(id);
+      inbox.clear(id);
     }
   }, Math.min(ttl, 60 * 60 * 1000));
   pruneTimer.unref();
