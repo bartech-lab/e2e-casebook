@@ -777,6 +777,15 @@ The Sales report page adds up 20,000,000 sales by region. What it promises:
 - **Cancel** stops the work at once: no result appears later, and nothing keeps running.
 - Building again after a cancel works, and gives the same numbers, to the grosz.
 
+### 72. Upload
+
+The Upload page sends a file of up to 20 MB to the server. What it promises:
+
+- A progress bar shows how much has been sent, as it is sent.
+- **Cancel upload** stops sending, and the server keeps nothing of a cancelled file.
+- A file over 20 MB is refused at once, without sending it. The server refuses one too.
+- The list shows each file with its exact name and size, and the server keeps the exact bytes.
+
 ## Run it
 
 ```sh
