@@ -60,6 +60,7 @@ import { SiteMenu } from '../site-menu/SiteMenu.tsx';
 import { IdleSession } from '../idle-session/IdleSession.tsx';
 import { Team } from '../team/Team.tsx';
 import { Meetings } from '../meetings/Meetings.tsx';
+import { Directory } from '../directory/Directory.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -154,7 +155,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/bakery`}>Bakery</Link> ·{' '}
         <Link href={`${base}/session`}>Session</Link> ·{' '}
         <Link href={`${base}/team`}>Team</Link> ·{' '}
-        <Link href={`${base}/meetings`}>Meetings</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/meetings`}>Meetings</Link> ·{' '}
+        <Link href={`${base}/directory`}>Directory</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -260,6 +262,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Team sandbox={sandbox} />
       ) : page === 'meetings' ? (
         <Meetings sandbox={sandbox} />
+      ) : page === 'directory' ? (
+        <Directory />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -437,6 +441,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/meetings`}>Meetings</Link>: plan meetings, repeated weekly, seen by people in other time zones.
+        </li>
+        <li>
+          <Link href={`${base}/directory`}>Directory</Link>: a list of 10,000 customers that stays fast by drawing only what you see.
         </li>
       </ul>
     </section>
