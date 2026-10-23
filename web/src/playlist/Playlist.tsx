@@ -20,12 +20,15 @@ export function Playlist({ sandbox }: { sandbox: string }) {
   const list = useQuery({ queryKey: key, queryFn: async () => json<{ songs: Song[] }>(await fetch(url)) });
   const save = useMutation({
     mutationFn: async (songs: Song[]) => json<{ songs: Song[] }>(await fetch(url, sendJson('PUT', { order: songs.map((s) => s.id) }))),
-    onSuccess: (data) => client.setQueryData(key, data),
+    onSuccess: (data, sent) => {
+      if (client.getQueryData<{ songs: Song[] }>(key)?.songs === sent) client.setQueryData(key, data);
+    },
   });
   const [drag, setDrag] = useState<Drag | null>(null);
   const [grabbed, setGrabbed] = useState<number | null>(null);
   const [message, setMessage] = useState('');
   const rows = useRef<HTMLOListElement>(null);
+  const pickedUp = useRef<Song[]>([]);
 
   const songs = list.data?.songs ?? [];
   const latest = () => client.getQueryData<{ songs: Song[] }>(key)?.songs ?? [];
@@ -74,11 +77,12 @@ export function Playlist({ sandbox }: { sandbox: string }) {
     } else if (e.key === 'Escape' && grabbed !== null) {
       e.preventDefault();
       setGrabbed(null);
-      void client.invalidateQueries({ queryKey: key });
+      client.setQueryData(key, { songs: pickedUp.current });
       setMessage('Move cancelled.');
     } else if (e.key === ' ' || e.key === 'Enter') {
       e.preventDefault();
       if (grabbed === null) {
+        pickedUp.current = latest();
         setGrabbed(song.id);
         setMessage(`Picked up ${song.title}. Press the up or down arrow key to move it, and Space to drop it.`);
       } else {
