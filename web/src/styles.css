@@ -166,3 +166,5 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .site-bar.narrow .site-links { flex-direction: column; gap: 0.5rem; transition: transform 0.2s; }
 .site-bar.narrow .site-links.closed { position: absolute; transform: translateY(-200%); visibility: hidden; }
 .site-filler { height: 150vh; }
+
+.meeting-form { display: flex; flex-wrap: wrap; align-items: end; gap: 0.75rem; }
