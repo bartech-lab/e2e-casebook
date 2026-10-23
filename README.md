@@ -700,6 +700,15 @@ The Confirm email page asks for a 6-digit code, one box per digit. What it promi
 - The code is checked as soon as six digits are in. A wrong code clears the boxes and puts you
   back at the first one. After three wrong codes, only a new code helps.
 
+### 64. Messages
+
+The Messages page counts new messages in English or Polish. What it promises:
+
+- Every number gets the right word form in both languages, and Polish has three of them.
+- Numbers are written the way each language writes them.
+- The page starts in the browser's language and remembers your choice. It tells the browser which
+  language it is in.
+
 ## Run it
 
 ```sh

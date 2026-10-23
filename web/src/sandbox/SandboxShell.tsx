@@ -62,6 +62,7 @@ import { Team } from '../team/Team.tsx';
 import { Meetings } from '../meetings/Meetings.tsx';
 import { Directory } from '../directory/Directory.tsx';
 import { ConfirmEmail } from '../confirm-email/ConfirmEmail.tsx';
+import { Plurals } from '../plurals/Plurals.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -158,7 +159,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/team`}>Team</Link> ·{' '}
         <Link href={`${base}/meetings`}>Meetings</Link> ·{' '}
         <Link href={`${base}/directory`}>Directory</Link> ·{' '}
-        <Link href={`${base}/confirm-email`}>Confirm email</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/confirm-email`}>Confirm email</Link> ·{' '}
+        <Link href={`${base}/messages`}>Messages</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -268,6 +270,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Directory />
       ) : page === 'confirm-email' ? (
         <ConfirmEmail sandbox={sandbox} />
+      ) : page === 'messages' ? (
+        <Plurals sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -451,6 +455,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/confirm-email`}>Confirm email</Link>: type, paste or autofill a 6-digit code, one box per digit.
+        </li>
+        <li>
+          <Link href={`${base}/messages`}>Messages</Link>: count new messages in English or Polish, with the right word for every number.
         </li>
       </ul>
     </section>
