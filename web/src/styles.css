@@ -148,3 +148,8 @@ main > section > ul > li > label { display: inline; margin: 0; }
 .gallery { display: grid; grid-template-columns: repeat(2, 240px); gap: 1rem; }
 .photo { width: 240px; height: 160px; background: var(--border); border-radius: 6px; overflow: hidden; }
 .photo p { padding: 0.75rem; font-size: 0.85rem; }
+
+.calendar td { padding: 0; border: 0; }
+.calendar button { width: 2.4rem; padding: 0.3rem 0; }
+.calendar button.other-month { opacity: 0.55; }
+.calendar [aria-selected="true"] button { background: var(--accent-soft); border-color: var(--accent); }

@@ -53,6 +53,7 @@ import { Verify } from '../verify/Verify.tsx';
 import { Summary } from '../summary/Summary.tsx';
 import { Shipping } from '../shipping/Shipping.tsx';
 import { Gallery } from '../gallery/Gallery.tsx';
+import { Holiday } from '../holiday/Holiday.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -140,7 +141,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/verify`}>Verify phone</Link> ·{' '}
         <Link href={`${base}/summary`}>Order summary</Link> ·{' '}
         <Link href={`${base}/shipping`}>Shipping address</Link> ·{' '}
-        <Link href={`${base}/gallery`}>Gallery</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/gallery`}>Gallery</Link> ·{' '}
+        <Link href={`${base}/holiday`}>Holiday request</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -232,6 +234,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Shipping sandbox={sandbox} />
       ) : page === 'gallery' ? (
         <Gallery sandbox={sandbox} />
+      ) : page === 'holiday' ? (
+        <Holiday />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -388,6 +392,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/gallery`}>Gallery</Link>: 24 photos that load as you scroll.
+        </li>
+        <li>
+          <Link href={`${base}/holiday`}>Holiday request</Link>: pick the days of a holiday on a calendar or by typing them.
         </li>
       </ul>
     </section>
