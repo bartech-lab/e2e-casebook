@@ -153,3 +153,7 @@ main > section > ul > li > label { display: inline; margin: 0; }
 .calendar button { width: 2.4rem; padding: 0.3rem 0; }
 .calendar button.other-month { opacity: 0.55; }
 .calendar [aria-selected="true"] button { background: var(--accent-soft); border-color: var(--accent); }
+
+.seek { width: 300px; height: 8px; background: var(--border); border-radius: 4px; margin: 0.75rem 0; }
+.seek-fill { height: 100%; background: var(--accent); border-radius: 4px; }
+ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
