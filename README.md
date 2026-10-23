@@ -769,6 +769,14 @@ stays at the bottom. What it promises:
 - Nothing you move to with the keyboard, and no section you jump to, ends up hidden behind the
   header or the pay bar.
 
+### 71. Sales report
+
+The Sales report page adds up 20,000,000 sales by region. What it promises:
+
+- The page stays responsive while the report is built, and shows the progress.
+- **Cancel** stops the work at once: no result appears later, and nothing keeps running.
+- Building again after a cancel works, and gives the same numbers, to the grosz.
+
 ## Run it
 
 ```sh
