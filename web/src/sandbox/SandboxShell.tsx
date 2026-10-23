@@ -67,6 +67,7 @@ import { Passkeys } from '../passkeys/Passkeys.tsx';
 import { Delivery } from '../delivery/Delivery.tsx';
 import { Import } from '../import/Import.tsx';
 import { Packing } from '../packing/Packing.tsx';
+import { Help } from '../help/Help.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -168,7 +169,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/passkeys`}>Passkeys</Link> ·{' '}
         <Link href={`${base}/delivery`}>Delivery</Link> ·{' '}
         <Link href={`${base}/import`}>Import</Link> ·{' '}
-        <Link href={`${base}/packing`}>Packing list</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/packing`}>Packing list</Link> ·{' '}
+        <Link href={`${base}/help`}>Help centre</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -288,6 +290,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Import sandbox={sandbox} />
       ) : page === 'packing' ? (
         <Packing />
+      ) : page === 'help' ? (
+        <Help sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -486,6 +490,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/packing`}>Packing list</Link>: a packing list where every change can be undone and redone.
+        </li>
+        <li>
+          <Link href={`${base}/help`}>Help centre</Link>: help articles that open without reloading the page.
         </li>
       </ul>
     </section>

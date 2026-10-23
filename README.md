@@ -749,6 +749,15 @@ The Packing list page edits a list of things to pack. What it promises:
 - A new change after an undo ends the redo history.
 - In a text field, the keys undo your typing, not the list.
 
+### 69. Help centre
+
+The Help centre opens articles without reloading the page. What it promises:
+
+- Opening an article, or going back and forward, behaves like a new page: the browser tab shows
+  its title, focus moves to its heading, and a screen reader announces it.
+- Opening a link to an article directly shows it, without moving focus.
+- The article list marks the one you are reading.
+
 ## Run it
 
 ```sh
