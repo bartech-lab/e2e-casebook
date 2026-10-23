@@ -10,13 +10,14 @@ import type { Feed } from './feed.ts';
 import type { Checklist } from './checklist.ts';
 import type { Vaults } from './vault.ts';
 import type { Bios } from './bio.ts';
+import type { FeedbackStore } from './feedback.ts';
 import type { Shop } from './shop.ts';
 import type { Hub } from './hub.ts';
 import { DEFAULT_CARDS, type Store } from './store.ts';
 import { cardInput, messageInput } from './validation.ts';
 
 type Params = { sandbox: string };
-type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios };
+type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore };
 
 type FaultBody = {
   dropSockets?: unknown;
@@ -26,7 +27,7 @@ type FaultBody = {
   auth?: { tokenTtlMs?: unknown };
 };
 
-export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios }: Deps) {
+export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback }: Deps) {
   app.register(
     async (scope) => {
       scope.addHook('preHandler', async (req, reply) => {
@@ -50,6 +51,7 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         checklist.clear(sandbox);
         vaults.clear(sandbox);
         bios.clear(sandbox);
+        feedback.clear(sandbox);
         hub.reset(sandbox);
         return { ok: true };
       });
