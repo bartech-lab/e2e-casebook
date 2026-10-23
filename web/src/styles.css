@@ -205,3 +205,9 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .timesheet td input { width: 4rem; text-align: right; }
 
 .embed { box-sizing: content-box; display: block; width: 100%; max-width: 40rem; border: 1px solid var(--border); border-radius: var(--radius); }
+
+.countries { list-style: none; margin: 0.5rem 0; padding: 0; max-width: 18rem; height: 16rem; overflow-y: auto; border: 1px solid var(--border); border-radius: var(--radius); }
+.countries li { padding: 0.3rem 0.75rem; cursor: pointer; }
+.countries li.active { background: var(--accent-soft); }
+.countries li[aria-selected='true'] { font-weight: 700; }
+.countries:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

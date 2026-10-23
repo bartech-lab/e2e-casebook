@@ -74,6 +74,7 @@ import { UploadPage } from '../upload/Upload.tsx';
 import { Ticket } from '../ticket/Ticket.tsx';
 import { Timesheet } from '../timesheet/Timesheet.tsx';
 import { Embed } from '../embed/Embed.tsx';
+import { Country } from '../country/Country.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -182,7 +183,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/upload`}>Upload</Link> ·{' '}
         <Link href={`${base}/ticket`}>Support ticket</Link> ·{' '}
         <Link href={`${base}/timesheet`}>Timesheet</Link> ·{' '}
-        <Link href={`${base}/shop-reviews`}>Shop reviews</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/shop-reviews`}>Shop reviews</Link> ·{' '}
+        <Link href={`${base}/country`}>Country</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -316,6 +318,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Timesheet />
       ) : page === 'shop-reviews' ? (
         <Embed />
+      ) : page === 'country' ? (
+        <Country />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -535,6 +539,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/shop-reviews`}>Shop reviews</Link>: a reviews widget in a frame that sizes itself.
+        </li>
+        <li>
+          <Link href={`${base}/country`}>Country</Link>: pick a country from a list by typing its first letters.
         </li>
       </ul>
     </section>
