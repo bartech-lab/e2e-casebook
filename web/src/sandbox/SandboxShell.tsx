@@ -72,6 +72,7 @@ import { Review } from '../review/Review.tsx';
 import { Report } from '../report/Report.tsx';
 import { UploadPage } from '../upload/Upload.tsx';
 import { Ticket } from '../ticket/Ticket.tsx';
+import { Timesheet } from '../timesheet/Timesheet.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -178,7 +179,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/review`}>Order review</Link> ·{' '}
         <Link href={`${base}/report`}>Sales report</Link> ·{' '}
         <Link href={`${base}/upload`}>Upload</Link> ·{' '}
-        <Link href={`${base}/ticket`}>Support ticket</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/ticket`}>Support ticket</Link> ·{' '}
+        <Link href={`${base}/timesheet`}>Timesheet</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -308,6 +310,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <UploadPage sandbox={sandbox} />
       ) : page === 'ticket' ? (
         <Ticket sandbox={sandbox} />
+      ) : page === 'timesheet' ? (
+        <Timesheet />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -521,6 +525,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/ticket`}>Support ticket</Link>: describe a problem and paste screenshots into it.
+        </li>
+        <li>
+          <Link href={`${base}/timesheet`}>Timesheet</Link>: a timesheet grid you can fill in with the keyboard.
         </li>
       </ul>
     </section>
