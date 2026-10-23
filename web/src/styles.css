@@ -130,3 +130,7 @@ main > section > ul > li > label { display: inline; margin: 0; }
 .range-fill { position: absolute; top: 0; bottom: 0; background: var(--accent); border-radius: 3px; }
 .thumb { position: absolute; top: 50%; width: 18px; height: 18px; margin: -9px 0 0 -9px; background: var(--surface); border: 2px solid var(--accent); border-radius: 50%; cursor: grab; }
 .thumb:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+#command-list { list-style: none; padding: 0; margin: 0.5rem 0 0; }
+#command-list [role="option"] { padding: 0.35rem 0.5rem; border-radius: 6px; cursor: pointer; }
+#command-list [aria-selected="true"] { background: var(--accent-soft); }

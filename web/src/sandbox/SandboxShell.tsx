@@ -47,6 +47,7 @@ import { Link } from '../router.tsx';
 import { Inbox } from '../inbox/Inbox.tsx';
 import { Orders } from '../orders/Orders.tsx';
 import { Files } from '../files/Files.tsx';
+import { Tasks } from '../tasks/Tasks.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -128,7 +129,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/updates`}>Updates</Link> ·{' '}
         <Link href={`${base}/inbox`}>Inbox</Link> ·{' '}
         <Link href={`${base}/orders`}>Orders</Link> ·{' '}
-        <Link href={`${base}/files`}>Files</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/files`}>Files</Link> ·{' '}
+        <Link href={`${base}/tasks`}>Tasks</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -208,6 +210,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Orders sandbox={sandbox} />
       ) : page === 'files' ? (
         <Files sandbox={sandbox} />
+      ) : page === 'tasks' ? (
+        <Tasks />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -346,6 +350,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/files`}>Files</Link>: delete a file, with a few seconds to undo it.
+        </li>
+        <li>
+          <Link href={`${base}/tasks`}>Tasks</Link>: a to-do list you can drive with keyboard shortcuts.
         </li>
       </ul>
     </section>
