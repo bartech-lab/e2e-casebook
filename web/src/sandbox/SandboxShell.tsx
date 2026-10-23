@@ -51,6 +51,7 @@ import { Tasks } from '../tasks/Tasks.tsx';
 import { Itinerary } from '../itinerary/Itinerary.tsx';
 import { Verify } from '../verify/Verify.tsx';
 import { Summary } from '../summary/Summary.tsx';
+import { Shipping } from '../shipping/Shipping.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -136,7 +137,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/tasks`}>Tasks</Link> ·{' '}
         <Link href={`${base}/itinerary`}>Itinerary</Link> ·{' '}
         <Link href={`${base}/verify`}>Verify phone</Link> ·{' '}
-        <Link href={`${base}/summary`}>Order summary</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/summary`}>Order summary</Link> ·{' '}
+        <Link href={`${base}/shipping`}>Shipping address</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -224,6 +226,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Verify sandbox={sandbox} />
       ) : page === 'summary' ? (
         <Summary sandbox={sandbox} />
+      ) : page === 'shipping' ? (
+        <Shipping sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -374,6 +378,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/summary`}>Order summary</Link>: an order summary in English or Arabic.
+        </li>
+        <li>
+          <Link href={`${base}/shipping`}>Shipping address</Link>: an address form that changes with the country.
         </li>
       </ul>
     </section>

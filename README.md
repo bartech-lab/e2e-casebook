@@ -581,6 +581,18 @@ The Order summary page can be shown in English or Arabic. What it promises:
 - In Arabic, the buttons line up from the right edge, as the text does.
 - The language you chose is kept after a reload. Other pages stay left to right.
 
+### 53. Shipping address
+
+The Shipping address page saves a country and a postcode, and a state for the United States.
+What it promises:
+
+- Poland takes postcodes like 80-001. The United States takes ZIP codes like 94105 or
+  94105-1234 and needs a state. The United Kingdom takes postcodes like SW1A 1AA, in any case
+  and with or without the space, and saves them in capitals with the space.
+- A state is only asked for, and only saved, for the United States. Changing the country clears
+  the old mistakes.
+- The server checks the same rules, whoever sends the address.
+
 ## Run it
 
 ```sh
