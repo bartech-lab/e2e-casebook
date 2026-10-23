@@ -33,6 +33,7 @@ import { createSms } from './sms.ts';
 import { createShipping } from './shipping.ts';
 import { registerPhotos } from './photos.ts';
 import { createAccounts } from './account.ts';
+import { createTeams } from './team.ts';
 
 export type AppOptions = {
   dbPath?: string;
@@ -68,6 +69,7 @@ export async function buildApp(opts: AppOptions = {}) {
   const sms = createSms();
   const shipping = createShipping();
   const accounts = createAccounts();
+  const teams = createTeams();
   const app = Fastify({ trustProxy: true });
 
   await app.register(fastifyWebsocket);
@@ -119,6 +121,7 @@ export async function buildApp(opts: AppOptions = {}) {
       shipping.register(scope);
       registerPhotos(scope);
       accounts.register(scope);
+      teams.register(scope);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
         messages: store.messagesSince(req.params.sandbox, Number(req.query.since ?? 0) || 0),
@@ -153,7 +156,7 @@ export async function buildApp(opts: AppOptions = {}) {
     { prefix: '/api/s/:sandbox' },
   );
 
-  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts });
+  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams });
 
   if (opts.clientDir && existsSync(join(opts.clientDir, 'index.html'))) {
     await app.register(fastifyStatic, { root: opts.clientDir, wildcard: false });
@@ -190,6 +193,7 @@ export async function buildApp(opts: AppOptions = {}) {
       sms.clear(id);
       shipping.clear(id);
       accounts.clear(id);
+      teams.clear(id);
     }
   }, Math.min(ttl, 60 * 60 * 1000));
   pruneTimer.unref();

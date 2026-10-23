@@ -58,6 +58,7 @@ import { StaySignedIn } from '../account-signin/StaySignedIn.tsx';
 import { Podcast } from '../podcast/Podcast.tsx';
 import { SiteMenu } from '../site-menu/SiteMenu.tsx';
 import { IdleSession } from '../idle-session/IdleSession.tsx';
+import { Team } from '../team/Team.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -150,7 +151,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/sign-in`}>Stay signed in</Link> ·{' '}
         <Link href={`${base}/podcast`}>Podcast</Link> ·{' '}
         <Link href={`${base}/bakery`}>Bakery</Link> ·{' '}
-        <Link href={`${base}/session`}>Session</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/session`}>Session</Link> ·{' '}
+        <Link href={`${base}/team`}>Team</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -252,6 +254,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <SiteMenu />
       ) : page === 'session' ? (
         <IdleSession sandbox={sandbox} />
+      ) : page === 'team' ? (
+        <Team sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -423,6 +427,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/session`}>Session</Link>: warns before signing you out after a while without activity.
+        </li>
+        <li>
+          <Link href={`${base}/team`}>Team</Link>: a shared document whose members can view, edit or manage roles.
         </li>
       </ul>
     </section>

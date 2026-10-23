@@ -21,11 +21,12 @@ import type { Files } from './files.ts';
 import type { Sms } from './sms.ts';
 import type { Shipping } from './shipping.ts';
 import type { Accounts } from './account.ts';
+import type { Teams } from './team.ts';
 import { DEFAULT_CARDS, type Store } from './store.ts';
 import { cardInput, messageInput } from './validation.ts';
 
 type Params = { sandbox: string };
-type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts };
+type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts; teams: Teams };
 
 type FaultBody = {
   dropSockets?: unknown;
@@ -35,7 +36,7 @@ type FaultBody = {
   auth?: { tokenTtlMs?: unknown };
 };
 
-export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts }: Deps) {
+export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams }: Deps) {
   app.register(
     async (scope) => {
       scope.addHook('preHandler', async (req, reply) => {
@@ -68,6 +69,7 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         sms.clear(sandbox);
         shipping.clear(sandbox);
         accounts.clear(sandbox);
+        teams.clear(sandbox);
         hub.reset(sandbox);
         return { ok: true };
       });
@@ -132,6 +134,13 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         const advanceMs = (req.body as { advanceMs?: unknown } | undefined)?.advanceMs;
         if (typeof advanceMs !== 'number' || !Number.isFinite(advanceMs) || advanceMs < 0) return reply.code(400).send({ error: 'advanceMs must be a number of ms, 0 or more' });
         sms.advance(req.params.sandbox, advanceMs);
+        return { ok: true };
+      });
+
+      scope.post<{ Params: Params }>('/team-role', async (req, reply) => {
+        const { user, role } = (req.body ?? {}) as { user?: unknown; role?: unknown };
+        if (typeof user !== 'string' || (role !== 'viewer' && role !== 'editor' && role !== 'admin')) return reply.code(400).send({ error: 'user and role are required' });
+        teams.setRole(req.params.sandbox, user, role);
         return { ok: true };
       });
 
