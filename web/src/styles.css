@@ -142,3 +142,5 @@ main > section > ul > li > label { display: inline; margin: 0; }
   .itinerary .day:first-of-type { break-before: auto; }
   .itinerary a[href^="http"]::after { content: " (" attr(href) ")"; }
 }
+
+.summary-actions { display: flex; justify-content: flex-start; gap: 0.5rem; max-width: 30rem; }

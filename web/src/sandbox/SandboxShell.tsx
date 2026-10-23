@@ -50,6 +50,7 @@ import { Files } from '../files/Files.tsx';
 import { Tasks } from '../tasks/Tasks.tsx';
 import { Itinerary } from '../itinerary/Itinerary.tsx';
 import { Verify } from '../verify/Verify.tsx';
+import { Summary } from '../summary/Summary.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -134,7 +135,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/files`}>Files</Link> ·{' '}
         <Link href={`${base}/tasks`}>Tasks</Link> ·{' '}
         <Link href={`${base}/itinerary`}>Itinerary</Link> ·{' '}
-        <Link href={`${base}/verify`}>Verify phone</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/verify`}>Verify phone</Link> ·{' '}
+        <Link href={`${base}/summary`}>Order summary</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -220,6 +222,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Itinerary />
       ) : page === 'verify' ? (
         <Verify sandbox={sandbox} />
+      ) : page === 'summary' ? (
+        <Summary sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -367,6 +371,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/verify`}>Verify phone</Link>: text yourself a code, at most once every 30 seconds.
+        </li>
+        <li>
+          <Link href={`${base}/summary`}>Order summary</Link>: an order summary in English or Arabic.
         </li>
       </ul>
     </section>
