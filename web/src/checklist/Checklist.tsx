@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { json, sendJson } from '../http.ts';
+import { uid } from '../uid.ts';
 
 type Item = { clientId: string; text: string };
 
@@ -68,7 +69,7 @@ export function Checklist({ sandbox }: { sandbox: string }) {
     const form = e.currentTarget;
     const text = String(new FormData(form).get('item') ?? '').trim();
     if (!text) return;
-    store([...readQueue(sandbox), { clientId: crypto.randomUUID(), text }]);
+    store([...readQueue(sandbox), { clientId: uid(), text }]);
     form.reset();
     void sync();
   }

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { json, sendJson } from '../http.ts';
+import { uid } from '../uid.ts';
 
 type Connection = { connected: boolean; email: string | null };
 
@@ -16,7 +17,7 @@ export function Calendar({ sandbox }: { sandbox: string }) {
   useEffect(() => {
     async function onMessage(e: MessageEvent) {
       const data = e.data as { type?: string; state?: string; code?: string; error?: string };
-      if (e.origin !== location.origin || data.type !== 'calendar-auth') return;
+      if (e.origin !== location.origin || e.source !== popup.current || data.type !== 'calendar-auth') return;
       if (!state.current || data.state !== state.current) return;
       state.current = null;
       if (!data.code) {
@@ -45,7 +46,7 @@ export function Calendar({ sandbox }: { sandbox: string }) {
   }, [url]);
 
   function connect() {
-    state.current = crypto.randomUUID();
+    state.current = uid();
     setMessage('Connecting…');
     popup.current = window.open(`/oauth/authorize.html?sandbox=${sandbox}&state=${state.current}`, 'calendar-sign-in', 'popup,width=480,height=420');
   }

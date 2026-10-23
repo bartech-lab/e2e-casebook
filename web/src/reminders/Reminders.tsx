@@ -1,4 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react';
+import { uid } from '../uid.ts';
 
 type Reminder = { id: string; text: string; due: number };
 
@@ -39,7 +40,7 @@ export function Reminders({ sandbox }: { sandbox: string }) {
     e.preventDefault();
     if (!text.trim()) return;
     if ('Notification' in window && Notification.permission === 'default') await Notification.requestPermission();
-    save([...list, { id: crypto.randomUUID(), text: text.trim(), due: Date.now() + Number(minutes) * 60_000 }]);
+    save([...list, { id: uid(), text: text.trim(), due: Date.now() + Number(minutes) * 60_000 }]);
     setText('');
   }
 
