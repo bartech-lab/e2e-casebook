@@ -54,6 +54,7 @@ import { Summary } from '../summary/Summary.tsx';
 import { Shipping } from '../shipping/Shipping.tsx';
 import { Gallery } from '../gallery/Gallery.tsx';
 import { Holiday } from '../holiday/Holiday.tsx';
+import { StaySignedIn } from '../account-signin/StaySignedIn.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -142,7 +143,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/summary`}>Order summary</Link> ·{' '}
         <Link href={`${base}/shipping`}>Shipping address</Link> ·{' '}
         <Link href={`${base}/gallery`}>Gallery</Link> ·{' '}
-        <Link href={`${base}/holiday`}>Holiday request</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/holiday`}>Holiday request</Link> ·{' '}
+        <Link href={`${base}/sign-in`}>Stay signed in</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -236,6 +238,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Gallery sandbox={sandbox} />
       ) : page === 'holiday' ? (
         <Holiday />
+      ) : page === 'sign-in' ? (
+        <StaySignedIn sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -395,6 +399,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/holiday`}>Holiday request</Link>: pick the days of a holiday on a calendar or by typing them.
+        </li>
+        <li>
+          <Link href={`${base}/sign-in`}>Stay signed in</Link>: sign in, and choose whether the browser remembers you.
         </li>
       </ul>
     </section>
