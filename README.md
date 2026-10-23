@@ -559,6 +559,18 @@ The Itinerary page shows a three-day trip with a **Print itinerary** button. Wha
 - Each link prints its address after its text, for example "Hotel website
   (https://hotel-wawel.example/)".
 
+### 51. Verify phone
+
+The Verify phone page texts a code (nothing is really sent). The server allows one code every 30
+seconds and answers `429` with `Retry-After` otherwise. The test hook
+`POST /__test__/s/:id/sms-clock` with `{ advanceMs }` moves one sandbox's server clock forward.
+What it promises:
+
+- After a code is sent, the button counts down "Resend in N s" from 30 and cannot be pressed.
+  At 0 it says **Resend code** and works again.
+- If the server says to wait, the page counts down exactly as long as `Retry-After` says.
+- The countdown continues after a reload.
+
 ## Run it
 
 ```sh

@@ -18,11 +18,12 @@ import type { Hub } from './hub.ts';
 import type { Inbox } from './inbox.ts';
 import type { Orders } from './orders.ts';
 import type { Files } from './files.ts';
+import type { Sms } from './sms.ts';
 import { DEFAULT_CARDS, type Store } from './store.ts';
 import { cardInput, messageInput } from './validation.ts';
 
 type Params = { sandbox: string };
-type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files };
+type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms };
 
 type FaultBody = {
   dropSockets?: unknown;
@@ -32,7 +33,7 @@ type FaultBody = {
   auth?: { tokenTtlMs?: unknown };
 };
 
-export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files }: Deps) {
+export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms }: Deps) {
   app.register(
     async (scope) => {
       scope.addHook('preHandler', async (req, reply) => {
@@ -62,6 +63,7 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         inbox.clear(sandbox);
         orders.clear(sandbox);
         files.clear(sandbox);
+        sms.clear(sandbox);
         hub.reset(sandbox);
         return { ok: true };
       });
@@ -119,6 +121,13 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         };
         if (!Array.isArray(list) || !list.every(valid)) return reply.code(400).send({ error: 'orders must be { number, customer, total, date }[]' });
         orders.seed(req.params.sandbox, list);
+        return { ok: true };
+      });
+
+      scope.post<{ Params: Params }>('/sms-clock', async (req, reply) => {
+        const advanceMs = (req.body as { advanceMs?: unknown } | undefined)?.advanceMs;
+        if (typeof advanceMs !== 'number' || !Number.isFinite(advanceMs) || advanceMs < 0) return reply.code(400).send({ error: 'advanceMs must be a number of ms, 0 or more' });
+        sms.advance(req.params.sandbox, advanceMs);
         return { ok: true };
       });
 
