@@ -12,13 +12,14 @@ import type { Vaults } from './vault.ts';
 import type { Bios } from './bio.ts';
 import type { FeedbackStore } from './feedback.ts';
 import type { Invites } from './invites.ts';
+import type { Releases } from './releases.ts';
 import type { Shop } from './shop.ts';
 import type { Hub } from './hub.ts';
 import { DEFAULT_CARDS, type Store } from './store.ts';
 import { cardInput, messageInput } from './validation.ts';
 
 type Params = { sandbox: string };
-type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites };
+type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases };
 
 type FaultBody = {
   dropSockets?: unknown;
@@ -28,7 +29,7 @@ type FaultBody = {
   auth?: { tokenTtlMs?: unknown };
 };
 
-export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites }: Deps) {
+export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases }: Deps) {
   app.register(
     async (scope) => {
       scope.addHook('preHandler', async (req, reply) => {
@@ -54,6 +55,7 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         bios.clear(sandbox);
         feedback.clear(sandbox);
         invites.clear(sandbox);
+        releases.clear(sandbox);
         hub.reset(sandbox);
         return { ok: true };
       });
@@ -100,6 +102,8 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         flags.set(req.params.sandbox, Object.fromEntries(keys.map((k) => [k, body[k]])));
         return flags.get(req.params.sandbox);
       });
+
+      scope.post<{ Params: Params }>('/release', async (req) => ({ version: releases.release(req.params.sandbox) }));
 
       scope.post<{ Params: Params }>('/expire-sessions', async (req) => {
         extras.expireSessions(req.params.sandbox);

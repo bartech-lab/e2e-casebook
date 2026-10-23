@@ -36,6 +36,7 @@ import { Reminders } from '../reminders/Reminders.tsx';
 import { Address } from '../address/Address.tsx';
 import { Feedback } from '../feedback/Feedback.tsx';
 import { Share } from '../share/Share.tsx';
+import { Updates } from '../updates/Updates.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { Settings } from '../settings/Settings.tsx';
 import { Reviews } from '../shop/Reviews.tsx';
@@ -120,7 +121,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/reminders`}>Reminders</Link> ·{' '}
         <Link href={`${base}/address`}>Address</Link> ·{' '}
         <Link href={`${base}/feedback`}>Feedback</Link> ·{' '}
-        <Link href={`${base}/share`}>Share</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/share`}>Share</Link> ·{' '}
+        <Link href={`${base}/updates`}>Updates</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -192,6 +194,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Feedback sandbox={sandbox} />
       ) : page === 'share' ? (
         <Share sandbox={sandbox} />
+      ) : page === 'updates' ? (
+        <Updates sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -318,6 +322,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/share`}>Share</Link>: copy an invite link.
+        </li>
+        <li>
+          <Link href={`${base}/updates`}>Updates</Link>: tells you when a new version of the app is out.
         </li>
       </ul>
     </section>

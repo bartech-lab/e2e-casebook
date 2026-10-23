@@ -490,6 +490,18 @@ promises:
 - If the browser refuses to copy, the page says so, selects the link, and asks you to press
   Ctrl+C. It never says "Link copied." when nothing was copied.
 
+### 45. Updates
+
+The Updates page tells you when a new version of the app has been released while the page was
+open. The test hook `POST /__test__/s/:id/release` releases a new version for one sandbox. What it
+promises:
+
+- It checks every 30 seconds and whenever the window gets focus. It never shows the notice for the
+  version you already run.
+- A failed check is not shown and does not stop later checks.
+- **Reload** loads the new version. **Later** hides the notice until an even newer version comes
+  out.
+
 ## Run it
 
 ```sh
