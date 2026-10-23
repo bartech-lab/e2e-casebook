@@ -786,6 +786,15 @@ The Upload page sends a file of up to 20 MB to the server. What it promises:
 - A file over 20 MB is refused at once, without sending it. The server refuses one too.
 - The list shows each file with its exact name and size, and the server keeps the exact bytes.
 
+### 73. Support ticket
+
+The Support ticket page takes a description and pasted screenshots. What it promises:
+
+- Pasting an image into the box attaches it; pasting text types it, as in any text box.
+- Every image in one paste is attached, up to 3 in all. Only PNG and JPEG images are attached.
+- **Remove** takes off the attachment you chose.
+- The ticket reaches the server with all its images, and the server applies the same limits.
+
 ## Run it
 
 ```sh

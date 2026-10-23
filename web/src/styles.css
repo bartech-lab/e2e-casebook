@@ -196,3 +196,6 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .co-terms { max-width: 32rem; }
 .co-accept, .co-note { display: block; margin: 0.75rem 0; }
 .co-footer { position: sticky; bottom: 0; z-index: 2; height: 4rem; display: flex; align-items: center; justify-content: space-between; padding: 0 0.75rem; background: var(--surface); border-top: 1px solid var(--border); }
+
+.attachments { list-style: none; padding: 0; display: grid; gap: 0.4rem; }
+.attachments img { object-fit: cover; border: 1px solid var(--border); border-radius: 4px; vertical-align: middle; }

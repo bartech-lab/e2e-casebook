@@ -71,6 +71,7 @@ import { Help } from '../help/Help.tsx';
 import { Review } from '../review/Review.tsx';
 import { Report } from '../report/Report.tsx';
 import { UploadPage } from '../upload/Upload.tsx';
+import { Ticket } from '../ticket/Ticket.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -176,7 +177,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/help`}>Help centre</Link> ·{' '}
         <Link href={`${base}/review`}>Order review</Link> ·{' '}
         <Link href={`${base}/report`}>Sales report</Link> ·{' '}
-        <Link href={`${base}/upload`}>Upload</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/upload`}>Upload</Link> ·{' '}
+        <Link href={`${base}/ticket`}>Support ticket</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -304,6 +306,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Report />
       ) : page === 'upload' ? (
         <UploadPage sandbox={sandbox} />
+      ) : page === 'ticket' ? (
+        <Ticket sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -514,6 +518,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/upload`}>Upload</Link>: upload a large file with progress and cancel.
+        </li>
+        <li>
+          <Link href={`${base}/ticket`}>Support ticket</Link>: describe a problem and paste screenshots into it.
         </li>
       </ul>
     </section>
