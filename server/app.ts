@@ -35,6 +35,7 @@ import { registerPhotos } from './photos.ts';
 import { createAccounts } from './account.ts';
 import { createTeams } from './team.ts';
 import { createMeetings } from './meetings.ts';
+import { createOtps } from './otp.ts';
 
 export type AppOptions = {
   dbPath?: string;
@@ -72,6 +73,7 @@ export async function buildApp(opts: AppOptions = {}) {
   const accounts = createAccounts();
   const teams = createTeams();
   const meetings = createMeetings();
+  const otps = createOtps();
   const app = Fastify({ trustProxy: true });
 
   await app.register(fastifyWebsocket);
@@ -125,6 +127,7 @@ export async function buildApp(opts: AppOptions = {}) {
       accounts.register(scope);
       teams.register(scope);
       meetings.register(scope);
+      otps.register(scope);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
         messages: store.messagesSince(req.params.sandbox, Number(req.query.since ?? 0) || 0),
@@ -159,7 +162,7 @@ export async function buildApp(opts: AppOptions = {}) {
     { prefix: '/api/s/:sandbox' },
   );
 
-  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings });
+  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps });
 
   if (opts.clientDir && existsSync(join(opts.clientDir, 'index.html'))) {
     await app.register(fastifyStatic, { root: opts.clientDir, wildcard: false });
@@ -198,6 +201,7 @@ export async function buildApp(opts: AppOptions = {}) {
       accounts.clear(id);
       teams.clear(id);
       meetings.clear(id);
+      otps.clear(id);
     }
   }, Math.min(ttl, 60 * 60 * 1000));
   pruneTimer.unref();

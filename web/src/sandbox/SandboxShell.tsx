@@ -61,6 +61,7 @@ import { IdleSession } from '../idle-session/IdleSession.tsx';
 import { Team } from '../team/Team.tsx';
 import { Meetings } from '../meetings/Meetings.tsx';
 import { Directory } from '../directory/Directory.tsx';
+import { ConfirmEmail } from '../confirm-email/ConfirmEmail.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -156,7 +157,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/session`}>Session</Link> ·{' '}
         <Link href={`${base}/team`}>Team</Link> ·{' '}
         <Link href={`${base}/meetings`}>Meetings</Link> ·{' '}
-        <Link href={`${base}/directory`}>Directory</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/directory`}>Directory</Link> ·{' '}
+        <Link href={`${base}/confirm-email`}>Confirm email</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -264,6 +266,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Meetings sandbox={sandbox} />
       ) : page === 'directory' ? (
         <Directory />
+      ) : page === 'confirm-email' ? (
+        <ConfirmEmail sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -444,6 +448,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/directory`}>Directory</Link>: a list of 10,000 customers that stays fast by drawing only what you see.
+        </li>
+        <li>
+          <Link href={`${base}/confirm-email`}>Confirm email</Link>: type, paste or autofill a 6-digit code, one box per digit.
         </li>
       </ul>
     </section>
