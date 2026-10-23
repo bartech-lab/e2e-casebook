@@ -157,3 +157,12 @@ main > section > ul > li > label { display: inline; margin: 0; }
 .seek { width: 300px; height: 8px; background: var(--border); border-radius: 4px; margin: 0.75rem 0; }
 .seek-fill { height: 100%; background: var(--accent); border-radius: 4px; }
 ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
+
+.site-bar { position: relative; display: flex; align-items: center; gap: 1rem; padding: 0.5rem 0.75rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.site-links { display: flex; gap: 1rem; list-style: none; margin: 0; padding: 0; }
+.site-links a[aria-current='page'] { font-weight: 700; }
+.site-bar.narrow { flex-wrap: wrap; }
+.site-bar.narrow nav { flex-basis: 100%; }
+.site-bar.narrow .site-links { flex-direction: column; gap: 0.5rem; transition: transform 0.2s; }
+.site-bar.narrow .site-links.closed { position: absolute; transform: translateY(-200%); visibility: hidden; }
+.site-filler { height: 150vh; }

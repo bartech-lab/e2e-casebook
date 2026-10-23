@@ -56,6 +56,7 @@ import { Gallery } from '../gallery/Gallery.tsx';
 import { Holiday } from '../holiday/Holiday.tsx';
 import { StaySignedIn } from '../account-signin/StaySignedIn.tsx';
 import { Podcast } from '../podcast/Podcast.tsx';
+import { SiteMenu } from '../site-menu/SiteMenu.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -146,7 +147,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/gallery`}>Gallery</Link> ·{' '}
         <Link href={`${base}/holiday`}>Holiday request</Link> ·{' '}
         <Link href={`${base}/sign-in`}>Stay signed in</Link> ·{' '}
-        <Link href={`${base}/podcast`}>Podcast</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/podcast`}>Podcast</Link> ·{' '}
+        <Link href={`${base}/bakery`}>Bakery</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -244,6 +246,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <StaySignedIn sandbox={sandbox} />
       ) : page === 'podcast' ? (
         <Podcast sandbox={sandbox} />
+      ) : page === 'bakery' ? (
+        <SiteMenu />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -409,6 +413,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/podcast`}>Podcast</Link>: a 30-second episode with a transcript that follows along.
+        </li>
+        <li>
+          <Link href={`${base}/bakery`}>Bakery</Link>: a small site header whose links fold into a Menu button on a narrow screen.
         </li>
       </ul>
     </section>
