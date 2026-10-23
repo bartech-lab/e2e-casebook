@@ -45,6 +45,7 @@ import { Split } from '../shop/Split.tsx';
 import { HttpError } from '../http.ts';
 import { Link } from '../router.tsx';
 import { Inbox } from '../inbox/Inbox.tsx';
+import { Orders } from '../orders/Orders.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -124,7 +125,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/feedback`}>Feedback</Link> ·{' '}
         <Link href={`${base}/share`}>Share</Link> ·{' '}
         <Link href={`${base}/updates`}>Updates</Link> ·{' '}
-        <Link href={`${base}/inbox`}>Inbox</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/inbox`}>Inbox</Link> ·{' '}
+        <Link href={`${base}/orders`}>Orders</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -200,6 +202,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Updates sandbox={sandbox} />
       ) : page === 'inbox' ? (
         <Inbox sandbox={sandbox} />
+      ) : page === 'orders' ? (
+        <Orders sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -332,6 +336,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/inbox`}>Inbox</Link>: pick many messages at once and archive them.
+        </li>
+        <li>
+          <Link href={`${base}/orders`}>Orders</Link>: a table you can sort by any column, ten orders a page.
         </li>
       </ul>
     </section>
