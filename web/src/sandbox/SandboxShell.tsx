@@ -33,6 +33,7 @@ import { Search } from '../search/Search.tsx';
 import { Invoices } from '../invoices/Invoices.tsx';
 import { PriceFilter } from '../prices/PriceFilter.tsx';
 import { Reminders } from '../reminders/Reminders.tsx';
+import { Address } from '../address/Address.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { Settings } from '../settings/Settings.tsx';
 import { Reviews } from '../shop/Reviews.tsx';
@@ -114,7 +115,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/search`}>Search</Link> ·{' '}
         <Link href={`${base}/invoices`}>Invoices</Link> ·{' '}
         <Link href={`${base}/prices`}>Price filter</Link> ·{' '}
-        <Link href={`${base}/reminders`}>Reminders</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/reminders`}>Reminders</Link> ·{' '}
+        <Link href={`${base}/address`}>Address</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -180,6 +182,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <PriceFilter />
       ) : page === 'reminders' ? (
         <Reminders sandbox={sandbox} />
+      ) : page === 'address' ? (
+        <Address sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -297,6 +301,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/reminders`}>Reminders</Link>: a reminder that pops up later, even after a reload.
+        </li>
+        <li>
+          <Link href={`${base}/address`}>Address</Link>: a form that warns before you lose your changes.
         </li>
       </ul>
     </section>

@@ -1,6 +1,18 @@
 import { useEffect, useState, type AnchorHTMLAttributes, type MouseEvent } from 'react';
 
-export function navigate(path: string) {
+type Blocker = (path: string) => boolean;
+
+let blocker: Blocker | null = null;
+
+export function setBlocker(next: Blocker) {
+  blocker = next;
+  return () => {
+    if (blocker === next) blocker = null;
+  };
+}
+
+export function navigate(path: string, { force = false } = {}) {
+  if (!force && blocker?.(path)) return;
   history.pushState(null, '', path);
   dispatchEvent(new PopStateEvent('popstate'));
 }
