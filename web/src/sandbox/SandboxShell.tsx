@@ -46,6 +46,7 @@ import { HttpError } from '../http.ts';
 import { Link } from '../router.tsx';
 import { Inbox } from '../inbox/Inbox.tsx';
 import { Orders } from '../orders/Orders.tsx';
+import { Files } from '../files/Files.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -126,7 +127,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/share`}>Share</Link> ·{' '}
         <Link href={`${base}/updates`}>Updates</Link> ·{' '}
         <Link href={`${base}/inbox`}>Inbox</Link> ·{' '}
-        <Link href={`${base}/orders`}>Orders</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/orders`}>Orders</Link> ·{' '}
+        <Link href={`${base}/files`}>Files</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -204,6 +206,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Inbox sandbox={sandbox} />
       ) : page === 'orders' ? (
         <Orders sandbox={sandbox} />
+      ) : page === 'files' ? (
+        <Files sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -339,6 +343,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/orders`}>Orders</Link>: a table you can sort by any column, ten orders a page.
+        </li>
+        <li>
+          <Link href={`${base}/files`}>Files</Link>: delete a file, with a few seconds to undo it.
         </li>
       </ul>
     </section>
