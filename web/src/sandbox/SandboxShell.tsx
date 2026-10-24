@@ -162,6 +162,7 @@ import { Replies } from '../replies/Replies.tsx';
 import { PayslipsLink } from '../payslips/PayslipsLink.tsx';
 import { Newsroom, NewsStory } from '../newsroom/Newsroom.tsx';
 import { Members } from '../members/Members.tsx';
+import { PrimeCounter } from '../prime-counter/PrimeCounter.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -360,10 +361,13 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/replies`}>Replies</Link> ·{' '}
         <Link href={`${base}/payslips`}>Payslips</Link> ·{' '}
         <Link href={`${base}/newsroom`}>Newsroom</Link> ·{' '}
-        <Link href={`${base}/members`}>Members</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/members`}>Members</Link> ·{' '}
+        <Link href={`${base}/prime-counter`}>Prime counter</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
+      ) : page === 'prime-counter' ? (
+        <PrimeCounter />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1155,6 +1159,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/members`}>Members</Link>: a members area that sends you back where you were after signing in, and nowhere else.
+        </li>
+        <li>
+          <Link href={`${base}/prime-counter`}>Prime counter</Link>: a count that takes seconds, during which the page must stay usable and can be cancelled.
         </li>
       </ul>
     </section>
