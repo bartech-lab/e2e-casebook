@@ -123,6 +123,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 108 | [Photo album](cases/108-photo-album.md) | The Photo album page uploads a whole folder of photos, keeping its subfolders. |
 | 109 | [Floor plan](cases/109-floor-plan.md) | The Floor plan page zooms a plan with a pinch, Ctrl and the mouse wheel, or buttons. |
 | 110 | [Reading list](cases/110-reading-list.md) | The Reading list page keeps the user signed in with a session stored in IndexedDB. |
+| 111 | [Bus stop](cases/111-bus-stop.md) | The Bus stop page links to a departures board that keeps working offline. |
 
 ## Run it
 

@@ -55,6 +55,7 @@ import { createNotesSchema } from './notesSchema.ts';
 import { createGigTickets } from './gigTickets.ts';
 import { createAlbums } from './albums.ts';
 import { createReaderAuth } from './readerAuth.ts';
+import { createBusTimes } from './busTimes.ts';
 
 export type AppOptions = {
   dbPath?: string;
@@ -111,6 +112,7 @@ export async function buildApp(opts: AppOptions = {}) {
   const gigTickets = createGigTickets();
   const albums = createAlbums();
   const readerAuth = createReaderAuth();
+  const busTimes = createBusTimes();
   const app = Fastify({ trustProxy: true });
 
   await app.register(fastifyWebsocket);
@@ -184,6 +186,7 @@ export async function buildApp(opts: AppOptions = {}) {
       gigTickets.register(scope);
       albums.register(scope);
       readerAuth.register(scope);
+      busTimes.register(scope);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
         messages: store.messagesSince(req.params.sandbox, Number(req.query.since ?? 0) || 0),
@@ -218,7 +221,7 @@ export async function buildApp(opts: AppOptions = {}) {
     { prefix: '/api/s/:sandbox' },
   );
 
-  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth });
+  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes });
 
   if (opts.clientDir && existsSync(join(opts.clientDir, 'index.html'))) {
     await app.register(fastifyStatic, { root: opts.clientDir, wildcard: false });
@@ -276,6 +279,7 @@ export async function buildApp(opts: AppOptions = {}) {
       gigTickets.clear(id);
       albums.clear(id);
       readerAuth.clear(id);
+      busTimes.clear(id);
     }
   }, Math.min(ttl, 60 * 60 * 1000));
   pruneTimer.unref();
