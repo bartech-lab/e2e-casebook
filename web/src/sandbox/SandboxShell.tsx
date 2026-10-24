@@ -138,6 +138,7 @@ import { Prints } from '../prints/Prints.tsx';
 import { StudyGroup } from '../study-group/StudyGroup.tsx';
 import { BillingDetails } from '../billing-details/BillingDetails.tsx';
 import { FlightSearch } from '../flight-search/FlightSearch.tsx';
+import { BankTransfer } from '../bank-transfer/BankTransfer.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -310,7 +311,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/prints`}>Prints</Link> ·{' '}
         <Link href={`${base}/study-group`}>Study group</Link> ·{' '}
         <Link href={`${base}/billing-details`}>Billing details</Link> ·{' '}
-        <Link href={`${base}/flight-search`}>Flight search</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/flight-search`}>Flight search</Link> ·{' '}
+        <Link href={`${base}/bank-transfer`}>Bank transfer</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -572,6 +574,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <BillingDetails sandbox={sandbox} />
       ) : page === 'flight-search' ? (
         <FlightSearch sandbox={sandbox} />
+      ) : page === 'bank-transfer' ? (
+        <BankTransfer sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -983,6 +987,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/flight-search`}>Flight search</Link>: a flight search that can be slow, with Cancel.
+        </li>
+        <li>
+          <Link href={`${base}/bank-transfer`}>Bank transfer</Link>: an account number that formats itself as you type.
         </li>
       </ul>
     </section>
