@@ -136,6 +136,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 121 | [Parking permit](cases/121-parking-permit.md) | The Parking permit page takes payment through card fields in an embedded frame. |
 | 122 | [Shared drive](cases/122-shared-drive.md) | The Shared drive page lists files with a custom right-click menu: Open, Duplicate and Delete. |
 | 123 | [Village hall](cases/123-village-hall.md) | The Village hall page lists questions whose answers open and close, and can still be found while closed. |
+| 124 | [Assistant](cases/124-assistant.md) | The Assistant page has three conversations; answers arrive word by word, also while you read another conversation. |
 
 ## Run it
 

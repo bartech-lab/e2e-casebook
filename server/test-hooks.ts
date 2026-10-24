@@ -48,11 +48,12 @@ import type { SavedSearches } from './savedSearches.ts';
 import type { EventFeedback } from './eventFeedback.ts';
 import type { ExpenseClaims } from './expenseClaims.ts';
 import type { CardPayments } from './cardPayments.ts';
+import type { Assistant } from './assistant.ts';
 import { DEFAULT_CARDS, type Store } from './store.ts';
 import { cardInput, messageInput } from './validation.ts';
 
 type Params = { sandbox: string };
-type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts; teams: Teams; meetings: Meetings; otps: Otps; passkeys: Passkeys; deliveries: Deliveries; imports: Imports; uploads: Uploads; tickets: Tickets; appearances: Appearances; priceAlerts: PriceAlerts; scores: Scores; passwords: Passwords; sales: Sales; articles: Articles; posts: Posts; voiceNotes: VoiceNotes; priceList: PriceList; notesSchema: NotesSchema; gigTickets: GigTickets; albums: Albums; readerAuth: ReaderAuth; busTimes: BusTimes; workspaces: Workspaces; savedSearches: SavedSearches; eventFeedback: EventFeedback; expenseClaims: ExpenseClaims; cardPayments: CardPayments };
+type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts; teams: Teams; meetings: Meetings; otps: Otps; passkeys: Passkeys; deliveries: Deliveries; imports: Imports; uploads: Uploads; tickets: Tickets; appearances: Appearances; priceAlerts: PriceAlerts; scores: Scores; passwords: Passwords; sales: Sales; articles: Articles; posts: Posts; voiceNotes: VoiceNotes; priceList: PriceList; notesSchema: NotesSchema; gigTickets: GigTickets; albums: Albums; readerAuth: ReaderAuth; busTimes: BusTimes; workspaces: Workspaces; savedSearches: SavedSearches; eventFeedback: EventFeedback; expenseClaims: ExpenseClaims; cardPayments: CardPayments; assistant: Assistant };
 
 type FaultBody = {
   dropSockets?: unknown;
@@ -62,7 +63,7 @@ type FaultBody = {
   auth?: { tokenTtlMs?: unknown };
 };
 
-export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes, workspaces, savedSearches, eventFeedback, expenseClaims, cardPayments }: Deps) {
+export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes, workspaces, savedSearches, eventFeedback, expenseClaims, cardPayments, assistant }: Deps) {
   app.register(
     async (scope) => {
       scope.addHook('preHandler', async (req, reply) => {
@@ -122,6 +123,7 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         eventFeedback.clear(sandbox);
         expenseClaims.clear(sandbox);
         cardPayments.clear(sandbox);
+        assistant.clear(sandbox);
         hub.reset(sandbox);
         return { ok: true };
       });
@@ -293,6 +295,13 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
       });
 
       scope.post<{ Params: Params }>('/claims-expire', async (req) => expenseClaims.expireAll(req.params.sandbox));
+
+      scope.post<{ Params: Params }>('/assistant-pace', async (req, reply) => {
+        const ms = (req.body as { ms?: unknown } | undefined)?.ms;
+        if (typeof ms !== 'number' || !Number.isInteger(ms) || ms < 0 || ms > 2000) return reply.code(400).send({ error: 'ms must be a whole number from 0 to 2000' });
+        assistant.setPace(req.params.sandbox, ms);
+        return { ok: true };
+      });
 
       scope.post<{ Params: Params }>('/expire-sessions', async (req) => {
         extras.expireSessions(req.params.sandbox);

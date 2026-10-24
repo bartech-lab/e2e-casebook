@@ -393,3 +393,9 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .faq-item h2 { margin: 0.5rem 0 0; font-size: 1.05rem; }
 .faq-item h2 button { width: 100%; max-width: 40rem; text-align: left; padding: 0.5rem 0.75rem; font: inherit; background: #fff; border: 1px solid #c8cdd8; border-radius: 0.3rem; }
 .faq-answer { max-width: 40rem; padding: 0 0.75rem; }
+
+.assistant-layout { display: grid; grid-template-columns: 12rem 1fr; gap: 1.5rem; }
+.assistant-layout aside ul { list-style: none; padding: 0; margin: 0; }
+.assistant-layout aside button { display: block; width: 100%; text-align: left; padding: 0.4rem 0.6rem; margin: 0 0 0.25rem; font: inherit; background: #fff; border: 1px solid #c8cdd8; border-radius: 0.3rem; }
+.assistant-layout aside button[aria-current='page'] { border-color: #2c4fa8; font-weight: 600; }
+.assistant-messages { padding-left: 1.2rem; }
