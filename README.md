@@ -158,6 +158,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 143 | [Rooms](cases/143-rooms.md) | The Rooms page shows a guest house's three rooms with photos sized for each screen. |
 | 144 | [Radio favourites](cases/144-radio-favourites.md) | The Radio favourites page lets you like songs, and keeps the saved likes in step with the screen. |
 | 145 | [Shift handover](cases/145-shift-handover.md) | The Shift handover page sends a note for the next shift, where @ mentions people. |
+| 146 | [Ticket contact](cases/146-ticket-contact.md) | The Ticket contact page asks where to send tickets, and works with the browser's autofill. |
 
 ## Run it
 
