@@ -115,6 +115,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 100 | [Hotels](cases/100-hotels.md) | The Hotels page filters a hotel list in a sheet that covers the whole window. |
 | 101 | [Lamps](cases/101-lamps.md) | The Lamps page shows product cards with Save and Compare buttons for mouse, keyboard and touch. |
 | 102 | [Mailing list](cases/102-mailing-list.md) | The Mailing list page embeds a sign-up form that a separate script wires up after the page loads. |
+| 103 | [Trip tags](cases/103-trip-tags.md) | The Trip tags page turns typed text into tags, also when the text comes from an input method. |
 
 ## Run it
 

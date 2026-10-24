@@ -101,6 +101,7 @@ import { DeliveryForm } from '../delivery-form/DeliveryForm.tsx';
 import { HotelSearch } from '../hotels/HotelSearch.tsx';
 import { Lamps } from '../lamps/Lamps.tsx';
 import { MailingList } from '../mailing-list/MailingList.tsx';
+import { TripTags } from '../trip-tags/TripTags.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -236,7 +237,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/delivery-form`}>Delivery details</Link> ·{' '}
         <Link href={`${base}/hotels`}>Hotels</Link> ·{' '}
         <Link href={`${base}/lamps`}>Lamps</Link> ·{' '}
-        <Link href={`${base}/mailing-list`}>Mailing list</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/mailing-list`}>Mailing list</Link> ·{' '}
+        <Link href={`${base}/trip-tags`}>Trip tags</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -424,6 +426,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Lamps />
       ) : page === 'mailing-list' ? (
         <MailingList />
+      ) : page === 'trip-tags' ? (
+        <TripTags />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -724,6 +728,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/mailing-list`}>Mailing list</Link>: a sign-up form wired up by a separate script that loads after the page.
+        </li>
+        <li>
+          <Link href={`${base}/trip-tags`}>Trip tags</Link>: a tag input that has to work with input methods for Japanese, Chinese and accents.
         </li>
       </ul>
     </section>
