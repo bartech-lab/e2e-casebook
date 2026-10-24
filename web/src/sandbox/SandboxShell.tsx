@@ -107,6 +107,7 @@ import { PrivacySettings } from '../privacy/PrivacySettings.tsx';
 import { TrainTicket } from '../train-ticket/TrainTicket.tsx';
 import { Pancakes } from '../pancakes/Pancakes.tsx';
 import { FolderUpload } from '../album/FolderUpload.tsx';
+import { FloorPlan } from '../floor-plan/FloorPlan.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -248,7 +249,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/privacy`}>Privacy settings</Link> ·{' '}
         <Link href={`${base}/train-ticket`}>Train ticket</Link> ·{' '}
         <Link href={`${base}/pancakes`}>Pancakes</Link> ·{' '}
-        <Link href={`${base}/album`}>Photo album</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/album`}>Photo album</Link> ·{' '}
+        <Link href={`${base}/floor-plan`}>Floor plan</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -448,6 +450,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Pancakes />
       ) : page === 'album' ? (
         <FolderUpload sandbox={sandbox} />
+      ) : page === 'floor-plan' ? (
+        <FloorPlan />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -766,6 +770,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/album`}>Photo album</Link>: an album that uploads a whole folder of photos at once.
+        </li>
+        <li>
+          <Link href={`${base}/floor-plan`}>Floor plan</Link>: a floor plan that zooms with two fingers, Ctrl and the wheel, or buttons.
         </li>
       </ul>
     </section>

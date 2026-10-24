@@ -121,6 +121,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 106 | [Train ticket](cases/106-train-ticket.md) | The Train ticket page sells a ticket with optional extras over three steps. |
 | 107 | [Pancakes](cases/107-pancakes.md) | The Pancakes page scales a recipe by servings and works out how many servings your flour makes. |
 | 108 | [Photo album](cases/108-photo-album.md) | The Photo album page uploads a whole folder of photos, keeping its subfolders. |
+| 109 | [Floor plan](cases/109-floor-plan.md) | The Floor plan page zooms a plan with a pinch, Ctrl and the mouse wheel, or buttons. |
 
 ## Run it
 
