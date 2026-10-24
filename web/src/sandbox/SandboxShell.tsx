@@ -148,6 +148,7 @@ import { TicketContact } from '../ticket-contact/TicketContact.tsx';
 import { Handbook } from '../handbook/Handbook.tsx';
 import { Barber } from '../barber/Barber.tsx';
 import { RunningOrder } from '../running-order/RunningOrder.tsx';
+import { SitePhotos } from '../site-photos/SitePhotos.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -330,7 +331,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/ticket-contact`}>Ticket contact</Link> ·{' '}
         <Link href={`${base}/handbook`}>Handbook</Link> ·{' '}
         <Link href={`${base}/barber`}>Barber</Link> ·{' '}
-        <Link href={`${base}/running-order`}>Running order</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/running-order`}>Running order</Link> ·{' '}
+        <Link href={`${base}/site-photos`}>Site photos</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -612,6 +614,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Barber sandbox={sandbox} name={name} />
       ) : page === 'running-order' ? (
         <RunningOrder sandbox={sandbox} />
+      ) : page === 'site-photos' ? (
+        <SitePhotos />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -1053,6 +1057,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/running-order`}>Running order</Link>: a long list you reorder by dragging, which scrolls while you drag.
+        </li>
+        <li>
+          <Link href={`${base}/site-photos`}>Site photos</Link>: a file table sorted by name, size or date, with numbers in names.
         </li>
       </ul>
     </section>
