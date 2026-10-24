@@ -113,6 +113,7 @@ import { BusStop } from '../bus-stop/BusStop.tsx';
 import { Workspace } from '../workspace/Workspace.tsx';
 import { SavedSearches } from '../saved-searches/SavedSearches.tsx';
 import { Groceries } from '../groceries/Groceries.tsx';
+import { EventFeedback } from '../event-feedback/EventFeedback.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -260,7 +261,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/bus-stop`}>Bus stop</Link> ·{' '}
         <Link href={`${base}/workspace`}>Workspace</Link> ·{' '}
         <Link href={`${base}/saved-searches`}>Saved searches</Link> ·{' '}
-        <Link href={`${base}/groceries`}>Groceries</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/groceries`}>Groceries</Link> ·{' '}
+        <Link href={`${base}/event-feedback`}>Event feedback</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -472,6 +474,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <SavedSearches sandbox={sandbox} />
       ) : page === 'groceries' ? (
         <Groceries />
+      ) : page === 'event-feedback' ? (
+        <EventFeedback sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -808,6 +812,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/groceries`}>Groceries</Link>: a shopping basket whose changes are announced to screen readers.
+        </li>
+        <li>
+          <Link href={`${base}/event-feedback`}>Event feedback</Link>: a feedback form with a star rating built as a custom element.
         </li>
       </ul>
     </section>

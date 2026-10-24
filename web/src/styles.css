@@ -346,3 +346,5 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .grocery-list button { min-width: 2rem; }
 .grocery-status, .grocery-alert { min-height: 1.4em; }
 .grocery-alert { color: #b42318; }
+.event-form fieldset { display: flex; flex-direction: column; align-items: flex-start; gap: 0.6rem; max-width: 28rem; border: 1px solid var(--border); border-radius: var(--radius); }
+.event-rating { display: flex; align-items: center; gap: 0.5rem; }

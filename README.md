@@ -127,6 +127,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 112 | [Workspace](cases/112-workspace.md) | The Workspace page opens on Setup or on the Dashboard, depending on the workspace's settings. |
 | 113 | [Saved searches](cases/113-saved-searches.md) | The Saved searches page lists saved searches and shows an empty state when there are none. |
 | 114 | [Groceries](cases/114-groceries.md) | The Groceries page adds products to a basket and announces each change to screen readers. |
+| 115 | [Event feedback](cases/115-event-feedback.md) | The Event feedback page has a form whose star rating is a custom element. |
 
 ## Run it
 
