@@ -444,3 +444,7 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .split-divider { flex: none; width: 8px; cursor: col-resize; background: #dde1ea; touch-action: none; user-select: none; }
 .split-divider:hover, .split-divider:focus-visible { background: #2c4fa8; }
 .split-message { flex: 1; min-width: 0; padding: 0.75rem 1rem; overflow: auto; }
+
+.drop-zone { max-width: 32rem; padding: 1rem 1.25rem; border: 2px dashed #8a93a8; border-radius: 0.5rem; background: #fff; }
+.drop-zone-over { border-color: #2c4fa8; background: #e7eefc; }
+.drop-zone-text { font-size: 1.1rem; font-weight: 600; margin: 0 0 0.75rem; padding: 1.5rem; background: #f3f5f9; border-radius: 0.4rem; text-align: center; }

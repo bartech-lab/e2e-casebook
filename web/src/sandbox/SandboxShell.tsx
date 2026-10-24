@@ -128,6 +128,7 @@ import { AlertSettings } from '../alert-settings/AlertSettings.tsx';
 import { ChoirSignup } from '../choir/ChoirSignup.tsx';
 import { SharedPhotos } from '../shared-photos/SharedPhotos.tsx';
 import { MailReader } from '../mail-reader/MailReader.tsx';
+import { Receipts } from '../receipts/Receipts.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -290,7 +291,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/alert-settings`}>Alert settings</Link> ·{' '}
         <Link href={`${base}/choir`}>Choir sign-up</Link> ·{' '}
         <Link href={`${base}/shared-photos`}>Shared photos</Link> ·{' '}
-        <Link href={`${base}/mail-reader`}>Mail reader</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/mail-reader`}>Mail reader</Link> ·{' '}
+        <Link href={`${base}/receipts`}>Receipts</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -532,6 +534,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <SharedPhotos />
       ) : page === 'mail-reader' ? (
         <MailReader sandbox={sandbox} />
+      ) : page === 'receipts' ? (
+        <Receipts />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -913,6 +917,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/mail-reader`}>Mail reader</Link>: a message list and a message, with a divider you can drag.
+        </li>
+        <li>
+          <Link href={`${base}/receipts`}>Receipts</Link>: receipts dragged from the computer onto a drop area.
         </li>
       </ul>
     </section>
