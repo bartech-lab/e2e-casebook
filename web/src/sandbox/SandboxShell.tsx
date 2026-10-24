@@ -163,6 +163,7 @@ import { PayslipsLink } from '../payslips/PayslipsLink.tsx';
 import { Newsroom, NewsStory } from '../newsroom/Newsroom.tsx';
 import { Members } from '../members/Members.tsx';
 import { PrimeCounter } from '../prime-counter/PrimeCounter.tsx';
+import { PayByBank } from '../pay-by-bank/PayByBank.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -362,12 +363,15 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/payslips`}>Payslips</Link> ·{' '}
         <Link href={`${base}/newsroom`}>Newsroom</Link> ·{' '}
         <Link href={`${base}/members`}>Members</Link> ·{' '}
-        <Link href={`${base}/prime-counter`}>Prime counter</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/prime-counter`}>Prime counter</Link> ·{' '}
+        <Link href={`${base}/pay-by-bank`}>Pay by bank</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
       ) : page === 'prime-counter' ? (
         <PrimeCounter />
+      ) : page === 'pay-by-bank' ? (
+        <PayByBank sandbox={sandbox} />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1162,6 +1166,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/prime-counter`}>Prime counter</Link>: a count that takes seconds, during which the page must stay usable and can be cancelled.
+        </li>
+        <li>
+          <Link href={`${base}/pay-by-bank`}>Pay by bank</Link>: a payment that leaves for a bank on another site and must come back to the right order.
         </li>
       </ul>
     </section>
