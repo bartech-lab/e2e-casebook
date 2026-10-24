@@ -119,6 +119,7 @@ import { Highlights } from '../highlights/Highlights.tsx';
 import { SellBike } from '../sell-bike/SellBike.tsx';
 import { ExpenseClaims } from '../expense-claims/ExpenseClaims.tsx';
 import { Flats } from '../flats/Flats.tsx';
+import { Parking } from '../parking/Parking.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -272,7 +273,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/highlights`}>Highlights</Link> ·{' '}
         <Link href={`${base}/sell-bike`}>Sell your bike</Link> ·{' '}
         <Link href={`${base}/expense-claims`}>Expense claims</Link> ·{' '}
-        <Link href={`${base}/flats`}>Flats</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/flats`}>Flats</Link> ·{' '}
+        <Link href={`${base}/parking`}>Parking permit</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -496,6 +498,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <ExpenseClaims sandbox={sandbox} />
       ) : page === 'flats' ? (
         <Flats sandbox={sandbox} />
+      ) : page === 'parking' ? (
+        <Parking sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -850,6 +854,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/flats`}>Flats</Link>: flats to rent as cards you can open, save and compare.
+        </li>
+        <li>
+          <Link href={`${base}/parking`}>Parking permit</Link>: pay for a parking permit with card details in an embedded payment frame.
         </li>
       </ul>
     </section>

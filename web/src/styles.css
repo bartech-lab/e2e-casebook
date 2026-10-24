@@ -381,3 +381,5 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .flat-card h2 { font-size: 1.1rem; margin: 0 0 0.3rem; }
 .flat-link::after { content: ''; position: absolute; inset: 0; }
 .flat-actions { position: relative; z-index: 1; display: inline-flex; gap: 0.5rem; align-items: center; }
+
+.pay-frame { display: block; width: 100%; max-width: 22rem; border: 1px solid #c8cdd8; border-radius: 0.4rem; margin: 0.75rem 0; }

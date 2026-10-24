@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Card details</title>
+    <style>
+      html, body { margin: 0; overflow: hidden; }
+      body { font-family: system-ui, sans-serif; padding: 0.5rem; background: #fff; }
+      label { display: block; margin: 0 0 0.5rem; }
+      input { display: block; font: inherit; padding: 0.3rem; width: 16rem; }
+      .row { display: flex; gap: 1rem; }
+      .row input { width: 6rem; }
+      #error { color: #a40000; margin: 0.5rem 0 0; }
+    </style>
+  </head>
+  <body>
+    <form id="card" novalidate>
+      <label>Card number <input name="number" inputmode="numeric" autocomplete="cc-number" /></label>
+      <div class="row">
+        <label>Expiry (MM/YY) <input name="expiry" autocomplete="cc-exp" /></label>
+        <label>Security code <input name="cvc" inputmode="numeric" autocomplete="cc-csc" /></label>
+      </div>
+      <p id="error" role="alert" hidden></p>
+    </form>
+    <script src="pay.js"></script>
+  </body>
+</html>

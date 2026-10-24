@@ -133,6 +133,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 118 | [Sell your bike](cases/118-sell-your-bike.md) | The Sell your bike page explains, to every user, why Publish is not available yet. |
 | 119 | [Expense claims](cases/119-expense-claims.md) | The Expense claims page submits claims after you sign in, and lets you sign in again without losing a claim when the session ends. |
 | 120 | [Flats](cases/120-flats.md) | The Flats page lists flats to rent as cards that open the flat, with Save and Compare on each card. |
+| 121 | [Parking permit](cases/121-parking-permit.md) | The Parking permit page takes payment through card fields in an embedded frame. |
 
 ## Run it
 
