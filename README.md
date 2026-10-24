@@ -128,6 +128,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 113 | [Saved searches](cases/113-saved-searches.md) | The Saved searches page lists saved searches and shows an empty state when there are none. |
 | 114 | [Groceries](cases/114-groceries.md) | The Groceries page adds products to a basket and announces each change to screen readers. |
 | 115 | [Event feedback](cases/115-event-feedback.md) | The Event feedback page has a form whose star rating is a custom element. |
+| 116 | [Shop dashboard](cases/116-shop-dashboard.md) | The Shop dashboard page has an orders widget that switches layout with its own width. |
 
 ## Run it
 
