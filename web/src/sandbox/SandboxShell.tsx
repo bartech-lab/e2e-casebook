@@ -124,6 +124,7 @@ import { Drive } from '../drive/Drive.tsx';
 import { VillageHall } from '../village-hall/VillageHall.tsx';
 import { Assistant } from '../assistant/Assistant.tsx';
 import { Comments } from '../comments/Comments.tsx';
+import { AlertSettings } from '../alert-settings/AlertSettings.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -282,7 +283,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/drive`}>Shared drive</Link> ·{' '}
         <Link href={`${base}/village-hall`}>Village hall</Link> ·{' '}
         <Link href={`${base}/assistant`}>Assistant</Link> ·{' '}
-        <Link href={`${base}/comments`}>Comments</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/comments`}>Comments</Link> ·{' '}
+        <Link href={`${base}/alert-settings`}>Alert settings</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -516,6 +518,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Assistant sandbox={sandbox} />
       ) : page === 'comments' ? (
         <Comments />
+      ) : page === 'alert-settings' ? (
+        <AlertSettings sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -885,6 +889,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/comments`}>Comments</Link>: a comment box that grows with what you write.
+        </li>
+        <li>
+          <Link href={`${base}/alert-settings`}>Alert settings</Link>: switches and a summary choice that must stay readable in high-contrast mode.
         </li>
       </ul>
     </section>

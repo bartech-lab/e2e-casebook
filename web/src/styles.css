@@ -404,3 +404,23 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .comment-box { display: grid; grid-template-columns: 1fr auto; gap: 0.5rem; align-items: end; max-width: 36rem; }
 .comment-box label { grid-column: 1 / -1; }
 .comment-box textarea { min-height: 0; font: inherit; font-size: 16px; line-height: 24px; padding: 6px 8px; border: 1px solid #8a93a8; resize: none; overflow-wrap: anywhere; box-sizing: border-box; }
+
+.switch-list { list-style: none; padding: 0; max-width: 22rem; }
+.switch-list li { display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 0; }
+.switch { position: relative; width: 46px; height: 26px; padding: 0; border: 1px solid transparent; border-radius: 13px; background: #b8bfcc; cursor: pointer; }
+.switch[aria-checked='true'] { background: #1f7a53; }
+.switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: left 0.1s; }
+.switch[aria-checked='true']::after { left: 22px; }
+.switch:focus-visible, .digest input:focus-visible + span { outline: 3px solid transparent; box-shadow: 0 0 0 3px #2c4fa8; }
+.digest { display: inline-flex; gap: 0; border: 0; padding: 0; margin: 1rem 0 0; }
+.digest legend { margin-bottom: 0.4rem; font-weight: 600; }
+.digest label { position: relative; }
+.digest input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.digest span { display: inline-block; padding: 0.4rem 1rem; border: 1px solid #8a93a8; background: #fff; color: #1d2b4f; }
+.digest input:checked + span { background: #1d2b4f; color: #fff; }
+@media (forced-colors: active) {
+  .switch::after { background: CanvasText; }
+  .switch[aria-checked='true'] { background: Highlight; }
+  .switch[aria-checked='true']::after { background: HighlightText; }
+  .digest input:checked + span { background: Highlight; color: HighlightText; forced-color-adjust: none; }
+}
