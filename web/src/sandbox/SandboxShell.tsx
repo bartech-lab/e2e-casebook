@@ -118,6 +118,7 @@ import { OrdersWidget } from '../orders-widget/OrdersWidget.tsx';
 import { Highlights } from '../highlights/Highlights.tsx';
 import { SellBike } from '../sell-bike/SellBike.tsx';
 import { ExpenseClaims } from '../expense-claims/ExpenseClaims.tsx';
+import { Flats } from '../flats/Flats.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -270,7 +271,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/shop-dashboard`}>Shop dashboard</Link> ·{' '}
         <Link href={`${base}/highlights`}>Highlights</Link> ·{' '}
         <Link href={`${base}/sell-bike`}>Sell your bike</Link> ·{' '}
-        <Link href={`${base}/expense-claims`}>Expense claims</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/expense-claims`}>Expense claims</Link> ·{' '}
+        <Link href={`${base}/flats`}>Flats</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -492,6 +494,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <SellBike />
       ) : page === 'expense-claims' ? (
         <ExpenseClaims sandbox={sandbox} />
+      ) : page === 'flats' ? (
+        <Flats sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -843,6 +847,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/expense-claims`}>Expense claims</Link>: expense claims behind a sign-in, where a session can end while you type.
+        </li>
+        <li>
+          <Link href={`${base}/flats`}>Flats</Link>: flats to rent as cards you can open, save and compare.
         </li>
       </ul>
     </section>
