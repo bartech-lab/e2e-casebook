@@ -147,6 +147,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 132 | [Concert poster](cases/132-concert-poster.md) | The Concert poster page sizes the poster's headline so it fits on one line at any width. |
 | 133 | [Field notes](cases/133-field-notes.md) | The Field notes page keeps notes in the browser's storage as you type. |
 | 134 | [Club activity](cases/134-club-activity.md) | The Club activity page lists what happened in the club, with times such as "3 minutes ago". |
+| 135 | [Notice board](cases/135-notice-board.md) | The Notice board page lists office notices and counts the ones you have not read yet. |
 
 ## Run it
 

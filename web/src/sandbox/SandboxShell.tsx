@@ -133,6 +133,7 @@ import { GuestbookLink } from '../guestbook/GuestbookLink.tsx';
 import { Poster } from '../poster/Poster.tsx';
 import { FieldNotes } from '../field-notes/FieldNotes.tsx';
 import { ClubActivity } from '../club-activity/ClubActivity.tsx';
+import { NoticeBoard } from '../notice-board/NoticeBoard.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -300,7 +301,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/guestbook`}>Guestbook</Link> ·{' '}
         <Link href={`${base}/poster`}>Concert poster</Link> ·{' '}
         <Link href={`${base}/field-notes`}>Field notes</Link> ·{' '}
-        <Link href={`${base}/club-activity`}>Club activity</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/club-activity`}>Club activity</Link> ·{' '}
+        <Link href={`${base}/notice-board`}>Notice board</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -552,6 +554,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <FieldNotes sandbox={sandbox} />
       ) : page === 'club-activity' ? (
         <ClubActivity sandbox={sandbox} />
+      ) : page === 'notice-board' ? (
+        <NoticeBoard sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -948,6 +952,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/club-activity`}>Club activity</Link>: what happened in the tennis club, with times like "3 minutes ago".
+        </li>
+        <li>
+          <Link href={`${base}/notice-board`}>Notice board</Link>: office notices that count as read once you have actually seen them.
         </li>
       </ul>
     </section>

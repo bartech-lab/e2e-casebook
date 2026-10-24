@@ -453,3 +453,16 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .poster-headline { white-space: nowrap; margin: 1.5rem 0 0.5rem; line-height: 1.2; }
 
 .notes-warning { color: #8a3b00; font-weight: 600; }
+
+.notice-list {
+  list-style: none;
+  padding: 0;
+}
+
+.notice {
+  min-height: 18rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
