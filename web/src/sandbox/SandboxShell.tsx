@@ -155,6 +155,7 @@ import { TileOrder } from '../tile-order/TileOrder.tsx';
 import { ShoeSize } from '../shoe-size/ShoeSize.tsx';
 import { SavedCards } from '../saved-cards/SavedCards.tsx';
 import { StockTake } from '../stock-take/StockTake.tsx';
+import { Cookbook } from '../cookbook/Cookbook.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -344,7 +345,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/tile-order`}>Tile order</Link> ·{' '}
         <Link href={`${base}/shoe-size`}>Shoe size</Link> ·{' '}
         <Link href={`${base}/saved-cards`}>Saved cards</Link> ·{' '}
-        <Link href={`${base}/stock-take`}>Stock take</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/stock-take`}>Stock take</Link> ·{' '}
+        <Link href={`${base}/cookbook`}>Cookbook</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -640,6 +642,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <SavedCards />
       ) : page === 'stock-take' ? (
         <StockTake />
+      ) : page === 'cookbook' ? (
+        <Cookbook />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -1102,6 +1106,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/stock-take`}>Stock take</Link>: a grid you fill by pasting cells from a spreadsheet.
+        </li>
+        <li>
+          <Link href={`${base}/cookbook`}>Cookbook</Link>: dialogs over a long page that must not scroll or move behind them.
         </li>
       </ul>
     </section>

@@ -555,3 +555,5 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 
 .modal-backdrop.fade { opacity: 1; transition: opacity 300ms ease; }
 .modal-backdrop.fade.closing { opacity: 0; pointer-events: none; }
+
+.cookbook > li { min-height: 8rem; }
