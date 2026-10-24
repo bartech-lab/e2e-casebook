@@ -14,7 +14,20 @@ export function PrivacySettings() {
   const toast = useRef<HTMLDivElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
+  const list = useRef<HTMLUListElement>(null);
+
   useEffect(() => () => clearTimeout(timer.current), []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) document.getElementById(e.target.getAttribute('popovertarget')!)?.classList.toggle('privacy-hint-away', !e.isIntersecting);
+      },
+      { root: list.current },
+    );
+    list.current?.querySelectorAll('.privacy-hint-button').forEach((b) => observer.observe(b));
+    return () => observer.disconnect();
+  }, []);
 
   function save() {
     clearTimeout(timer.current);
@@ -25,7 +38,7 @@ export function PrivacySettings() {
   return (
     <section>
       <h1>Privacy settings</h1>
-      <ul className="privacy-list" aria-label="Settings">
+      <ul ref={list} className="privacy-list" aria-label="Settings">
         {SETTINGS.map(([id, label, hint]) => (
           <li key={id} className="privacy-card">
             <label>
