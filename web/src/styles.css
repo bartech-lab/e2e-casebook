@@ -362,3 +362,9 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
   .ow-table td::before { content: attr(data-label) ": "; color: var(--muted); }
 }
 @media (max-width: 640px) { .ow-layout.with-filters { grid-template-columns: minmax(0, 1fr); } }
+.hl-page { max-width: 38rem; }
+.hl-page article p { line-height: 1.7; }
+.hl-meta { color: var(--muted); }
+.hl-popup { position: absolute; transform: translateX(-100%); z-index: 4; display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem; }
+.hl-popup button { white-space: nowrap; box-shadow: var(--shadow); }
+.hl-popup p { margin: 0; padding: 0.25rem 0.5rem; background: #1f2937; color: #ffffff; border-radius: var(--radius); font-size: 0.85rem; white-space: nowrap; }

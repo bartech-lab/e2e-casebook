@@ -115,6 +115,7 @@ import { SavedSearches } from '../saved-searches/SavedSearches.tsx';
 import { Groceries } from '../groceries/Groceries.tsx';
 import { EventFeedback } from '../event-feedback/EventFeedback.tsx';
 import { OrdersWidget } from '../orders-widget/OrdersWidget.tsx';
+import { Highlights } from '../highlights/Highlights.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -264,7 +265,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/saved-searches`}>Saved searches</Link> ·{' '}
         <Link href={`${base}/groceries`}>Groceries</Link> ·{' '}
         <Link href={`${base}/event-feedback`}>Event feedback</Link> ·{' '}
-        <Link href={`${base}/shop-dashboard`}>Shop dashboard</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/shop-dashboard`}>Shop dashboard</Link> ·{' '}
+        <Link href={`${base}/highlights`}>Highlights</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -480,6 +482,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <EventFeedback sandbox={sandbox} />
       ) : page === 'shop-dashboard' ? (
         <OrdersWidget />
+      ) : page === 'highlights' ? (
+        <Highlights />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -822,6 +826,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/shop-dashboard`}>Shop dashboard</Link>: a dashboard widget that changes layout with its own width, not the window's.
+        </li>
+        <li>
+          <Link href={`${base}/highlights`}>Highlights</Link>: an article where selected text can be saved as a highlight.
         </li>
       </ul>
     </section>
