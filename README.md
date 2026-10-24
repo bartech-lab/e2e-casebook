@@ -144,6 +144,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 129 | [Mail reader](cases/129-mail-reader.md) | The Mail reader page shows a message list and a message side by side, divided by a bar you can drag. |
 | 130 | [Receipts](cases/130-receipts.md) | The Receipts page attaches receipt files dragged from the computer onto it, or chosen with a button. |
 | 131 | [Guestbook](cases/131-guestbook.md) | The Guestbook is a plain HTML page with a form, served by the server and usable without JavaScript. |
+| 132 | [Concert poster](cases/132-concert-poster.md) | The Concert poster page sizes the poster's headline so it fits on one line at any width. |
 
 ## Run it
 

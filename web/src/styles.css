@@ -448,3 +448,6 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .drop-zone { max-width: 32rem; padding: 1rem 1.25rem; border: 2px dashed #8a93a8; border-radius: 0.5rem; background: #fff; }
 .drop-zone-over { border-color: #2c4fa8; background: #e7eefc; }
 .drop-zone-text { font-size: 1.1rem; font-weight: 600; margin: 0 0 0.75rem; padding: 1.5rem; background: #f3f5f9; border-radius: 0.4rem; text-align: center; }
+
+.poster { position: relative; aspect-ratio: 3 / 2; max-width: 100%; margin: 1rem 0; padding: 0 1rem; overflow: hidden; box-sizing: border-box; background: linear-gradient(160deg, #1d2b4f, #4a5a85); color: #fff; border-radius: 0.5rem; }
+.poster-headline { white-space: nowrap; margin: 1.5rem 0 0.5rem; line-height: 1.2; }
