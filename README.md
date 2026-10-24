@@ -170,6 +170,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 155 | [Saved cards](cases/155-saved-cards.md) | The Saved cards page asks before removing a card, in a question that fades out. |
 | 156 | [Stock take](cases/156-stock-take.md) | The Stock take page is a grid of counts you can fill by pasting cells from a spreadsheet. |
 | 157 | [Cookbook](cases/157-cookbook.md) | The Cookbook page opens dialogs over a long list that must stay put behind them. |
+| 158 | [Trail map](cases/158-trail-map.md) | The Trail map page opens from a service worker's saved copy and must update to a new version cleanly. |
 
 ## Run it
 

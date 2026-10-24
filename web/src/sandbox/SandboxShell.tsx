@@ -156,6 +156,7 @@ import { ShoeSize } from '../shoe-size/ShoeSize.tsx';
 import { SavedCards } from '../saved-cards/SavedCards.tsx';
 import { StockTake } from '../stock-take/StockTake.tsx';
 import { Cookbook } from '../cookbook/Cookbook.tsx';
+import { TrailMap } from '../trail-map/TrailMap.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -346,7 +347,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/shoe-size`}>Shoe size</Link> ·{' '}
         <Link href={`${base}/saved-cards`}>Saved cards</Link> ·{' '}
         <Link href={`${base}/stock-take`}>Stock take</Link> ·{' '}
-        <Link href={`${base}/cookbook`}>Cookbook</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/cookbook`}>Cookbook</Link> ·{' '}
+        <Link href={`${base}/trail-map`}>Trail map</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -644,6 +646,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <StockTake />
       ) : page === 'cookbook' ? (
         <Cookbook />
+      ) : page === 'trail-map' ? (
+        <TrailMap sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -1109,6 +1113,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/cookbook`}>Cookbook</Link>: dialogs over a long page that must not scroll or move behind them.
+        </li>
+        <li>
+          <Link href={`${base}/trail-map`}>Trail map</Link>: an offline page that must move to a new version only when asked, in every open tab.
         </li>
       </ul>
     </section>
