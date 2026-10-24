@@ -108,6 +108,7 @@ import { TrainTicket } from '../train-ticket/TrainTicket.tsx';
 import { Pancakes } from '../pancakes/Pancakes.tsx';
 import { FolderUpload } from '../album/FolderUpload.tsx';
 import { FloorPlan } from '../floor-plan/FloorPlan.tsx';
+import { ReadingList } from '../reading-list/ReadingList.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -250,7 +251,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/train-ticket`}>Train ticket</Link> ·{' '}
         <Link href={`${base}/pancakes`}>Pancakes</Link> ·{' '}
         <Link href={`${base}/album`}>Photo album</Link> ·{' '}
-        <Link href={`${base}/floor-plan`}>Floor plan</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/floor-plan`}>Floor plan</Link> ·{' '}
+        <Link href={`${base}/reading-list`}>Reading list</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -452,6 +454,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <FolderUpload sandbox={sandbox} />
       ) : page === 'floor-plan' ? (
         <FloorPlan />
+      ) : page === 'reading-list' ? (
+        <ReadingList sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -773,6 +777,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/floor-plan`}>Floor plan</Link>: a floor plan that zooms with two fingers, Ctrl and the wheel, or buttons.
+        </li>
+        <li>
+          <Link href={`${base}/reading-list`}>Reading list</Link>: a signed-in reading list whose session is kept in the browser's IndexedDB.
         </li>
       </ul>
     </section>
