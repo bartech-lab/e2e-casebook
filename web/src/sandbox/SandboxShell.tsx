@@ -125,6 +125,7 @@ import { VillageHall } from '../village-hall/VillageHall.tsx';
 import { Assistant } from '../assistant/Assistant.tsx';
 import { Comments } from '../comments/Comments.tsx';
 import { AlertSettings } from '../alert-settings/AlertSettings.tsx';
+import { ChoirSignup } from '../choir/ChoirSignup.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -284,7 +285,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/village-hall`}>Village hall</Link> ·{' '}
         <Link href={`${base}/assistant`}>Assistant</Link> ·{' '}
         <Link href={`${base}/comments`}>Comments</Link> ·{' '}
-        <Link href={`${base}/alert-settings`}>Alert settings</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/alert-settings`}>Alert settings</Link> ·{' '}
+        <Link href={`${base}/choir`}>Choir sign-up</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -520,6 +522,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Comments />
       ) : page === 'alert-settings' ? (
         <AlertSettings sandbox={sandbox} />
+      ) : page === 'choir' ? (
+        <ChoirSignup />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -892,6 +896,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/alert-settings`}>Alert settings</Link>: switches and a summary choice that must stay readable in high-contrast mode.
+        </li>
+        <li>
+          <Link href={`${base}/choir`}>Choir sign-up</Link>: a sign-up form that changes layout when a phone is turned.
         </li>
       </ul>
     </section>
