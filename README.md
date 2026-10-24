@@ -102,6 +102,8 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 87 | [Post editor](cases/87-post-editor.md) | The Post editor page writes and publishes a blog post in a panel that scrolls. |
 | 88 | [Announcements](cases/88-announcements.md) | The Announcements page shows three banners you can dismiss. |
 | 89 | [Voice note](cases/89-voice-note.md) | The Voice note page records a voice note with the microphone and saves it. |
+| 90 | [Price list](cases/90-price-list.md) | The Price list page checks for new prices and downloads the list only when it changed. |
+| 91 | [Contributors](cases/91-contributors.md) | The Contributors page shows names on small cards, cutting the ones that do not fit. |
 
 ## Run it
 

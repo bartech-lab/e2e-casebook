@@ -88,6 +88,8 @@ import { Newsletter } from '../newsletter/Newsletter.tsx';
 import { PostEditor } from '../post-editor/PostEditor.tsx';
 import { Announcements } from '../announcements/Announcements.tsx';
 import { VoiceNote } from '../voice-note/VoiceNote.tsx';
+import { PriceList } from '../price-list/PriceList.tsx';
+import { Contributors } from '../contributors/Contributors.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -210,7 +212,9 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/newsletter`}>Newsletter</Link> ·{' '}
         <Link href={`${base}/post-editor`}>Post editor</Link> ·{' '}
         <Link href={`${base}/announcements`}>Announcements</Link> ·{' '}
-        <Link href={`${base}/voice-note`}>Voice note</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/voice-note`}>Voice note</Link> ·{' '}
+        <Link href={`${base}/price-list`}>Price list</Link> ·{' '}
+        <Link href={`${base}/contributors`}>Contributors</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -372,6 +376,10 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Announcements sandbox={sandbox} />
       ) : page === 'voice-note' ? (
         <VoiceNote sandbox={sandbox} />
+      ) : page === 'price-list' ? (
+        <PriceList sandbox={sandbox} />
+      ) : page === 'contributors' ? (
+        <Contributors />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -633,6 +641,12 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/voice-note`}>Voice note</Link>: record a voice note with the microphone and play it back.
+        </li>
+        <li>
+          <Link href={`${base}/price-list`}>Price list</Link>: check a price list without downloading it again when nothing changed.
+        </li>
+        <li>
+          <Link href={`${base}/contributors`}>Contributors</Link>: read long names that do not fit on their cards.
         </li>
       </ul>
     </section>

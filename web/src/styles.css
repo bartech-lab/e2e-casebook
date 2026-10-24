@@ -260,3 +260,9 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .level { width: 200px; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; margin: 8px 0; }
 .level span { display: block; height: 100%; background: var(--accent); }
 @media (max-width: 640px) { nav[aria-label="Sandbox"] { position: static; } }
+.contributors { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; }
+.contributor { position: relative; width: 12rem; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+.contributor a { display: block; }
+.contributor-name { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.contributor-tip { position: absolute; left: 0; top: calc(100% + 4px); z-index: 5; padding: 4px 8px; background: #1f2937; color: #ffffff; border-radius: var(--radius); white-space: nowrap; }
+@media (max-width: 600px) { .contributor { width: 8rem; } }
