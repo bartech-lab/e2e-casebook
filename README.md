@@ -134,6 +134,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 119 | [Expense claims](cases/119-expense-claims.md) | The Expense claims page submits claims after you sign in, and lets you sign in again without losing a claim when the session ends. |
 | 120 | [Flats](cases/120-flats.md) | The Flats page lists flats to rent as cards that open the flat, with Save and Compare on each card. |
 | 121 | [Parking permit](cases/121-parking-permit.md) | The Parking permit page takes payment through card fields in an embedded frame. |
+| 122 | [Shared drive](cases/122-shared-drive.md) | The Shared drive page lists files with a custom right-click menu: Open, Duplicate and Delete. |
 
 ## Run it
 
