@@ -151,6 +151,7 @@ import { RunningOrder } from '../running-order/RunningOrder.tsx';
 import { SitePhotos } from '../site-photos/SitePhotos.tsx';
 import { Staff } from '../staff/Staff.tsx';
 import { Answers } from '../answers/Answers.tsx';
+import { TileOrder } from '../tile-order/TileOrder.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -336,7 +337,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/running-order`}>Running order</Link> ·{' '}
         <Link href={`${base}/site-photos`}>Site photos</Link> ·{' '}
         <Link href={`${base}/staff`}>Staff</Link> ·{' '}
-        <Link href={`${base}/answers`}>Support answers</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/answers`}>Support answers</Link> ·{' '}
+        <Link href={`${base}/tile-order`}>Tile order</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -624,6 +626,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Staff sandbox={sandbox} />
       ) : page === 'answers' ? (
         <Answers />
+      ) : page === 'tile-order' ? (
+        <TileOrder sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -1074,6 +1078,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/answers`}>Support answers</Link>: search with highlighted matches, accents and special characters.
+        </li>
+        <li>
+          <Link href={`${base}/tile-order`}>Tile order</Link>: an order that belongs to one browser tab.
         </li>
       </ul>
     </section>
