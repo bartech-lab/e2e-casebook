@@ -466,3 +466,10 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
   border: 1px solid #ccc;
   border-radius: 0.5rem;
 }
+
+.room-photo,
+.rooms-wave {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

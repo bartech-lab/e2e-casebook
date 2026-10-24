@@ -155,6 +155,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 140 | [Bank transfer](cases/140-bank-transfer.md) | The Bank transfer page sends money to an account number that is formatted as you type. |
 | 141 | [Library card](cases/141-library-card.md) | The Library card page takes a date of birth typed by hand and works out your age. |
 | 142 | [Village fête](cases/142-village-fete.md) | The Village fête page links to a reply form that the server builds and a script improves. |
+| 143 | [Rooms](cases/143-rooms.md) | The Rooms page shows a guest house's three rooms with photos sized for each screen. |
 
 ## Run it
 

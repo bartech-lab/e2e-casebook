@@ -1,3 +1,4 @@
+import { registerRoomPhotos } from './roomPhotos.ts';
 import { randomBytes } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
@@ -272,6 +273,7 @@ export async function buildApp(opts: AppOptions = {}) {
     { prefix: '/api/s/:sandbox' },
   );
 
+  registerRoomPhotos(app);
   if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes, workspaces, savedSearches, eventFeedback, expenseClaims, cardPayments, assistant, guestbook, clientErrors, clubActivity, noticeBoard, cloudPix, studyGroup, billing, flights, transfers, libraryCards, rsvps });
 
   if (opts.clientDir && existsSync(join(opts.clientDir, 'index.html'))) {
