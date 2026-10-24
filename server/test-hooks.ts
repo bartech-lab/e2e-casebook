@@ -38,11 +38,12 @@ import type { Articles } from './articles.ts';
 import type { Posts } from './posts.ts';
 import type { VoiceNotes } from './voiceNotes.ts';
 import type { PriceList } from './priceList.ts';
+import type { NotesSchema } from './notesSchema.ts';
 import { DEFAULT_CARDS, type Store } from './store.ts';
 import { cardInput, messageInput } from './validation.ts';
 
 type Params = { sandbox: string };
-type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts; teams: Teams; meetings: Meetings; otps: Otps; passkeys: Passkeys; deliveries: Deliveries; imports: Imports; uploads: Uploads; tickets: Tickets; appearances: Appearances; priceAlerts: PriceAlerts; scores: Scores; passwords: Passwords; sales: Sales; articles: Articles; posts: Posts; voiceNotes: VoiceNotes; priceList: PriceList };
+type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts; teams: Teams; meetings: Meetings; otps: Otps; passkeys: Passkeys; deliveries: Deliveries; imports: Imports; uploads: Uploads; tickets: Tickets; appearances: Appearances; priceAlerts: PriceAlerts; scores: Scores; passwords: Passwords; sales: Sales; articles: Articles; posts: Posts; voiceNotes: VoiceNotes; priceList: PriceList; notesSchema: NotesSchema };
 
 type FaultBody = {
   dropSockets?: unknown;
@@ -52,7 +53,7 @@ type FaultBody = {
   auth?: { tokenTtlMs?: unknown };
 };
 
-export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList }: Deps) {
+export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema }: Deps) {
   app.register(
     async (scope) => {
       scope.addHook('preHandler', async (req, reply) => {
@@ -102,6 +103,7 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         posts.clear(sandbox);
         voiceNotes.clear(sandbox);
         priceList.clear(sandbox);
+        notesSchema.clear(sandbox);
         hub.reset(sandbox);
         return { ok: true };
       });
@@ -214,6 +216,12 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
       });
 
       scope.get<{ Params: Params }>('/price-list-requests', async (req) => priceList.requests(req.params.sandbox));
+
+      scope.post<{ Params: Params }>('/notes-schema', async (req, reply) => {
+        const version = (req.body as { version?: unknown } | undefined)?.version;
+        if (version !== 1 && version !== 2) return reply.code(400).send({ error: 'version must be 1 or 2' });
+        return notesSchema.setVersion(req.params.sandbox, version);
+      });
 
       scope.post<{ Params: Params }>('/import-mode', async (req) => {
         imports.setManual(req.params.sandbox, (req.body as { manual?: unknown } | undefined)?.manual === true);

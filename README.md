@@ -104,6 +104,14 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 89 | [Voice note](cases/89-voice-note.md) | The Voice note page records a voice note with the microphone and saves it. |
 | 90 | [Price list](cases/90-price-list.md) | The Price list page checks for new prices and downloads the list only when it changed. |
 | 91 | [Contributors](cases/91-contributors.md) | The Contributors page shows names on small cards, cutting the ones that do not fit. |
+| 92 | [Product details](cases/92-product-details.md) | The Product details page shows four tabs of details about a hand grinder. |
+| 93 | [Files tree](cases/93-files-tree.md) | The Files tree page shows folders and files in a tree you can open and close. |
+| 94 | [Promotions](cases/94-promotions.md) | The Promotions page shows a carousel of four offers that changes every 5 seconds. |
+| 95 | [Local notes](cases/95-local-notes.md) | The Local notes page keeps notes in the browser's database and updates it safely across tabs. |
+| 96 | [Letter](cases/96-letter.md) | The Letter page is a text box with its own Undo and Redo that work a word at a time. |
+| 97 | [Recipe](cases/97-recipe.md) | The Recipe page shares a recipe with the device's share sheet, or copies its link. |
+| 98 | [Photos](cases/98-photos.md) | The Photos page shows five photos in a viewer that can go full screen. |
+| 99 | [Delivery details](cases/99-delivery-details.md) | The Delivery details page is a form that reflows on narrow screens and with large text. |
 
 ## Run it
 

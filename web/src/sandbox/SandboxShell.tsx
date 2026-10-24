@@ -90,6 +90,14 @@ import { Announcements } from '../announcements/Announcements.tsx';
 import { VoiceNote } from '../voice-note/VoiceNote.tsx';
 import { PriceList } from '../price-list/PriceList.tsx';
 import { Contributors } from '../contributors/Contributors.tsx';
+import { ProductTabs } from '../product-tabs/ProductTabs.tsx';
+import { FolderTree } from '../folder-tree/FolderTree.tsx';
+import { Promotions } from '../promotions/Promotions.tsx';
+import { LocalNotes } from '../local-notes/LocalNotes.tsx';
+import { UndoEditor } from '../letter/UndoEditor.tsx';
+import { ShareRecipe } from '../share-recipe/ShareRecipe.tsx';
+import { PhotoViewer } from '../photos/PhotoViewer.tsx';
+import { DeliveryForm } from '../delivery-form/DeliveryForm.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -214,7 +222,15 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/announcements`}>Announcements</Link> ·{' '}
         <Link href={`${base}/voice-note`}>Voice note</Link> ·{' '}
         <Link href={`${base}/price-list`}>Price list</Link> ·{' '}
-        <Link href={`${base}/contributors`}>Contributors</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/contributors`}>Contributors</Link> ·{' '}
+        <Link href={`${base}/product-tabs`}>Product details</Link> ·{' '}
+        <Link href={`${base}/folder-tree`}>Files tree</Link> ·{' '}
+        <Link href={`${base}/promotions`}>Promotions</Link> ·{' '}
+        <Link href={`${base}/local-notes`}>Local notes</Link> ·{' '}
+        <Link href={`${base}/letter`}>Letter</Link> ·{' '}
+        <Link href={`${base}/share-recipe`}>Recipe</Link> ·{' '}
+        <Link href={`${base}/photos`}>Photos</Link> ·{' '}
+        <Link href={`${base}/delivery-form`}>Delivery details</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -380,6 +396,22 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <PriceList sandbox={sandbox} />
       ) : page === 'contributors' ? (
         <Contributors />
+      ) : page === 'product-tabs' ? (
+        <ProductTabs />
+      ) : page === 'folder-tree' ? (
+        <FolderTree />
+      ) : page === 'promotions' ? (
+        <Promotions />
+      ) : page === 'local-notes' ? (
+        <LocalNotes sandbox={sandbox} />
+      ) : page === 'letter' ? (
+        <UndoEditor />
+      ) : page === 'share-recipe' ? (
+        <ShareRecipe />
+      ) : page === 'photos' ? (
+        <PhotoViewer />
+      ) : page === 'delivery-form' ? (
+        <DeliveryForm />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -647,6 +679,30 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/contributors`}>Contributors</Link>: read long names that do not fit on their cards.
+        </li>
+        <li>
+          <Link href={`${base}/product-tabs`}>Product details</Link>: switch between product details with tabs, by mouse or keyboard.
+        </li>
+        <li>
+          <Link href={`${base}/folder-tree`}>Files tree</Link>: browse folders in a tree with the mouse or the keyboard.
+        </li>
+        <li>
+          <Link href={`${base}/promotions`}>Promotions</Link>: a carousel of offers that changes by itself and can be stopped.
+        </li>
+        <li>
+          <Link href={`${base}/local-notes`}>Local notes</Link>: keep notes in this browser, and survive an update while another tab is open.
+        </li>
+        <li>
+          <Link href={`${base}/letter`}>Letter</Link>: write a letter with Undo and Redo that work word by word.
+        </li>
+        <li>
+          <Link href={`${base}/share-recipe`}>Recipe</Link>: share a recipe with the device's share sheet, or copy its link.
+        </li>
+        <li>
+          <Link href={`${base}/photos`}>Photos</Link>: view photos in full screen, with a fallback when full screen is not allowed.
+        </li>
+        <li>
+          <Link href={`${base}/delivery-form`}>Delivery details</Link>: a delivery form that works on a very narrow screen and with large text.
         </li>
       </ul>
     </section>
