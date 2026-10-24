@@ -158,6 +158,7 @@ import { StockTake } from '../stock-take/StockTake.tsx';
 import { Cookbook } from '../cookbook/Cookbook.tsx';
 import { TrailMap } from '../trail-map/TrailMap.tsx';
 import { Phrasebook } from '../phrasebook/Phrasebook.tsx';
+import { Replies } from '../replies/Replies.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -350,7 +351,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/stock-take`}>Stock take</Link> ·{' '}
         <Link href={`${base}/cookbook`}>Cookbook</Link> ·{' '}
         <Link href={`${base}/trail-map`}>Trail map</Link> ·{' '}
-        <Link href={`${base}/phrasebook`}>Phrasebook</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/phrasebook`}>Phrasebook</Link> ·{' '}
+        <Link href={`${base}/replies`}>Replies</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -652,6 +654,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <TrailMap sandbox={sandbox} />
       ) : page === 'phrasebook' ? (
         <Phrasebook sandbox={sandbox} />
+      ) : page === 'replies' ? (
+        <Replies sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -1123,6 +1127,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/phrasebook`}>Phrasebook</Link>: a phrase list typed with input methods for Chinese, Japanese or accented letters.
+        </li>
+        <li>
+          <Link href={`${base}/replies`}>Replies</Link>: reply drafts per conversation that must survive reloads, hidden tabs and other tabs.
         </li>
       </ul>
     </section>
