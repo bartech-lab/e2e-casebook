@@ -143,6 +143,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 128 | [Shared photos](cases/128-shared-photos.md) | The Shared photos page opens a photo on a tap and starts selecting photos when one is pressed and held. |
 | 129 | [Mail reader](cases/129-mail-reader.md) | The Mail reader page shows a message list and a message side by side, divided by a bar you can drag. |
 | 130 | [Receipts](cases/130-receipts.md) | The Receipts page attaches receipt files dragged from the computer onto it, or chosen with a button. |
+| 131 | [Guestbook](cases/131-guestbook.md) | The Guestbook is a plain HTML page with a form, served by the server and usable without JavaScript. |
 
 ## Run it
 
