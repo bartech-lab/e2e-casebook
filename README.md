@@ -168,6 +168,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 153 | [Tile order](cases/153-tile-order.md) | The Tile order page builds an order that belongs to one browser tab and survives a reload. |
 | 154 | [Shoe size](cases/154-shoe-size.md) | The Shoe size page picks a size from a custom list that opens over its button. |
 | 155 | [Saved cards](cases/155-saved-cards.md) | The Saved cards page asks before removing a card, in a question that fades out. |
+| 156 | [Stock take](cases/156-stock-take.md) | The Stock take page is a grid of counts you can fill by pasting cells from a spreadsheet. |
 
 ## Run it
 

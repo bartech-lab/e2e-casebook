@@ -154,6 +154,7 @@ import { Answers } from '../answers/Answers.tsx';
 import { TileOrder } from '../tile-order/TileOrder.tsx';
 import { ShoeSize } from '../shoe-size/ShoeSize.tsx';
 import { SavedCards } from '../saved-cards/SavedCards.tsx';
+import { StockTake } from '../stock-take/StockTake.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -342,7 +343,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/answers`}>Support answers</Link> ·{' '}
         <Link href={`${base}/tile-order`}>Tile order</Link> ·{' '}
         <Link href={`${base}/shoe-size`}>Shoe size</Link> ·{' '}
-        <Link href={`${base}/saved-cards`}>Saved cards</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/saved-cards`}>Saved cards</Link> ·{' '}
+        <Link href={`${base}/stock-take`}>Stock take</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -636,6 +638,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <ShoeSize />
       ) : page === 'saved-cards' ? (
         <SavedCards />
+      ) : page === 'stock-take' ? (
+        <StockTake />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -1095,6 +1099,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/saved-cards`}>Saved cards</Link>: a confirm question you can reopen while it fades out.
+        </li>
+        <li>
+          <Link href={`${base}/stock-take`}>Stock take</Link>: a grid you fill by pasting cells from a spreadsheet.
         </li>
       </ul>
     </section>
