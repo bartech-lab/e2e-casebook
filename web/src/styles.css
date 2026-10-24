@@ -485,3 +485,24 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .mention-list [aria-selected='true'] {
   background: #dde8ff;
 }
+
+.hb-toggle {
+  display: block;
+  width: 100%;
+  max-width: 20rem;
+  padding: 0.4rem 0.6rem;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.hb-toggle:focus {
+  outline: none;
+}
+
+.hb-toggle:focus-visible {
+  outline: 3px solid #1a5fb4;
+  outline-offset: 2px;
+}

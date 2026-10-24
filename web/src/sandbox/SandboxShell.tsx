@@ -145,6 +145,7 @@ import { Rooms } from '../rooms/Rooms.tsx';
 import { Favourites } from '../favourites/Favourites.tsx';
 import { Handover } from '../handover/Handover.tsx';
 import { TicketContact } from '../ticket-contact/TicketContact.tsx';
+import { Handbook } from '../handbook/Handbook.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -324,7 +325,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/rooms`}>Rooms</Link> ·{' '}
         <Link href={`${base}/favourites`}>Radio favourites</Link> ·{' '}
         <Link href={`${base}/handover`}>Shift handover</Link> ·{' '}
-        <Link href={`${base}/ticket-contact`}>Ticket contact</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/ticket-contact`}>Ticket contact</Link> ·{' '}
+        <Link href={`${base}/handbook`}>Handbook</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -600,6 +602,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Handover sandbox={sandbox} />
       ) : page === 'ticket-contact' ? (
         <TicketContact sandbox={sandbox} />
+      ) : page === 'handbook' ? (
+        <Handbook />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -1032,6 +1036,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/ticket-contact`}>Ticket contact</Link>: contact details that the browser can fill in for you.
+        </li>
+        <li>
+          <Link href={`${base}/handbook`}>Handbook</Link>: a staff handbook menu that shows where the keyboard is.
         </li>
       </ul>
     </section>
