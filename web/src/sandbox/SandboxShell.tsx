@@ -153,6 +153,7 @@ import { Staff } from '../staff/Staff.tsx';
 import { Answers } from '../answers/Answers.tsx';
 import { TileOrder } from '../tile-order/TileOrder.tsx';
 import { ShoeSize } from '../shoe-size/ShoeSize.tsx';
+import { SavedCards } from '../saved-cards/SavedCards.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -340,7 +341,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/staff`}>Staff</Link> ·{' '}
         <Link href={`${base}/answers`}>Support answers</Link> ·{' '}
         <Link href={`${base}/tile-order`}>Tile order</Link> ·{' '}
-        <Link href={`${base}/shoe-size`}>Shoe size</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/shoe-size`}>Shoe size</Link> ·{' '}
+        <Link href={`${base}/saved-cards`}>Saved cards</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -632,6 +634,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <TileOrder sandbox={sandbox} />
       ) : page === 'shoe-size' ? (
         <ShoeSize />
+      ) : page === 'saved-cards' ? (
+        <SavedCards />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -1088,6 +1092,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/shoe-size`}>Shoe size</Link>: a custom select whose list opens over its own button.
+        </li>
+        <li>
+          <Link href={`${base}/saved-cards`}>Saved cards</Link>: a confirm question you can reopen while it fades out.
         </li>
       </ul>
     </section>

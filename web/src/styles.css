@@ -552,3 +552,6 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .size-list > li { padding: 0.3rem 0.6rem; cursor: default; }
 .size-list > li.active { background: Highlight; color: HighlightText; }
 .size-list > li[aria-selected='true'] { font-weight: bold; }
+
+.modal-backdrop.fade { opacity: 1; transition: opacity 300ms ease; }
+.modal-backdrop.fade.closing { opacity: 0; pointer-events: none; }
