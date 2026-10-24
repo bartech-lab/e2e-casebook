@@ -568,3 +568,4 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .team-chat { height: 22rem; overflow-y: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); padding: 0 0.75rem; }
 .team-chat li { padding: 0.4rem 0; }
 .team-chat img { display: block; margin-top: 0.3rem; }
+.cinema-seats { display: flex; gap: 0.5rem; list-style: none; padding: 0; }
