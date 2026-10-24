@@ -131,6 +131,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 116 | [Shop dashboard](cases/116-shop-dashboard.md) | The Shop dashboard page has an orders widget that switches layout with its own width. |
 | 117 | [Highlights](cases/117-highlights.md) | The Highlights page lets the reader save selected text from an article. |
 | 118 | [Sell your bike](cases/118-sell-your-bike.md) | The Sell your bike page explains, to every user, why Publish is not available yet. |
+| 119 | [Expense claims](cases/119-expense-claims.md) | The Expense claims page submits claims after you sign in, and lets you sign in again without losing a claim when the session ends. |
 
 ## Run it
 

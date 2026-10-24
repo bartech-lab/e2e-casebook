@@ -372,3 +372,5 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .sell-publish { position: relative; }
 .looks-disabled { opacity: 0.55; cursor: not-allowed; }
 .sell-tip { position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%); width: max-content; max-width: 18rem; padding: 0.4rem 0.6rem; background: #1f2937; color: #ffffff; border-radius: var(--radius); font-size: 0.85rem; }
+
+.claims-reauth { position: fixed; inset: 20% 25% auto; padding: 1rem; background: var(--bg, #fff); border: 1px solid #555; box-shadow: 0 0 0 100vmax rgb(0 0 0 / 0.4); }
