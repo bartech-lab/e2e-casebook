@@ -181,6 +181,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 166 | [Kitchen timer](cases/166-kitchen-timer.md) | The Kitchen timer is shared by all open tabs of the page and must ring exactly once when it ends. |
 | 167 | [Transcript](cases/167-transcript.md) | The Transcript page has a link for every line, and each link must land on its line, under the page's sticky header. |
 | 168 | [Team chat](cases/168-team-chat.md) | The Team chat keeps you at the newest message as messages and photos arrive, unless you scrolled up to read. |
+| 169 | [Cinema](cases/169-cinema.md) | The Cinema page reserves seats, and its buttons must work from the moment they appear, on any connection. |
 
 ## Run it
 
