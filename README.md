@@ -164,6 +164,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 149 | [Running order](cases/149-running-order.md) | The Running order page lists 30 acts of a village show, in an order you change by dragging. |
 | 150 | [Site photos](cases/150-site-photos.md) | The Site photos page lists folders and photos in a table you sort by name, size or date. |
 | 151 | [Staff](cases/151-staff.md) | The Staff page opens an edit dialog that loads a person's details while you move around it. |
+| 152 | [Support answers](cases/152-support-answers.md) | The Support answers page filters help articles as you type and highlights the matches. |
 
 ## Run it
 
