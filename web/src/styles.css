@@ -436,3 +436,11 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .photo-tile[aria-pressed='true'] { border-color: #1d2b4f; outline: 3px solid #f2b705; }
 .photo-bar { display: flex; align-items: center; gap: 1rem; min-height: 2.5rem; }
 .photo-big { height: 50vh; background: linear-gradient(135deg, #8fb3d9, #3d5a80); border-radius: 0.4rem; margin: 0 0 1rem; }
+
+.split { display: flex; height: 22rem; border: 1px solid #c8cdd8; border-radius: 0.4rem; background: #fff; overflow: hidden; }
+.split-list { flex: none; margin: 0; padding: 0.5rem; list-style: none; overflow: auto; box-sizing: border-box; }
+.split-list button { display: block; width: 100%; text-align: left; padding: 0.4rem; font: inherit; background: none; border: 0; border-radius: 0.3rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.split-list button[aria-current='true'] { background: #dfe7fb; }
+.split-divider { flex: none; width: 8px; cursor: col-resize; background: #dde1ea; touch-action: none; user-select: none; }
+.split-divider:hover, .split-divider:focus-visible { background: #2c4fa8; }
+.split-message { flex: 1; min-width: 0; padding: 0.75rem 1rem; overflow: auto; }

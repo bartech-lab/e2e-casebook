@@ -141,6 +141,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 126 | [Alert settings](cases/126-alert-settings.md) | The Alert settings page has three on/off switches and a choice of summary email. |
 | 127 | [Choir sign-up](cases/127-choir-sign-up.md) | The Choir sign-up page shows its form step by step on narrow screens and all at once on wide ones. |
 | 128 | [Shared photos](cases/128-shared-photos.md) | The Shared photos page opens a photo on a tap and starts selecting photos when one is pressed and held. |
+| 129 | [Mail reader](cases/129-mail-reader.md) | The Mail reader page shows a message list and a message side by side, divided by a bar you can drag. |
 
 ## Run it
 
