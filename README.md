@@ -176,6 +176,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 161 | [Payslips](cases/161-payslips.md) | On the Payslips site, the browser's Back and Forward buttons must never show payslips to someone who signed out. |
 | 162 | [Newsroom](cases/162-newsroom.md) | The Newsroom page pages through stories with Load more, without repeats or gaps, and keeps your place when you come back from a story. |
 | 163 | [Members](cases/163-members.md) | The Members area sends you to the page you asked for after signing in, but never off the site. |
+| 164 | [Prime counter](cases/164-prime-counter.md) | The Prime counter page runs a count of several seconds that must not freeze the page, and can be cancelled or replaced. |
 
 ## Run it
 
