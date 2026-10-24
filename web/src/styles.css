@@ -557,3 +557,6 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .modal-backdrop.fade.closing { opacity: 0; pointer-events: none; }
 
 .cookbook > li { min-height: 8rem; }
+.replies { display: flex; gap: 2rem; align-items: flex-start; }
+.replies label { display: grid; gap: 0.25rem; }
+.draft-mark { color: var(--muted); font-size: 0.85rem; }

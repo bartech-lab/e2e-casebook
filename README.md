@@ -172,6 +172,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 157 | [Cookbook](cases/157-cookbook.md) | The Cookbook page opens dialogs over a long list that must stay put behind them. |
 | 158 | [Trail map](cases/158-trail-map.md) | The Trail map page opens from a service worker's saved copy and must update to a new version cleanly. |
 | 159 | [Phrasebook](cases/159-phrasebook.md) | The Phrasebook page adds phrases with Enter, including ones typed with an input method (IME). |
+| 160 | [Replies](cases/160-replies.md) | The Replies page keeps an unsent reply per conversation in the browser, up to the last letter typed. |
 
 ## Run it
 
