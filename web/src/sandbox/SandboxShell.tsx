@@ -165,6 +165,7 @@ import { Members } from '../members/Members.tsx';
 import { PrimeCounter } from '../prime-counter/PrimeCounter.tsx';
 import { PayByBank } from '../pay-by-bank/PayByBank.tsx';
 import { KitchenTimer } from '../kitchen-timer/KitchenTimer.tsx';
+import { Transcript } from '../transcript/Transcript.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -366,7 +367,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/members`}>Members</Link> ·{' '}
         <Link href={`${base}/prime-counter`}>Prime counter</Link> ·{' '}
         <Link href={`${base}/pay-by-bank`}>Pay by bank</Link> ·{' '}
-        <Link href={`${base}/kitchen-timer`}>Kitchen timer</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/kitchen-timer`}>Kitchen timer</Link> ·{' '}
+        <Link href={`${base}/transcript`}>Transcript</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -376,6 +378,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <PayByBank sandbox={sandbox} />
       ) : page === 'kitchen-timer' ? (
         <KitchenTimer sandbox={sandbox} />
+      ) : page === 'transcript' ? (
+        <Transcript sandbox={sandbox} />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1176,6 +1180,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/kitchen-timer`}>Kitchen timer</Link>: one timer shared by every open tab, which must ring exactly once.
+        </li>
+        <li>
+          <Link href={`${base}/transcript`}>Transcript</Link>: a long meeting transcript whose line links must land exactly on their line.
         </li>
       </ul>
     </section>
