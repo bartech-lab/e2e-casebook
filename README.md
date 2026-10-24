@@ -137,6 +137,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 122 | [Shared drive](cases/122-shared-drive.md) | The Shared drive page lists files with a custom right-click menu: Open, Duplicate and Delete. |
 | 123 | [Village hall](cases/123-village-hall.md) | The Village hall page lists questions whose answers open and close, and can still be found while closed. |
 | 124 | [Assistant](cases/124-assistant.md) | The Assistant page has three conversations; answers arrive word by word, also while you read another conversation. |
+| 125 | [Comments](cases/125-comments.md) | The Comments page has a comment box that grows with its text, up to six lines. |
 
 ## Run it
 

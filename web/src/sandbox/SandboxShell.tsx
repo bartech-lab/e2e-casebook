@@ -123,6 +123,7 @@ import { Parking } from '../parking/Parking.tsx';
 import { Drive } from '../drive/Drive.tsx';
 import { VillageHall } from '../village-hall/VillageHall.tsx';
 import { Assistant } from '../assistant/Assistant.tsx';
+import { Comments } from '../comments/Comments.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -280,7 +281,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/parking`}>Parking permit</Link> ·{' '}
         <Link href={`${base}/drive`}>Shared drive</Link> ·{' '}
         <Link href={`${base}/village-hall`}>Village hall</Link> ·{' '}
-        <Link href={`${base}/assistant`}>Assistant</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/assistant`}>Assistant</Link> ·{' '}
+        <Link href={`${base}/comments`}>Comments</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -512,6 +514,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <VillageHall />
       ) : page === 'assistant' ? (
         <Assistant sandbox={sandbox} />
+      ) : page === 'comments' ? (
+        <Comments />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -878,6 +882,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/assistant`}>Assistant</Link>: three conversations with an assistant whose answers arrive word by word.
+        </li>
+        <li>
+          <Link href={`${base}/comments`}>Comments</Link>: a comment box that grows with what you write.
         </li>
       </ul>
     </section>

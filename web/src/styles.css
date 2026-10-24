@@ -399,3 +399,8 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .assistant-layout aside button { display: block; width: 100%; text-align: left; padding: 0.4rem 0.6rem; margin: 0 0 0.25rem; font: inherit; background: #fff; border: 1px solid #c8cdd8; border-radius: 0.3rem; }
 .assistant-layout aside button[aria-current='page'] { border-color: #2c4fa8; font-weight: 600; }
 .assistant-messages { padding-left: 1.2rem; }
+
+.comment-list li { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0 0 0.5rem; }
+.comment-box { display: grid; grid-template-columns: 1fr auto; gap: 0.5rem; align-items: end; max-width: 36rem; }
+.comment-box label { grid-column: 1 / -1; }
+.comment-box textarea { min-height: 0; font: inherit; font-size: 16px; line-height: 24px; padding: 6px 8px; border: 1px solid #8a93a8; resize: none; overflow-wrap: anywhere; box-sizing: border-box; }
