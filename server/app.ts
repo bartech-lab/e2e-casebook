@@ -86,6 +86,7 @@ import { createPayslips } from './payslips.ts';
 import { createNewsroom } from './newsroom.ts';
 import { createMembers } from './members.ts';
 import { createPayByBank } from './payByBank.ts';
+import { createKitchenTimer } from './kitchenTimer.ts';
 
 export type AppOptions = {
   dbPath?: string;
@@ -172,6 +173,7 @@ export async function buildApp(opts: AppOptions = {}) {
   const newsroom = createNewsroom();
   const members = createMembers();
   const payByBank = createPayByBank((id) => store.hasSandbox(id));
+  const kitchenTimer = createKitchenTimer();
   const app = Fastify({ trustProxy: true });
 
   await app.register(fastifyWebsocket);
@@ -273,6 +275,7 @@ export async function buildApp(opts: AppOptions = {}) {
       newsroom.register(scope);
       members.register(scope);
       payByBank.register(scope);
+      kitchenTimer.register(scope);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
         messages: store.messagesSince(req.params.sandbox, Number(req.query.since ?? 0) || 0),
@@ -311,7 +314,7 @@ export async function buildApp(opts: AppOptions = {}) {
   trailMap.serve(app);
   payslips.serve(app);
   payByBank.serve(app);
-  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes, workspaces, savedSearches, eventFeedback, expenseClaims, cardPayments, assistant, guestbook, clientErrors, clubActivity, noticeBoard, cloudPix, studyGroup, billing, flights, transfers, libraryCards, rsvps, songs, handover, ticketContacts, barber, runningOrder, staffRoster, tileOrders, trailMap, payslips, newsroom, members, payByBank });
+  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes, workspaces, savedSearches, eventFeedback, expenseClaims, cardPayments, assistant, guestbook, clientErrors, clubActivity, noticeBoard, cloudPix, studyGroup, billing, flights, transfers, libraryCards, rsvps, songs, handover, ticketContacts, barber, runningOrder, staffRoster, tileOrders, trailMap, payslips, newsroom, members, payByBank, kitchenTimer });
 
   if (opts.clientDir && existsSync(join(opts.clientDir, 'index.html'))) {
     await app.register(fastifyStatic, { root: opts.clientDir, wildcard: false });
@@ -399,6 +402,7 @@ export async function buildApp(opts: AppOptions = {}) {
       newsroom.clear(id);
       members.clear(id);
       payByBank.clear(id);
+      kitchenTimer.clear(id);
     }
   }, Math.min(ttl, 60 * 60 * 1000));
   pruneTimer.unref();
