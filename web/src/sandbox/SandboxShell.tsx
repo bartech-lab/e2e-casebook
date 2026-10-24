@@ -166,6 +166,7 @@ import { PrimeCounter } from '../prime-counter/PrimeCounter.tsx';
 import { PayByBank } from '../pay-by-bank/PayByBank.tsx';
 import { KitchenTimer } from '../kitchen-timer/KitchenTimer.tsx';
 import { Transcript } from '../transcript/Transcript.tsx';
+import { TeamChat } from '../team-chat/TeamChat.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -368,7 +369,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/prime-counter`}>Prime counter</Link> ·{' '}
         <Link href={`${base}/pay-by-bank`}>Pay by bank</Link> ·{' '}
         <Link href={`${base}/kitchen-timer`}>Kitchen timer</Link> ·{' '}
-        <Link href={`${base}/transcript`}>Transcript</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/transcript`}>Transcript</Link> ·{' '}
+        <Link href={`${base}/team-chat`}>Team chat</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -380,6 +382,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <KitchenTimer sandbox={sandbox} />
       ) : page === 'transcript' ? (
         <Transcript sandbox={sandbox} />
+      ) : page === 'team-chat' ? (
+        <TeamChat sandbox={sandbox} />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1183,6 +1187,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/transcript`}>Transcript</Link>: a long meeting transcript whose line links must land exactly on their line.
+        </li>
+        <li>
+          <Link href={`${base}/team-chat`}>Team chat</Link>: a chat that must stay at the newest message while photos load, without pulling you away from older ones.
         </li>
       </ul>
     </section>
