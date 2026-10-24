@@ -142,6 +142,7 @@ import { BankTransfer } from '../bank-transfer/BankTransfer.tsx';
 import { LibraryCard } from '../library-card/LibraryCard.tsx';
 import { Fete } from '../fete/Fete.tsx';
 import { Rooms } from '../rooms/Rooms.tsx';
+import { Favourites } from '../favourites/Favourites.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -318,7 +319,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/bank-transfer`}>Bank transfer</Link> ·{' '}
         <Link href={`${base}/library-card`}>Library card</Link> ·{' '}
         <Link href={`${base}/fete`}>Village fête</Link> ·{' '}
-        <Link href={`${base}/rooms`}>Rooms</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/rooms`}>Rooms</Link> ·{' '}
+        <Link href={`${base}/favourites`}>Radio favourites</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -588,6 +590,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Fete sandbox={sandbox} />
       ) : page === 'rooms' ? (
         <Rooms />
+      ) : page === 'favourites' ? (
+        <Favourites sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -1011,6 +1015,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/rooms`}>Rooms</Link>: room photos that load the right size for each screen.
+        </li>
+        <li>
+          <Link href={`${base}/favourites`}>Radio favourites</Link>: like buttons that stay right however fast you click.
         </li>
       </ul>
     </section>
