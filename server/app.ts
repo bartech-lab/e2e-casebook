@@ -87,6 +87,7 @@ import { createNewsroom } from './newsroom.ts';
 import { createMembers } from './members.ts';
 import { createPayByBank } from './payByBank.ts';
 import { createKitchenTimer } from './kitchenTimer.ts';
+import { registerTranscript } from './transcript.ts';
 
 export type AppOptions = {
   dbPath?: string;
@@ -276,6 +277,7 @@ export async function buildApp(opts: AppOptions = {}) {
       members.register(scope);
       payByBank.register(scope);
       kitchenTimer.register(scope);
+      registerTranscript(scope);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
         messages: store.messagesSince(req.params.sandbox, Number(req.query.since ?? 0) || 0),

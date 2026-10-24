@@ -561,3 +561,7 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .replies label { display: grid; gap: 0.25rem; }
 .draft-mark { color: var(--muted); font-size: 0.85rem; }
 .news-list li { padding: 0.6rem 0; }
+.transcript-head { position: sticky; top: 0; z-index: 1; background: var(--bg, #fff); border-bottom: 1px solid #ccd; height: 5.5rem; box-sizing: border-box; }
+.transcript-line { content-visibility: auto; contain-intrinsic-size: auto 2.5em; scroll-margin-top: 6rem; }
+.transcript-line[aria-current='true'] { background: #fff4c2; }
+.transcript nav { position: static; display: block; margin: 0; padding: 0; font-size: inherit; background: none; border: 0; }

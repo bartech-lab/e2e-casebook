@@ -179,6 +179,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 164 | [Prime counter](cases/164-prime-counter.md) | The Prime counter page runs a count of several seconds that must not freeze the page, and can be cancelled or replaced. |
 | 165 | [Pay by bank](cases/165-pay-by-bank.md) | The Pay by bank page sends you to a bank on another site, which sends you back with the result. |
 | 166 | [Kitchen timer](cases/166-kitchen-timer.md) | The Kitchen timer is shared by all open tabs of the page and must ring exactly once when it ends. |
+| 167 | [Transcript](cases/167-transcript.md) | The Transcript page has a link for every line, and each link must land on its line, under the page's sticky header. |
 
 ## Run it
 
