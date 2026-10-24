@@ -30,11 +30,18 @@ import type { Imports } from './imports.ts';
 import type { Uploads } from './uploads.ts';
 import type { Tickets } from './tickets.ts';
 import type { Appearances } from './appearance.ts';
+import type { PriceAlerts } from './priceAlerts.ts';
+import type { Scores } from './scores.ts';
+import type { Passwords } from './passwords.ts';
+import type { Sales } from './sales.ts';
+import type { Articles } from './articles.ts';
+import type { Posts } from './posts.ts';
+import type { VoiceNotes } from './voiceNotes.ts';
 import { DEFAULT_CARDS, type Store } from './store.ts';
 import { cardInput, messageInput } from './validation.ts';
 
 type Params = { sandbox: string };
-type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts; teams: Teams; meetings: Meetings; otps: Otps; passkeys: Passkeys; deliveries: Deliveries; imports: Imports; uploads: Uploads; tickets: Tickets; appearances: Appearances };
+type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts; teams: Teams; meetings: Meetings; otps: Otps; passkeys: Passkeys; deliveries: Deliveries; imports: Imports; uploads: Uploads; tickets: Tickets; appearances: Appearances; priceAlerts: PriceAlerts; scores: Scores; passwords: Passwords; sales: Sales; articles: Articles; posts: Posts; voiceNotes: VoiceNotes };
 
 type FaultBody = {
   dropSockets?: unknown;
@@ -44,7 +51,7 @@ type FaultBody = {
   auth?: { tokenTtlMs?: unknown };
 };
 
-export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances }: Deps) {
+export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes }: Deps) {
   app.register(
     async (scope) => {
       scope.addHook('preHandler', async (req, reply) => {
@@ -86,6 +93,13 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         uploads.clear(sandbox);
         tickets.clear(sandbox);
         appearances.clear(sandbox);
+        priceAlerts.clear(sandbox);
+        scores.clear(sandbox);
+        passwords.clear(sandbox);
+        sales.clear(sandbox);
+        articles.clear(sandbox);
+        posts.clear(sandbox);
+        voiceNotes.clear(sandbox);
         hub.reset(sandbox);
         return { ok: true };
       });
@@ -167,6 +181,26 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         if (typeof rate !== 'number' || !Number.isFinite(rate) || rate < 0) return reply.code(400).send({ error: 'bytesPerSecond must be 0 or more' });
         uploads.setPace(req.params.sandbox, rate);
         return { ok: true };
+      });
+
+      scope.post<{ Params: Params }>('/price', async (req, reply) => {
+        const price = (req.body as { price?: unknown } | undefined)?.price;
+        if (typeof price !== 'number' || !Number.isInteger(price) || price < 0) return reply.code(400).send({ error: 'price must be a whole number of grosze, 0 or more' });
+        return priceAlerts.setPrice(req.params.sandbox, price);
+      });
+
+      scope.post<{ Params: Params }>('/goal', async (req, reply) => {
+        const team = (req.body as { team?: unknown } | undefined)?.team;
+        if (team !== 'home' && team !== 'away') return reply.code(400).send({ error: 'team must be home or away' });
+        return scores.goal(req.params.sandbox, team);
+      });
+
+      scope.get<{ Params: Params }>('/score-reads', async (req) => scores.reads(req.params.sandbox));
+
+      scope.post<{ Params: Params }>('/sale', async (req, reply) => {
+        const endsInMs = (req.body as { endsInMs?: unknown } | undefined)?.endsInMs;
+        if (typeof endsInMs !== 'number' || !Number.isFinite(endsInMs)) return reply.code(400).send({ error: 'endsInMs must be a number' });
+        return sales.endIn(req.params.sandbox, endsInMs);
       });
 
       scope.post<{ Params: Params }>('/import-mode', async (req) => {

@@ -76,6 +76,18 @@ import { Timesheet } from '../timesheet/Timesheet.tsx';
 import { Embed } from '../embed/Embed.tsx';
 import { Country } from '../country/Country.tsx';
 import { Appearance } from '../appearance/Appearance.tsx';
+import { StatementPage } from '../statement/Statement.tsx';
+import { Plans } from '../plans/Plans.tsx';
+import { PriceAlert } from '../price-alert/PriceAlert.tsx';
+import { LiveScore } from '../live-score/LiveScore.tsx';
+import { MobileInbox } from '../mobile-inbox/MobileInbox.tsx';
+import { ChangePassword } from '../password/ChangePassword.tsx';
+import { FlashSale } from '../flash-sale/FlashSale.tsx';
+import { ClassList } from '../class-list/ClassList.tsx';
+import { Newsletter } from '../newsletter/Newsletter.tsx';
+import { PostEditor } from '../post-editor/PostEditor.tsx';
+import { Announcements } from '../announcements/Announcements.tsx';
+import { VoiceNote } from '../voice-note/VoiceNote.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -186,7 +198,19 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/timesheet`}>Timesheet</Link> ·{' '}
         <Link href={`${base}/shop-reviews`}>Shop reviews</Link> ·{' '}
         <Link href={`${base}/country`}>Country</Link> ·{' '}
-        <Link href={`${base}/appearance`}>Appearance</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/appearance`}>Appearance</Link> ·{' '}
+        <Link href={`${base}/statement`}>Statement</Link> ·{' '}
+        <Link href={`${base}/plans`}>Plans</Link> ·{' '}
+        <Link href={`${base}/price-alert`}>Price alerts</Link> ·{' '}
+        <Link href={`${base}/live-score`}>Live score</Link> ·{' '}
+        <Link href={`${base}/mobile-inbox`}>Mobile inbox</Link> ·{' '}
+        <Link href={`${base}/password`}>Change password</Link> ·{' '}
+        <Link href={`${base}/flash-sale`}>Flash sale</Link> ·{' '}
+        <Link href={`${base}/class-list`}>Class list</Link> ·{' '}
+        <Link href={`${base}/newsletter`}>Newsletter</Link> ·{' '}
+        <Link href={`${base}/post-editor`}>Post editor</Link> ·{' '}
+        <Link href={`${base}/announcements`}>Announcements</Link> ·{' '}
+        <Link href={`${base}/voice-note`}>Voice note</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -324,6 +348,30 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Country />
       ) : page === 'appearance' ? (
         <Appearance sandbox={sandbox} />
+      ) : page === 'statement' ? (
+        <StatementPage sandbox={sandbox} />
+      ) : page === 'plans' ? (
+        <Plans />
+      ) : page === 'price-alert' ? (
+        <PriceAlert sandbox={sandbox} />
+      ) : page === 'live-score' ? (
+        <LiveScore sandbox={sandbox} />
+      ) : page === 'mobile-inbox' ? (
+        <MobileInbox />
+      ) : page === 'password' ? (
+        <ChangePassword sandbox={sandbox} />
+      ) : page === 'flash-sale' ? (
+        <FlashSale sandbox={sandbox} />
+      ) : page === 'class-list' ? (
+        <ClassList />
+      ) : page === 'newsletter' ? (
+        <Newsletter sandbox={sandbox} />
+      ) : page === 'post-editor' ? (
+        <PostEditor sandbox={sandbox} />
+      ) : page === 'announcements' ? (
+        <Announcements sandbox={sandbox} />
+      ) : page === 'voice-note' ? (
+        <VoiceNote sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -549,6 +597,42 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/appearance`}>Appearance</Link>: choose a light or dark theme and less motion, or follow your device.
+        </li>
+        <li>
+          <Link href={`${base}/statement`}>Statement</Link>: see a month of transactions and download them as a CSV file.
+        </li>
+        <li>
+          <Link href={`${base}/plans`}>Plans</Link>: compare three plans, with a tooltip on each info button.
+        </li>
+        <li>
+          <Link href={`${base}/price-alert`}>Price alerts</Link>: get a browser notification when the headphones get cheaper.
+        </li>
+        <li>
+          <Link href={`${base}/live-score`}>Live score</Link>: follow a match score that saves requests while you look away.
+        </li>
+        <li>
+          <Link href={`${base}/mobile-inbox`}>Mobile inbox</Link>: delete a message by swiping it, or with its Delete button, and undo it.
+        </li>
+        <li>
+          <Link href={`${base}/password`}>Change password</Link>: change the account password, with show and hide.
+        </li>
+        <li>
+          <Link href={`${base}/flash-sale`}>Flash sale</Link>: count down to the end of a sale by the shop's clock.
+        </li>
+        <li>
+          <Link href={`${base}/class-list`}>Class list</Link>: sort and search a class of Polish pupils.
+        </li>
+        <li>
+          <Link href={`${base}/newsletter`}>Newsletter</Link>: mark articles as read once you have actually looked at them.
+        </li>
+        <li>
+          <Link href={`${base}/post-editor`}>Post editor</Link>: write and publish a blog post in a panel that scrolls.
+        </li>
+        <li>
+          <Link href={`${base}/announcements`}>Announcements</Link>: dismiss announcement banners that fade out.
+        </li>
+        <li>
+          <Link href={`${base}/voice-note`}>Voice note</Link>: record a voice note with the microphone and play it back.
         </li>
       </ul>
     </section>

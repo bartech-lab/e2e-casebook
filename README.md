@@ -90,6 +90,18 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 75 | [Shop reviews](cases/75-shop-reviews.md) | The Shop reviews page shows a reviews widget in a sandboxed frame. |
 | 76 | [Country](cases/76-country.md) | The Country page is a list of 30 countries you can pick from with the keyboard. |
 | 77 | [Appearance](cases/77-appearance.md) | The Appearance page lets you pick a theme and how much motion you see. |
+| 78 | [Statement](cases/78-statement.md) | The Statement page lists a month of transactions and downloads them as a CSV file. |
+| 79 | [Plans](cases/79-plans.md) | The Plans page compares three plans, each with an info button that shows a tooltip. |
+| 80 | [Price alerts](cases/80-price-alerts.md) | The Price alerts page sends a browser notification when a product gets cheaper. |
+| 81 | [Live score](cases/81-live-score.md) | The Live score page follows a match and stops asking the server while the tab is hidden. |
+| 82 | [Mobile inbox](cases/82-mobile-inbox.md) | The Mobile inbox page deletes a message when you swipe it to the left, with an undo. |
+| 83 | [Change password](cases/83-change-password.md) | The Change password page changes the account password and works with password managers. |
+| 84 | [Flash sale](cases/84-flash-sale.md) | The Flash sale page counts down to the end of a sale by the shop's clock. |
+| 85 | [Class list](cases/85-class-list.md) | The Class list page sorts and searches 15 pupils with Polish names. |
+| 86 | [Newsletter](cases/86-newsletter.md) | The Newsletter page marks an article as read once it has been on screen for 2 seconds. |
+| 87 | [Post editor](cases/87-post-editor.md) | The Post editor page writes and publishes a blog post in a panel that scrolls. |
+| 88 | [Announcements](cases/88-announcements.md) | The Announcements page shows three banners you can dismiss. |
+| 89 | [Voice note](cases/89-voice-note.md) | The Voice note page records a voice note with the microphone and saves it. |
 
 ## Run it
 

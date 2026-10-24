@@ -42,6 +42,14 @@ import { createImports } from './imports.ts';
 import { createUploads } from './uploads.ts';
 import { createTickets } from './tickets.ts';
 import { createAppearances } from './appearance.ts';
+import { registerStatements } from './statements.ts';
+import { createPriceAlerts } from './priceAlerts.ts';
+import { createScores } from './scores.ts';
+import { createPasswords } from './passwords.ts';
+import { createSales } from './sales.ts';
+import { createArticles } from './articles.ts';
+import { createPosts } from './posts.ts';
+import { createVoiceNotes } from './voiceNotes.ts';
 
 export type AppOptions = {
   dbPath?: string;
@@ -86,6 +94,13 @@ export async function buildApp(opts: AppOptions = {}) {
   const uploads = createUploads();
   const tickets = createTickets();
   const appearances = createAppearances();
+  const priceAlerts = createPriceAlerts();
+  const scores = createScores();
+  const passwords = createPasswords();
+  const sales = createSales();
+  const articles = createArticles();
+  const posts = createPosts();
+  const voiceNotes = createVoiceNotes();
   const app = Fastify({ trustProxy: true });
 
   await app.register(fastifyWebsocket);
@@ -146,6 +161,14 @@ export async function buildApp(opts: AppOptions = {}) {
       uploads.register(scope);
       tickets.register(scope);
       appearances.register(scope);
+      registerStatements(scope);
+      priceAlerts.register(scope);
+      scores.register(scope);
+      passwords.register(scope);
+      sales.register(scope);
+      articles.register(scope);
+      posts.register(scope);
+      voiceNotes.register(scope);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
         messages: store.messagesSince(req.params.sandbox, Number(req.query.since ?? 0) || 0),
@@ -180,7 +203,7 @@ export async function buildApp(opts: AppOptions = {}) {
     { prefix: '/api/s/:sandbox' },
   );
 
-  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances });
+  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes });
 
   if (opts.clientDir && existsSync(join(opts.clientDir, 'index.html'))) {
     await app.register(fastifyStatic, { root: opts.clientDir, wildcard: false });
@@ -226,6 +249,13 @@ export async function buildApp(opts: AppOptions = {}) {
       uploads.clear(id);
       tickets.clear(id);
       appearances.clear(id);
+      priceAlerts.clear(id);
+      scores.clear(id);
+      passwords.clear(id);
+      sales.clear(id);
+      articles.clear(id);
+      posts.clear(id);
+      voiceNotes.clear(id);
     }
   }, Math.min(ttl, 60 * 60 * 1000));
   pruneTimer.unref();
