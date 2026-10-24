@@ -331,3 +331,6 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .privacy-hint-button { min-width: 2rem; min-height: 2rem; padding: 0; border-radius: 999px; }
 .privacy-hint { position: fixed; inset: auto; top: anchor(bottom); left: anchor(left); margin: 6px 0 0; width: 16rem; padding: 0.5rem 0.75rem; background: #1f2937; color: #ffffff; border: 0; border-radius: var(--radius); font-size: 0.9rem; }
 .privacy-toast { position: fixed; inset: auto 1rem 1rem auto; margin: 0; padding: 0.75rem 1rem; background: #14532d; color: #ffffff; border: 0; border-radius: var(--radius); }
+.train-extras { display: flex; flex-direction: column; gap: 0.5rem; max-width: 26rem; border: 1px solid var(--border); border-radius: var(--radius); }
+.train-total { font-weight: 600; }
+.train-lines th { text-align: left; font-weight: normal; padding-right: 2rem; }

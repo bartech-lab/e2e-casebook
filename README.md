@@ -118,6 +118,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 103 | [Trip tags](cases/103-trip-tags.md) | The Trip tags page turns typed text into tags, also when the text comes from an input method. |
 | 104 | [Concert tickets](cases/104-concert-tickets.md) | The Concert tickets page sells tickets and must be up to date when the user returns with Back. |
 | 105 | [Privacy settings](cases/105-privacy-settings.md) | The Privacy settings page has a pop-up hint for each option and a confirmation after saving. |
+| 106 | [Train ticket](cases/106-train-ticket.md) | The Train ticket page sells a ticket with optional extras over three steps. |
 
 ## Run it
 

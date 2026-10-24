@@ -104,6 +104,7 @@ import { MailingList } from '../mailing-list/MailingList.tsx';
 import { TripTags } from '../trip-tags/TripTags.tsx';
 import { GigTickets } from '../gig-tickets/GigTickets.tsx';
 import { PrivacySettings } from '../privacy/PrivacySettings.tsx';
+import { TrainTicket } from '../train-ticket/TrainTicket.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -242,7 +243,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/mailing-list`}>Mailing list</Link> ·{' '}
         <Link href={`${base}/trip-tags`}>Trip tags</Link> ·{' '}
         <Link href={`${base}/gig-tickets`}>Concert tickets</Link> ·{' '}
-        <Link href={`${base}/privacy`}>Privacy settings</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/privacy`}>Privacy settings</Link> ·{' '}
+        <Link href={`${base}/train-ticket`}>Train ticket</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -436,6 +438,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <GigTickets sandbox={sandbox} />
       ) : page === 'privacy' ? (
         <PrivacySettings />
+      ) : page === 'train-ticket' ? (
+        <TrainTicket />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -745,6 +749,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/privacy`}>Privacy settings</Link>: settings with pop-up hints next to each option and a short confirmation after saving.
+        </li>
+        <li>
+          <Link href={`${base}/train-ticket`}>Train ticket</Link>: a three-step ticket purchase with optional extras.
         </li>
       </ul>
     </section>
