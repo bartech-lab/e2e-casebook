@@ -131,6 +131,7 @@ import { MailReader } from '../mail-reader/MailReader.tsx';
 import { Receipts } from '../receipts/Receipts.tsx';
 import { GuestbookLink } from '../guestbook/GuestbookLink.tsx';
 import { Poster } from '../poster/Poster.tsx';
+import { FieldNotes } from '../field-notes/FieldNotes.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -296,7 +297,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/mail-reader`}>Mail reader</Link> ·{' '}
         <Link href={`${base}/receipts`}>Receipts</Link> ·{' '}
         <Link href={`${base}/guestbook`}>Guestbook</Link> ·{' '}
-        <Link href={`${base}/poster`}>Concert poster</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/poster`}>Concert poster</Link> ·{' '}
+        <Link href={`${base}/field-notes`}>Field notes</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -544,6 +546,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <GuestbookLink sandbox={sandbox} />
       ) : page === 'poster' ? (
         <Poster sandbox={sandbox} />
+      ) : page === 'field-notes' ? (
+        <FieldNotes sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -934,6 +938,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/poster`}>Concert poster</Link>: a poster whose headline shrinks to fit on one line.
+        </li>
+        <li>
+          <Link href={`${base}/field-notes`}>Field notes</Link>: notes kept in the browser, also when its storage is full.
         </li>
       </ul>
     </section>

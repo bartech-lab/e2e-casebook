@@ -451,3 +451,5 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 
 .poster { position: relative; aspect-ratio: 3 / 2; max-width: 100%; margin: 1rem 0; padding: 0 1rem; overflow: hidden; box-sizing: border-box; background: linear-gradient(160deg, #1d2b4f, #4a5a85); color: #fff; border-radius: 0.5rem; }
 .poster-headline { white-space: nowrap; margin: 1.5rem 0 0.5rem; line-height: 1.2; }
+
+.notes-warning { color: #8a3b00; font-weight: 600; }

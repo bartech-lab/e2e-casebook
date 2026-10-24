@@ -145,6 +145,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 130 | [Receipts](cases/130-receipts.md) | The Receipts page attaches receipt files dragged from the computer onto it, or chosen with a button. |
 | 131 | [Guestbook](cases/131-guestbook.md) | The Guestbook is a plain HTML page with a form, served by the server and usable without JavaScript. |
 | 132 | [Concert poster](cases/132-concert-poster.md) | The Concert poster page sizes the poster's headline so it fits on one line at any width. |
+| 133 | [Field notes](cases/133-field-notes.md) | The Field notes page keeps notes in the browser's storage as you type. |
 
 ## Run it
 
