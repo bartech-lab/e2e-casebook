@@ -150,6 +150,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 135 | [Notice board](cases/135-notice-board.md) | The Notice board page lists office notices and counts the ones you have not read yet. |
 | 136 | [Prints](cases/136-prints.md) | The Prints page connects your CloudPix photo account through a pop-up window. |
 | 137 | [Study group](cases/137-study-group.md) | The Study group page is a group chat that shows who is typing. |
+| 138 | [Billing details](cases/138-billing-details.md) | The Billing details page saves who invoices are made out to: a private person or a company. |
 
 ## Run it
 
