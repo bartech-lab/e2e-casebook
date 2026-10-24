@@ -111,6 +111,7 @@ import { FloorPlan } from '../floor-plan/FloorPlan.tsx';
 import { ReadingList } from '../reading-list/ReadingList.tsx';
 import { BusStop } from '../bus-stop/BusStop.tsx';
 import { Workspace } from '../workspace/Workspace.tsx';
+import { SavedSearches } from '../saved-searches/SavedSearches.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -256,7 +257,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/floor-plan`}>Floor plan</Link> ·{' '}
         <Link href={`${base}/reading-list`}>Reading list</Link> ·{' '}
         <Link href={`${base}/bus-stop`}>Bus stop</Link> ·{' '}
-        <Link href={`${base}/workspace`}>Workspace</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/workspace`}>Workspace</Link> ·{' '}
+        <Link href={`${base}/saved-searches`}>Saved searches</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -464,6 +466,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <BusStop sandbox={sandbox} />
       ) : page === 'workspace' ? (
         <Workspace sandbox={sandbox} />
+      ) : page === 'saved-searches' ? (
+        <SavedSearches sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -794,6 +798,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/workspace`}>Workspace</Link>: a workspace that sends unfinished workspaces to Setup and finished ones to the Dashboard.
+        </li>
+        <li>
+          <Link href={`${base}/saved-searches`}>Saved searches</Link>: a list of saved searches with an empty state for new users.
         </li>
       </ul>
     </section>

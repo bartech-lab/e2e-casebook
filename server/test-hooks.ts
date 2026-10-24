@@ -44,11 +44,12 @@ import type { Albums } from './albums.ts';
 import type { ReaderAuth } from './readerAuth.ts';
 import type { BusTimes } from './busTimes.ts';
 import type { Workspaces } from './workspaces.ts';
+import type { SavedSearches } from './savedSearches.ts';
 import { DEFAULT_CARDS, type Store } from './store.ts';
 import { cardInput, messageInput } from './validation.ts';
 
 type Params = { sandbox: string };
-type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts; teams: Teams; meetings: Meetings; otps: Otps; passkeys: Passkeys; deliveries: Deliveries; imports: Imports; uploads: Uploads; tickets: Tickets; appearances: Appearances; priceAlerts: PriceAlerts; scores: Scores; passwords: Passwords; sales: Sales; articles: Articles; posts: Posts; voiceNotes: VoiceNotes; priceList: PriceList; notesSchema: NotesSchema; gigTickets: GigTickets; albums: Albums; readerAuth: ReaderAuth; busTimes: BusTimes; workspaces: Workspaces };
+type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts; teams: Teams; meetings: Meetings; otps: Otps; passkeys: Passkeys; deliveries: Deliveries; imports: Imports; uploads: Uploads; tickets: Tickets; appearances: Appearances; priceAlerts: PriceAlerts; scores: Scores; passwords: Passwords; sales: Sales; articles: Articles; posts: Posts; voiceNotes: VoiceNotes; priceList: PriceList; notesSchema: NotesSchema; gigTickets: GigTickets; albums: Albums; readerAuth: ReaderAuth; busTimes: BusTimes; workspaces: Workspaces; savedSearches: SavedSearches };
 
 type FaultBody = {
   dropSockets?: unknown;
@@ -58,7 +59,7 @@ type FaultBody = {
   auth?: { tokenTtlMs?: unknown };
 };
 
-export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes, workspaces }: Deps) {
+export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes, workspaces, savedSearches }: Deps) {
   app.register(
     async (scope) => {
       scope.addHook('preHandler', async (req, reply) => {
@@ -114,6 +115,7 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         readerAuth.clear(sandbox);
         busTimes.clear(sandbox);
         workspaces.clear(sandbox);
+        savedSearches.clear(sandbox);
         hub.reset(sandbox);
         return { ok: true };
       });
@@ -273,6 +275,15 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         if (setupDone !== undefined && typeof setupDone !== 'boolean') return reply.code(400).send({ error: 'setupDone must be true or false' });
         if (delayMs !== undefined && (typeof delayMs !== 'number' || !Number.isInteger(delayMs) || delayMs < 0 || delayMs > 10000)) return reply.code(400).send({ error: 'delayMs must be 0 to 10000' });
         return workspaces.set(req.params.sandbox, { ...(setupDone === undefined ? {} : { setupDone }), ...(delayMs === undefined ? {} : { delayMs }) });
+      });
+
+      scope.post<{ Params: Params }>('/saved-searches', async (req, reply) => {
+        const { names, delayMs } = (req.body ?? {}) as { names?: unknown; delayMs?: unknown };
+        if (names !== undefined && !(Array.isArray(names) && names.every((n) => typeof n === 'string'))) return reply.code(400).send({ error: 'names must be strings' });
+        if (delayMs !== undefined && (typeof delayMs !== 'number' || !Number.isInteger(delayMs) || delayMs < 0 || delayMs > 10000)) return reply.code(400).send({ error: 'delayMs must be 0 to 10000' });
+        if (Array.isArray(names)) savedSearches.seed(req.params.sandbox, names as string[]);
+        if (typeof delayMs === 'number') savedSearches.setDelay(req.params.sandbox, delayMs);
+        return { ok: true };
       });
 
       scope.post<{ Params: Params }>('/expire-sessions', async (req) => {
