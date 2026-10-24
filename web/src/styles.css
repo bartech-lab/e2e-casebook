@@ -299,3 +299,27 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
   .reflow-table, .reflow-table tbody, .reflow-table tr, .reflow-table td { display: block; }
   .reflow-table tr { padding: 6px 0; border-bottom: 1px solid var(--border); }
 }
+.hotel-bar { position: sticky; top: 0; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.5rem 0.75rem; background: rgb(255 255 255 / 0.6); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+.hotel-list { list-style: none; padding: 0; }
+.hotel-list li { display: flex; flex-direction: column; gap: 0.2rem; padding: 0.9rem 0.25rem; border-bottom: 1px solid var(--border); }
+.hotel-list li span { color: var(--muted); font-size: 0.9rem; }
+.hotel-sheet { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; background: var(--surface); color: var(--text); }
+.hotel-sheet-head, .hotel-sheet-foot { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 1rem; border-bottom: 1px solid var(--border); }
+.hotel-sheet-head h2 { margin: 0; font-size: 1.1rem; }
+.hotel-sheet-list { flex: 1; min-height: 0; overflow-y: auto; margin: 0; padding: 0.5rem 1rem; border: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+.hotel-sheet-foot { border-bottom: 0; border-top: 1px solid var(--border); justify-content: flex-end; }
+.lamp-grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); gap: 1rem; }
+.lamp-card { position: relative; display: flex; flex-direction: column; gap: 0.25rem; padding: 0.75rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+.lamp-photo { height: 6rem; border-radius: var(--radius); background: linear-gradient(135deg, #f6e7c8, #d9c08f); }
+.lamp-actions { position: absolute; top: 1rem; right: 1rem; display: flex; gap: 0.25rem; }
+.lamp-actions button { min-width: 2rem; min-height: 2rem; padding: 0; border-radius: 999px; }
+@media (hover: hover) {
+  .lamp-actions { opacity: 0; transition: opacity 0.15s; }
+  .lamp-card:hover .lamp-actions, .lamp-card:focus-within .lamp-actions { opacity: 1; }
+}
+@media (pointer: coarse) {
+  .lamp-actions button { min-width: 2.75rem; min-height: 2.75rem; }
+}
+.nl-form fieldset { display: flex; flex-direction: column; align-items: flex-start; gap: 0.6rem; max-width: 28rem; border: 1px solid var(--border); border-radius: var(--radius); }
+.nl-topics { display: flex; flex-direction: column; gap: 0.3rem; }
+.nl-error { margin: 0; color: #b42318; min-height: 1.2em; }

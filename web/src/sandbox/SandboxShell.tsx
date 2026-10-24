@@ -98,6 +98,9 @@ import { UndoEditor } from '../letter/UndoEditor.tsx';
 import { ShareRecipe } from '../share-recipe/ShareRecipe.tsx';
 import { PhotoViewer } from '../photos/PhotoViewer.tsx';
 import { DeliveryForm } from '../delivery-form/DeliveryForm.tsx';
+import { HotelSearch } from '../hotels/HotelSearch.tsx';
+import { Lamps } from '../lamps/Lamps.tsx';
+import { MailingList } from '../mailing-list/MailingList.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -230,7 +233,10 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/letter`}>Letter</Link> ·{' '}
         <Link href={`${base}/share-recipe`}>Recipe</Link> ·{' '}
         <Link href={`${base}/photos`}>Photos</Link> ·{' '}
-        <Link href={`${base}/delivery-form`}>Delivery details</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/delivery-form`}>Delivery details</Link> ·{' '}
+        <Link href={`${base}/hotels`}>Hotels</Link> ·{' '}
+        <Link href={`${base}/lamps`}>Lamps</Link> ·{' '}
+        <Link href={`${base}/mailing-list`}>Mailing list</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -412,6 +418,12 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <PhotoViewer />
       ) : page === 'delivery-form' ? (
         <DeliveryForm />
+      ) : page === 'hotels' ? (
+        <HotelSearch />
+      ) : page === 'lamps' ? (
+        <Lamps />
+      ) : page === 'mailing-list' ? (
+        <MailingList />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -703,6 +715,15 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/delivery-form`}>Delivery details</Link>: a delivery form that works on a very narrow screen and with large text.
+        </li>
+        <li>
+          <Link href={`${base}/hotels`}>Hotels</Link>: a hotel list with a full-window Filters sheet under a frosted toolbar.
+        </li>
+        <li>
+          <Link href={`${base}/lamps`}>Lamps</Link>: product cards whose quick actions must work with a mouse, a keyboard and a touch screen.
+        </li>
+        <li>
+          <Link href={`${base}/mailing-list`}>Mailing list</Link>: a sign-up form wired up by a separate script that loads after the page.
         </li>
       </ul>
     </section>

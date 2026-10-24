@@ -1,0 +1,5 @@
+[
+  { "id": "news", "label": "Weekly news", "default": true },
+  { "id": "offers", "label": "Offers", "default": false },
+  { "id": "events", "label": "Events in your city", "default": false }
+]

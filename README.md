@@ -112,6 +112,9 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 97 | [Recipe](cases/97-recipe.md) | The Recipe page shares a recipe with the device's share sheet, or copies its link. |
 | 98 | [Photos](cases/98-photos.md) | The Photos page shows five photos in a viewer that can go full screen. |
 | 99 | [Delivery details](cases/99-delivery-details.md) | The Delivery details page is a form that reflows on narrow screens and with large text. |
+| 100 | [Hotels](cases/100-hotels.md) | The Hotels page filters a hotel list in a sheet that covers the whole window. |
+| 101 | [Lamps](cases/101-lamps.md) | The Lamps page shows product cards with Save and Compare buttons for mouse, keyboard and touch. |
+| 102 | [Mailing list](cases/102-mailing-list.md) | The Mailing list page embeds a sign-up form that a separate script wires up after the page loads. |
 
 ## Run it
 
