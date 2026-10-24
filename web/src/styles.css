@@ -26,6 +26,7 @@ p { margin: 0.5rem 0; }
 main > section, main > form { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem 1.75rem; margin-top: 1.5rem; }
 
 nav { position: sticky; top: 0; z-index: 2; display: flex; flex-wrap: wrap; align-items: center; gap: 0.1rem; margin: 0 -1rem; padding: 0.6rem 1rem; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 0; }
+nav[aria-label="Sandbox"] { position: static; }
 nav > * { font-size: 0.9rem; }
 nav a { color: var(--muted); padding: 0.3rem 0.5rem; border-radius: 999px; font-weight: 500; }
 nav a:hover { background: var(--accent-soft); color: var(--accent); text-decoration: none; }
@@ -505,4 +506,42 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .hb-toggle:focus-visible {
   outline: 3px solid #1a5fb4;
   outline-offset: 2px;
+}
+
+.running-order {
+  height: 320px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid #aaa;
+  max-width: 24rem;
+}
+
+.running-order .act {
+  box-sizing: border-box;
+  height: 40px;
+  padding: 0 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.running-order .act.dragging {
+  opacity: 0.5;
+}
+
+.running-order [data-drop-before] {
+  box-shadow: inset 0 3px 0 #1a5fb4;
+}
+
+.running-order .act-end {
+  height: 0;
+  box-shadow: 0 -3px 0 #1a5fb4;
+}
+
+.act-handle {
+  cursor: grab;
+  touch-action: none;
 }
