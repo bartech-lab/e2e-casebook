@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Payment received</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 2rem; }
+    </style>
+  </head>
+  <body>
+    <h1>Payment received</h1>
+    <p id="line"></p>
+    <p>Use your browser's Back button to return to the tickets.</p>
+    <script>
+      const q = new URLSearchParams(location.search);
+      const n = Number(q.get('quantity'));
+      document.getElementById('line').textContent = `Order ${q.get('order')} is paid: ${n === 1 ? '1 ticket' : n + ' tickets'}.`;
+    </script>
+  </body>
+</html>
