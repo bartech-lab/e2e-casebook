@@ -121,6 +121,7 @@ import { ExpenseClaims } from '../expense-claims/ExpenseClaims.tsx';
 import { Flats } from '../flats/Flats.tsx';
 import { Parking } from '../parking/Parking.tsx';
 import { Drive } from '../drive/Drive.tsx';
+import { VillageHall } from '../village-hall/VillageHall.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -276,7 +277,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/expense-claims`}>Expense claims</Link> ·{' '}
         <Link href={`${base}/flats`}>Flats</Link> ·{' '}
         <Link href={`${base}/parking`}>Parking permit</Link> ·{' '}
-        <Link href={`${base}/drive`}>Shared drive</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/drive`}>Shared drive</Link> ·{' '}
+        <Link href={`${base}/village-hall`}>Village hall</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -504,6 +506,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Parking sandbox={sandbox} />
       ) : page === 'drive' ? (
         <Drive />
+      ) : page === 'village-hall' ? (
+        <VillageHall />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -864,6 +868,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/drive`}>Shared drive</Link>: files with a right-click menu that also opens from the keyboard.
+        </li>
+        <li>
+          <Link href={`${base}/village-hall`}>Village hall</Link>: questions and answers whose closed answers can still be found and linked to.
         </li>
       </ul>
     </section>

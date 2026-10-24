@@ -135,6 +135,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 120 | [Flats](cases/120-flats.md) | The Flats page lists flats to rent as cards that open the flat, with Save and Compare on each card. |
 | 121 | [Parking permit](cases/121-parking-permit.md) | The Parking permit page takes payment through card fields in an embedded frame. |
 | 122 | [Shared drive](cases/122-shared-drive.md) | The Shared drive page lists files with a custom right-click menu: Open, Duplicate and Delete. |
+| 123 | [Village hall](cases/123-village-hall.md) | The Village hall page lists questions whose answers open and close, and can still be found while closed. |
 
 ## Run it
 
