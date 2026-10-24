@@ -161,6 +161,7 @@ import { Phrasebook } from '../phrasebook/Phrasebook.tsx';
 import { Replies } from '../replies/Replies.tsx';
 import { PayslipsLink } from '../payslips/PayslipsLink.tsx';
 import { Newsroom, NewsStory } from '../newsroom/Newsroom.tsx';
+import { Members } from '../members/Members.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -205,6 +206,7 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
   const split = /^shop\/orders\/(\d+)\/split$/.exec(page);
   const booking = /^booking\/(dates|guests|review|done)$/.exec(page);
   const newsStory = /^newsroom\/(\d+)$/.exec(page);
+  const membersPage = /^members(?:\/(sign-in|minutes|accounts))?$/.exec(page);
   return (
     <>
       <nav aria-label="Sandbox">
@@ -357,7 +359,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/phrasebook`}>Phrasebook</Link> ·{' '}
         <Link href={`${base}/replies`}>Replies</Link> ·{' '}
         <Link href={`${base}/payslips`}>Payslips</Link> ·{' '}
-        <Link href={`${base}/newsroom`}>Newsroom</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/newsroom`}>Newsroom</Link> ·{' '}
+        <Link href={`${base}/members`}>Members</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -665,6 +668,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <PayslipsLink sandbox={sandbox} />
       ) : page === 'newsroom' ? (
         <Newsroom sandbox={sandbox} />
+      ) : membersPage ? (
+        <Members sandbox={sandbox} sub={membersPage[1] ?? ''} />
       ) : newsStory ? (
         <NewsStory sandbox={sandbox} id={Number(newsStory[1])} />
       ) : booking ? (
@@ -1147,6 +1152,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/newsroom`}>Newsroom</Link>: a long story list with Load more, where new stories arrive while you read.
+        </li>
+        <li>
+          <Link href={`${base}/members`}>Members</Link>: a members area that sends you back where you were after signing in, and nowhere else.
         </li>
       </ul>
     </section>
