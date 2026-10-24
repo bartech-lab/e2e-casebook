@@ -545,3 +545,10 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
   cursor: grab;
   touch-action: none;
 }
+
+.size-select { position: relative; display: inline-block; }
+.size-select > button { min-width: 7rem; text-align: left; }
+.size-list { position: absolute; top: 0; left: 0; z-index: 10; margin: 0; padding: 0; list-style: none; min-width: 7rem; background: var(--surface); border: 1px solid currentColor; }
+.size-list > li { padding: 0.3rem 0.6rem; cursor: default; }
+.size-list > li.active { background: Highlight; color: HighlightText; }
+.size-list > li[aria-selected='true'] { font-weight: bold; }

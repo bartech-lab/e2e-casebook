@@ -166,6 +166,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 151 | [Staff](cases/151-staff.md) | The Staff page opens an edit dialog that loads a person's details while you move around it. |
 | 152 | [Support answers](cases/152-support-answers.md) | The Support answers page filters help articles as you type and highlights the matches. |
 | 153 | [Tile order](cases/153-tile-order.md) | The Tile order page builds an order that belongs to one browser tab and survives a reload. |
+| 154 | [Shoe size](cases/154-shoe-size.md) | The Shoe size page picks a size from a custom list that opens over its button. |
 
 ## Run it
 

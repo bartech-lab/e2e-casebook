@@ -152,6 +152,7 @@ import { SitePhotos } from '../site-photos/SitePhotos.tsx';
 import { Staff } from '../staff/Staff.tsx';
 import { Answers } from '../answers/Answers.tsx';
 import { TileOrder } from '../tile-order/TileOrder.tsx';
+import { ShoeSize } from '../shoe-size/ShoeSize.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -338,7 +339,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/site-photos`}>Site photos</Link> ·{' '}
         <Link href={`${base}/staff`}>Staff</Link> ·{' '}
         <Link href={`${base}/answers`}>Support answers</Link> ·{' '}
-        <Link href={`${base}/tile-order`}>Tile order</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/tile-order`}>Tile order</Link> ·{' '}
+        <Link href={`${base}/shoe-size`}>Shoe size</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -628,6 +630,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Answers />
       ) : page === 'tile-order' ? (
         <TileOrder sandbox={sandbox} />
+      ) : page === 'shoe-size' ? (
+        <ShoeSize />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -1081,6 +1085,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/tile-order`}>Tile order</Link>: an order that belongs to one browser tab.
+        </li>
+        <li>
+          <Link href={`${base}/shoe-size`}>Shoe size</Link>: a custom select whose list opens over its own button.
         </li>
       </ul>
     </section>
