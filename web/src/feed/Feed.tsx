@@ -4,7 +4,7 @@ import { json } from '../http.ts';
 type Post = { id: number; text: string };
 type Page = { posts: Post[]; more: boolean };
 
-const POLL_MS = 3000;
+const POLL_MS = 2000;
 
 export function Feed({ sandbox }: { sandbox: string }) {
   const url = `/api/s/${sandbox}/feed`;
