@@ -6,7 +6,8 @@ ann is an admin, bob an editor, cy a viewer.
 **Requirements to test:**
 
 - Viewers read. Editors also edit the Roadmap. Admins also change anyone's role.
-- The server enforces the same rules, whatever the page shows.
+- The server enforces the same rules, whatever the page shows. Someone who is not on the team
+  cannot read the Roadmap, not even through the server's API.
 - A team always keeps at least one admin.
 - If your role changes while the page is open, a refused change says so, shows your new role, and
   keeps the text you typed.

@@ -5,5 +5,6 @@ request open for notifications.
 
 **Requirements to test:**
 
-- The toast appears only after the server has stored the settings, never when the save fails.
+- The toast appears only after the server has stored the settings you entered, never when the
+  save fails.
 - The toast disappears after 2 seconds.
