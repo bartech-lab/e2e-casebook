@@ -135,6 +135,7 @@ import { FieldNotes } from '../field-notes/FieldNotes.tsx';
 import { ClubActivity } from '../club-activity/ClubActivity.tsx';
 import { NoticeBoard } from '../notice-board/NoticeBoard.tsx';
 import { Prints } from '../prints/Prints.tsx';
+import { StudyGroup } from '../study-group/StudyGroup.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -304,7 +305,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/field-notes`}>Field notes</Link> ·{' '}
         <Link href={`${base}/club-activity`}>Club activity</Link> ·{' '}
         <Link href={`${base}/notice-board`}>Notice board</Link> ·{' '}
-        <Link href={`${base}/prints`}>Prints</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/prints`}>Prints</Link> ·{' '}
+        <Link href={`${base}/study-group`}>Study group</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -560,6 +562,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <NoticeBoard sandbox={sandbox} />
       ) : page === 'prints' ? (
         <Prints sandbox={sandbox} />
+      ) : page === 'study-group' ? (
+        <StudyGroup sandbox={sandbox} name={name} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -962,6 +966,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/prints`}>Prints</Link>: connect a photo account in a pop-up window.
+        </li>
+        <li>
+          <Link href={`${base}/study-group`}>Study group</Link>: a group chat that shows who is typing.
         </li>
       </ul>
     </section>

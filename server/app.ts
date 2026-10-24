@@ -67,6 +67,7 @@ import { createClientErrors } from './clientErrors.ts';
 import { createClubActivity } from './clubActivity.ts';
 import { createNoticeBoard } from './noticeBoard.ts';
 import { createCloudPix } from './cloudPix.ts';
+import { createStudyGroup } from './studyGroup.ts';
 
 export type AppOptions = {
   dbPath?: string;
@@ -135,6 +136,7 @@ export async function buildApp(opts: AppOptions = {}) {
   const clubActivity = createClubActivity();
   const noticeBoard = createNoticeBoard();
   const cloudPix = createCloudPix();
+  const studyGroup = createStudyGroup();
   const app = Fastify({ trustProxy: true });
 
   await app.register(fastifyWebsocket);
@@ -220,6 +222,7 @@ export async function buildApp(opts: AppOptions = {}) {
       clubActivity.register(scope);
       noticeBoard.register(scope);
       cloudPix.register(scope);
+      studyGroup.register(scope);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
         messages: store.messagesSince(req.params.sandbox, Number(req.query.since ?? 0) || 0),
@@ -254,7 +257,7 @@ export async function buildApp(opts: AppOptions = {}) {
     { prefix: '/api/s/:sandbox' },
   );
 
-  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes, workspaces, savedSearches, eventFeedback, expenseClaims, cardPayments, assistant, guestbook, clientErrors, clubActivity, noticeBoard, cloudPix });
+  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes, workspaces, savedSearches, eventFeedback, expenseClaims, cardPayments, assistant, guestbook, clientErrors, clubActivity, noticeBoard, cloudPix, studyGroup });
 
   if (opts.clientDir && existsSync(join(opts.clientDir, 'index.html'))) {
     await app.register(fastifyStatic, { root: opts.clientDir, wildcard: false });
@@ -324,6 +327,7 @@ export async function buildApp(opts: AppOptions = {}) {
       clubActivity.clear(id);
       noticeBoard.clear(id);
       cloudPix.clear(id);
+      studyGroup.clear(id);
     }
   }, Math.min(ttl, 60 * 60 * 1000));
   pruneTimer.unref();

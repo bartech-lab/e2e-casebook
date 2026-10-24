@@ -149,6 +149,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 134 | [Club activity](cases/134-club-activity.md) | The Club activity page lists what happened in the club, with times such as "3 minutes ago". |
 | 135 | [Notice board](cases/135-notice-board.md) | The Notice board page lists office notices and counts the ones you have not read yet. |
 | 136 | [Prints](cases/136-prints.md) | The Prints page connects your CloudPix photo account through a pop-up window. |
+| 137 | [Study group](cases/137-study-group.md) | The Study group page is a group chat that shows who is typing. |
 
 ## Run it
 
