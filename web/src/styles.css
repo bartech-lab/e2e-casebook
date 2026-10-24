@@ -326,3 +326,8 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .tag-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .tag-list li { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.15rem 0.3rem 0.15rem 0.6rem; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; }
 .tag-list button { min-width: 1.6rem; min-height: 1.6rem; padding: 0; border-radius: 999px; }
+.privacy-list { list-style: none; padding: 0; display: grid; gap: 0.75rem; max-width: 32rem; }
+.privacy-card { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.75rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.privacy-hint-button { min-width: 2rem; min-height: 2rem; padding: 0; border-radius: 999px; }
+.privacy-hint { position: fixed; inset: auto; top: anchor(bottom); left: anchor(left); margin: 6px 0 0; width: 16rem; padding: 0.5rem 0.75rem; background: #1f2937; color: #ffffff; border: 0; border-radius: var(--radius); font-size: 0.9rem; }
+.privacy-toast { position: fixed; inset: auto 1rem 1rem auto; margin: 0; padding: 0.75rem 1rem; background: #14532d; color: #ffffff; border: 0; border-radius: var(--radius); }

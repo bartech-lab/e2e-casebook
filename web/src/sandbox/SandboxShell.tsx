@@ -103,6 +103,7 @@ import { Lamps } from '../lamps/Lamps.tsx';
 import { MailingList } from '../mailing-list/MailingList.tsx';
 import { TripTags } from '../trip-tags/TripTags.tsx';
 import { GigTickets } from '../gig-tickets/GigTickets.tsx';
+import { PrivacySettings } from '../privacy/PrivacySettings.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -240,7 +241,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/lamps`}>Lamps</Link> ·{' '}
         <Link href={`${base}/mailing-list`}>Mailing list</Link> ·{' '}
         <Link href={`${base}/trip-tags`}>Trip tags</Link> ·{' '}
-        <Link href={`${base}/gig-tickets`}>Concert tickets</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/gig-tickets`}>Concert tickets</Link> ·{' '}
+        <Link href={`${base}/privacy`}>Privacy settings</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -432,6 +434,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <TripTags />
       ) : page === 'gig-tickets' ? (
         <GigTickets sandbox={sandbox} />
+      ) : page === 'privacy' ? (
+        <PrivacySettings />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -738,6 +742,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/gig-tickets`}>Concert tickets</Link>: a ticket purchase that leaves for a receipt page and has to be right when the user comes Back.
+        </li>
+        <li>
+          <Link href={`${base}/privacy`}>Privacy settings</Link>: settings with pop-up hints next to each option and a short confirmation after saving.
         </li>
       </ul>
     </section>
