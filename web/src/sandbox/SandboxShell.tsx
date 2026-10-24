@@ -140,6 +140,7 @@ import { BillingDetails } from '../billing-details/BillingDetails.tsx';
 import { FlightSearch } from '../flight-search/FlightSearch.tsx';
 import { BankTransfer } from '../bank-transfer/BankTransfer.tsx';
 import { LibraryCard } from '../library-card/LibraryCard.tsx';
+import { Fete } from '../fete/Fete.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -314,7 +315,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/billing-details`}>Billing details</Link> ·{' '}
         <Link href={`${base}/flight-search`}>Flight search</Link> ·{' '}
         <Link href={`${base}/bank-transfer`}>Bank transfer</Link> ·{' '}
-        <Link href={`${base}/library-card`}>Library card</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/library-card`}>Library card</Link> ·{' '}
+        <Link href={`${base}/fete`}>Village fête</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -580,6 +582,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <BankTransfer sandbox={sandbox} />
       ) : page === 'library-card' ? (
         <LibraryCard sandbox={sandbox} />
+      ) : page === 'fete' ? (
+        <Fete sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -997,6 +1001,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/library-card`}>Library card</Link>: a date of birth typed by hand, and an age that depends on today.
+        </li>
+        <li>
+          <Link href={`${base}/fete`}>Village fête</Link>: a reply form that works before its script has loaded.
         </li>
       </ul>
     </section>

@@ -154,6 +154,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 139 | [Flight search](cases/139-flight-search.md) | The Flight search page finds flights, and copes when the search is slow. |
 | 140 | [Bank transfer](cases/140-bank-transfer.md) | The Bank transfer page sends money to an account number that is formatted as you type. |
 | 141 | [Library card](cases/141-library-card.md) | The Library card page takes a date of birth typed by hand and works out your age. |
+| 142 | [Village fête](cases/142-village-f-te.md) | The Village fête page links to a reply form that the server builds and a script improves. |
 
 ## Run it
 
