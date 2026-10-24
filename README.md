@@ -157,6 +157,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 142 | [Village fête](cases/142-village-fete.md) | The Village fête page links to a reply form that the server builds and a script improves. |
 | 143 | [Rooms](cases/143-rooms.md) | The Rooms page shows a guest house's three rooms with photos sized for each screen. |
 | 144 | [Radio favourites](cases/144-radio-favourites.md) | The Radio favourites page lets you like songs, and keeps the saved likes in step with the screen. |
+| 145 | [Shift handover](cases/145-shift-handover.md) | The Shift handover page sends a note for the next shift, where @ mentions people. |
 
 ## Run it
 

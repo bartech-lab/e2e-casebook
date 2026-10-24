@@ -473,3 +473,15 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
   max-width: 100%;
   height: auto;
 }
+
+.mention-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0;
+  border: 1px solid #888;
+  max-width: 20rem;
+}
+
+.mention-list [aria-selected='true'] {
+  background: #dde8ff;
+}
