@@ -63,11 +63,12 @@ import type { Rsvps } from './rsvp.ts';
 import type { Songs } from './songs.ts';
 import type { Handover } from './handover.ts';
 import type { TicketContacts } from './ticketContacts.ts';
+import type { Barber } from './barber.ts';
 import { DEFAULT_CARDS, type Store } from './store.ts';
 import { cardInput, messageInput } from './validation.ts';
 
 type Params = { sandbox: string };
-type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts; teams: Teams; meetings: Meetings; otps: Otps; passkeys: Passkeys; deliveries: Deliveries; imports: Imports; uploads: Uploads; tickets: Tickets; appearances: Appearances; priceAlerts: PriceAlerts; scores: Scores; passwords: Passwords; sales: Sales; articles: Articles; posts: Posts; voiceNotes: VoiceNotes; priceList: PriceList; notesSchema: NotesSchema; gigTickets: GigTickets; albums: Albums; readerAuth: ReaderAuth; busTimes: BusTimes; workspaces: Workspaces; savedSearches: SavedSearches; eventFeedback: EventFeedback; expenseClaims: ExpenseClaims; cardPayments: CardPayments; assistant: Assistant; guestbook: Guestbook; clientErrors: ClientErrors; clubActivity: ClubActivity; noticeBoard: NoticeBoard; cloudPix: CloudPix; studyGroup: StudyGroup; billing: Billing; flights: Flights; transfers: Transfers; libraryCards: LibraryCards; rsvps: Rsvps; songs: Songs; handover: Handover; ticketContacts: TicketContacts };
+type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts; teams: Teams; meetings: Meetings; otps: Otps; passkeys: Passkeys; deliveries: Deliveries; imports: Imports; uploads: Uploads; tickets: Tickets; appearances: Appearances; priceAlerts: PriceAlerts; scores: Scores; passwords: Passwords; sales: Sales; articles: Articles; posts: Posts; voiceNotes: VoiceNotes; priceList: PriceList; notesSchema: NotesSchema; gigTickets: GigTickets; albums: Albums; readerAuth: ReaderAuth; busTimes: BusTimes; workspaces: Workspaces; savedSearches: SavedSearches; eventFeedback: EventFeedback; expenseClaims: ExpenseClaims; cardPayments: CardPayments; assistant: Assistant; guestbook: Guestbook; clientErrors: ClientErrors; clubActivity: ClubActivity; noticeBoard: NoticeBoard; cloudPix: CloudPix; studyGroup: StudyGroup; billing: Billing; flights: Flights; transfers: Transfers; libraryCards: LibraryCards; rsvps: Rsvps; songs: Songs; handover: Handover; ticketContacts: TicketContacts; barber: Barber };
 
 type FaultBody = {
   dropSockets?: unknown;
@@ -77,7 +78,7 @@ type FaultBody = {
   auth?: { tokenTtlMs?: unknown };
 };
 
-export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes, workspaces, savedSearches, eventFeedback, expenseClaims, cardPayments, assistant, guestbook, clientErrors, clubActivity, noticeBoard, cloudPix, studyGroup, billing, flights, transfers, libraryCards, rsvps, songs, handover, ticketContacts }: Deps) {
+export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes, workspaces, savedSearches, eventFeedback, expenseClaims, cardPayments, assistant, guestbook, clientErrors, clubActivity, noticeBoard, cloudPix, studyGroup, billing, flights, transfers, libraryCards, rsvps, songs, handover, ticketContacts, barber }: Deps) {
   app.register(
     async (scope) => {
       scope.addHook('preHandler', async (req, reply) => {
@@ -152,6 +153,7 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         songs.clear(sandbox);
         handover.clear(sandbox);
         ticketContacts.clear(sandbox);
+        barber.clear(sandbox);
         hub.reset(sandbox);
         return { ok: true };
       });
@@ -358,6 +360,11 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         return { ok: true };
       });
       scope.get<{ Params: Params }>('/song-writes', async (req) => ({ writes: songs.writes(req.params.sandbox) }));
+
+      scope.post<{ Params: Params }>('/barber-clock', async (req, reply) => {
+        if (!barber.advance(req.params.sandbox, (req.body as { advanceMs?: unknown } | undefined)?.advanceMs)) return reply.code(400).send({ error: 'advanceMs must be a number of ms' });
+        return { ok: true };
+      });
 
       scope.post<{ Params: Params }>('/expire-sessions', async (req) => {
         extras.expireSessions(req.params.sandbox);

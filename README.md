@@ -160,6 +160,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 145 | [Shift handover](cases/145-shift-handover.md) | The Shift handover page sends a note for the next shift, where @ mentions people. |
 | 146 | [Ticket contact](cases/146-ticket-contact.md) | The Ticket contact page asks where to send tickets, and works with the browser's autofill. |
 | 147 | [Handbook](cases/147-handbook.md) | The Handbook page has a menu of sections that open and close, usable with a keyboard and a screen reader. |
+| 148 | [Barber](cases/148-barber.md) | The Barber page books a haircut and holds the chosen time for 5 minutes. |
 
 ## Run it
 
