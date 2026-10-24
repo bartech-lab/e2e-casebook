@@ -105,6 +105,7 @@ import { TripTags } from '../trip-tags/TripTags.tsx';
 import { GigTickets } from '../gig-tickets/GigTickets.tsx';
 import { PrivacySettings } from '../privacy/PrivacySettings.tsx';
 import { TrainTicket } from '../train-ticket/TrainTicket.tsx';
+import { Pancakes } from '../pancakes/Pancakes.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -244,7 +245,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/trip-tags`}>Trip tags</Link> ·{' '}
         <Link href={`${base}/gig-tickets`}>Concert tickets</Link> ·{' '}
         <Link href={`${base}/privacy`}>Privacy settings</Link> ·{' '}
-        <Link href={`${base}/train-ticket`}>Train ticket</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/train-ticket`}>Train ticket</Link> ·{' '}
+        <Link href={`${base}/pancakes`}>Pancakes</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -440,6 +442,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <PrivacySettings />
       ) : page === 'train-ticket' ? (
         <TrainTicket />
+      ) : page === 'pancakes' ? (
+        <Pancakes />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -752,6 +756,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/train-ticket`}>Train ticket</Link>: a three-step ticket purchase with optional extras.
+        </li>
+        <li>
+          <Link href={`${base}/pancakes`}>Pancakes</Link>: a recipe that scales with the number of servings and checks how much flour you have.
         </li>
       </ul>
     </section>
