@@ -153,6 +153,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 138 | [Billing details](cases/138-billing-details.md) | The Billing details page saves who invoices are made out to: a private person or a company. |
 | 139 | [Flight search](cases/139-flight-search.md) | The Flight search page finds flights, and copes when the search is slow. |
 | 140 | [Bank transfer](cases/140-bank-transfer.md) | The Bank transfer page sends money to an account number that is formatted as you type. |
+| 141 | [Library card](cases/141-library-card.md) | The Library card page takes a date of birth typed by hand and works out your age. |
 
 ## Run it
 
