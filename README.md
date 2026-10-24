@@ -130,6 +130,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 115 | [Event feedback](cases/115-event-feedback.md) | The Event feedback page has a form whose star rating is a custom element. |
 | 116 | [Shop dashboard](cases/116-shop-dashboard.md) | The Shop dashboard page has an orders widget that switches layout with its own width. |
 | 117 | [Highlights](cases/117-highlights.md) | The Highlights page lets the reader save selected text from an article. |
+| 118 | [Sell your bike](cases/118-sell-your-bike.md) | The Sell your bike page explains, to every user, why Publish is not available yet. |
 
 ## Run it
 

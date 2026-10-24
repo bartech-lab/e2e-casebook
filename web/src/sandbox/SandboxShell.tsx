@@ -116,6 +116,7 @@ import { Groceries } from '../groceries/Groceries.tsx';
 import { EventFeedback } from '../event-feedback/EventFeedback.tsx';
 import { OrdersWidget } from '../orders-widget/OrdersWidget.tsx';
 import { Highlights } from '../highlights/Highlights.tsx';
+import { SellBike } from '../sell-bike/SellBike.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -266,7 +267,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/groceries`}>Groceries</Link> ·{' '}
         <Link href={`${base}/event-feedback`}>Event feedback</Link> ·{' '}
         <Link href={`${base}/shop-dashboard`}>Shop dashboard</Link> ·{' '}
-        <Link href={`${base}/highlights`}>Highlights</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/highlights`}>Highlights</Link> ·{' '}
+        <Link href={`${base}/sell-bike`}>Sell your bike</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -484,6 +486,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <OrdersWidget />
       ) : page === 'highlights' ? (
         <Highlights />
+      ) : page === 'sell-bike' ? (
+        <SellBike />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -829,6 +833,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/highlights`}>Highlights</Link>: an article where selected text can be saved as a highlight.
+        </li>
+        <li>
+          <Link href={`${base}/sell-bike`}>Sell your bike</Link>: a listing form whose Publish button explains why it is not ready yet.
         </li>
       </ul>
     </section>

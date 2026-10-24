@@ -368,3 +368,7 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .hl-popup { position: absolute; transform: translateX(-100%); z-index: 4; display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem; }
 .hl-popup button { white-space: nowrap; box-shadow: var(--shadow); }
 .hl-popup p { margin: 0; padding: 0.25rem 0.5rem; background: #1f2937; color: #ffffff; border-radius: var(--radius); font-size: 0.85rem; white-space: nowrap; }
+.sell-form { display: flex; flex-direction: column; align-items: flex-start; gap: 0.6rem; max-width: 26rem; }
+.sell-publish { position: relative; }
+.looks-disabled { opacity: 0.55; cursor: not-allowed; }
+.sell-tip { position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%); width: max-content; max-width: 18rem; padding: 0.4rem 0.6rem; background: #1f2937; color: #ffffff; border-radius: var(--radius); font-size: 0.85rem; }
