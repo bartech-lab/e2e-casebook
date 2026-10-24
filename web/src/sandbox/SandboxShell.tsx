@@ -137,6 +137,7 @@ import { NoticeBoard } from '../notice-board/NoticeBoard.tsx';
 import { Prints } from '../prints/Prints.tsx';
 import { StudyGroup } from '../study-group/StudyGroup.tsx';
 import { BillingDetails } from '../billing-details/BillingDetails.tsx';
+import { FlightSearch } from '../flight-search/FlightSearch.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -308,7 +309,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/notice-board`}>Notice board</Link> ·{' '}
         <Link href={`${base}/prints`}>Prints</Link> ·{' '}
         <Link href={`${base}/study-group`}>Study group</Link> ·{' '}
-        <Link href={`${base}/billing-details`}>Billing details</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/billing-details`}>Billing details</Link> ·{' '}
+        <Link href={`${base}/flight-search`}>Flight search</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -568,6 +570,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <StudyGroup sandbox={sandbox} name={name} />
       ) : page === 'billing-details' ? (
         <BillingDetails sandbox={sandbox} />
+      ) : page === 'flight-search' ? (
+        <FlightSearch sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -976,6 +980,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/billing-details`}>Billing details</Link>: billing details for a private person or a company.
+        </li>
+        <li>
+          <Link href={`${base}/flight-search`}>Flight search</Link>: a flight search that can be slow, with Cancel.
         </li>
       </ul>
     </section>
