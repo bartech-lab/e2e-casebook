@@ -126,6 +126,7 @@ import { Assistant } from '../assistant/Assistant.tsx';
 import { Comments } from '../comments/Comments.tsx';
 import { AlertSettings } from '../alert-settings/AlertSettings.tsx';
 import { ChoirSignup } from '../choir/ChoirSignup.tsx';
+import { SharedPhotos } from '../shared-photos/SharedPhotos.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -286,7 +287,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/assistant`}>Assistant</Link> ·{' '}
         <Link href={`${base}/comments`}>Comments</Link> ·{' '}
         <Link href={`${base}/alert-settings`}>Alert settings</Link> ·{' '}
-        <Link href={`${base}/choir`}>Choir sign-up</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/choir`}>Choir sign-up</Link> ·{' '}
+        <Link href={`${base}/shared-photos`}>Shared photos</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -524,6 +526,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <AlertSettings sandbox={sandbox} />
       ) : page === 'choir' ? (
         <ChoirSignup />
+      ) : page === 'shared-photos' ? (
+        <SharedPhotos />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -899,6 +903,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/choir`}>Choir sign-up</Link>: a sign-up form that changes layout when a phone is turned.
+        </li>
+        <li>
+          <Link href={`${base}/shared-photos`}>Shared photos</Link>: a photo grid where pressing and holding a photo starts selecting.
         </li>
       </ul>
     </section>
