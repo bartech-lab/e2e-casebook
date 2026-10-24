@@ -110,6 +110,7 @@ import { FolderUpload } from '../album/FolderUpload.tsx';
 import { FloorPlan } from '../floor-plan/FloorPlan.tsx';
 import { ReadingList } from '../reading-list/ReadingList.tsx';
 import { BusStop } from '../bus-stop/BusStop.tsx';
+import { Workspace } from '../workspace/Workspace.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -254,7 +255,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/album`}>Photo album</Link> ·{' '}
         <Link href={`${base}/floor-plan`}>Floor plan</Link> ·{' '}
         <Link href={`${base}/reading-list`}>Reading list</Link> ·{' '}
-        <Link href={`${base}/bus-stop`}>Bus stop</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/bus-stop`}>Bus stop</Link> ·{' '}
+        <Link href={`${base}/workspace`}>Workspace</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -460,6 +462,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <ReadingList sandbox={sandbox} />
       ) : page === 'bus-stop' ? (
         <BusStop sandbox={sandbox} />
+      ) : page === 'workspace' ? (
+        <Workspace sandbox={sandbox} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -787,6 +791,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/bus-stop`}>Bus stop</Link>: a departures board that keeps working offline through a service worker.
+        </li>
+        <li>
+          <Link href={`${base}/workspace`}>Workspace</Link>: a workspace that sends unfinished workspaces to Setup and finished ones to the Dashboard.
         </li>
       </ul>
     </section>

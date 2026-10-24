@@ -124,6 +124,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 109 | [Floor plan](cases/109-floor-plan.md) | The Floor plan page zooms a plan with a pinch, Ctrl and the mouse wheel, or buttons. |
 | 110 | [Reading list](cases/110-reading-list.md) | The Reading list page keeps the user signed in with a session stored in IndexedDB. |
 | 111 | [Bus stop](cases/111-bus-stop.md) | The Bus stop page links to a departures board that keeps working offline. |
+| 112 | [Workspace](cases/112-workspace.md) | The Workspace page opens on Setup or on the Dashboard, depending on the workspace's settings. |
 
 ## Run it
 
