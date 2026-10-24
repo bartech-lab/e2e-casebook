@@ -160,6 +160,7 @@ import { TrailMap } from '../trail-map/TrailMap.tsx';
 import { Phrasebook } from '../phrasebook/Phrasebook.tsx';
 import { Replies } from '../replies/Replies.tsx';
 import { PayslipsLink } from '../payslips/PayslipsLink.tsx';
+import { Newsroom, NewsStory } from '../newsroom/Newsroom.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -203,6 +204,7 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
   const product = /^shop\/([a-z]+)$/.exec(page);
   const split = /^shop\/orders\/(\d+)\/split$/.exec(page);
   const booking = /^booking\/(dates|guests|review|done)$/.exec(page);
+  const newsStory = /^newsroom\/(\d+)$/.exec(page);
   return (
     <>
       <nav aria-label="Sandbox">
@@ -354,7 +356,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/trail-map`}>Trail map</Link> ·{' '}
         <Link href={`${base}/phrasebook`}>Phrasebook</Link> ·{' '}
         <Link href={`${base}/replies`}>Replies</Link> ·{' '}
-        <Link href={`${base}/payslips`}>Payslips</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/payslips`}>Payslips</Link> ·{' '}
+        <Link href={`${base}/newsroom`}>Newsroom</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -660,6 +663,10 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Replies sandbox={sandbox} />
       ) : page === 'payslips' ? (
         <PayslipsLink sandbox={sandbox} />
+      ) : page === 'newsroom' ? (
+        <Newsroom sandbox={sandbox} />
+      ) : newsStory ? (
+        <NewsStory sandbox={sandbox} id={Number(newsStory[1])} />
       ) : booking ? (
         <Booking sandbox={sandbox} step={booking[1] as BookingStep} />
       ) : page === 'shop' ? (
@@ -1137,6 +1144,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/payslips`}>Payslips</Link>: a separate site with sign-in, where the browser's Back button must not show private pages after signing out.
+        </li>
+        <li>
+          <Link href={`${base}/newsroom`}>Newsroom</Link>: a long story list with Load more, where new stories arrive while you read.
         </li>
       </ul>
     </section>
