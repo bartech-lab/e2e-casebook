@@ -560,3 +560,4 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .replies { display: flex; gap: 2rem; align-items: flex-start; }
 .replies label { display: grid; gap: 0.25rem; }
 .draft-mark { color: var(--muted); font-size: 0.85rem; }
+.news-list li { padding: 0.6rem 0; }

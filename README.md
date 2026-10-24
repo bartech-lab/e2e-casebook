@@ -174,6 +174,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 159 | [Phrasebook](cases/159-phrasebook.md) | The Phrasebook page adds phrases with Enter, including ones typed with an input method (IME). |
 | 160 | [Replies](cases/160-replies.md) | The Replies page keeps an unsent reply per conversation in the browser, up to the last letter typed. |
 | 161 | [Payslips](cases/161-payslips.md) | On the Payslips site, the browser's Back and Forward buttons must never show payslips to someone who signed out. |
+| 162 | [Newsroom](cases/162-newsroom.md) | The Newsroom page pages through stories with Load more, without repeats or gaps, and keeps your place when you come back from a story. |
 
 ## Run it
 
