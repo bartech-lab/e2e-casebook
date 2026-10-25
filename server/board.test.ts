@@ -283,7 +283,7 @@ test('If-Match is per card: version of card 1 does not satisfy card 2', async (t
 
 test('malformed If-Match is 400 and changes nothing', async (t) => {
   const { app, sb } = await setup(t);
-  for (const h of ['abc', '1', '"abc"', '""']) {
+  for (const h of ['abc', '1', '"abc"', '""', '"1", "2"', '"1"x']) {
     const r = await api(app, sb, 'PATCH', '/cards/2', { title: 'x' }, { 'if-match': h });
     assert.equal(r.statusCode, 400, `If-Match ${h} -> ${r.statusCode} ${r.body}`);
   }
@@ -704,4 +704,30 @@ test('file reflects cards at the moment the job finished, not at start', async (
   assert.equal(f.statusCode, 200);
   const lines = f.body.split(/\r?\n/).filter(Boolean);
   assert.deepEqual(lines, ['id,title,status,version', '"1","A","todo","1"', '"2","edited during export","todo","2"']);
+});
+
+test('POST card answers 201 with ETag "1" and rejects a whitespace-only author', async (t) => {
+  const { app, sb } = await setup(t);
+  const bad = await api(app, sb, 'POST', '/cards', { title: 'Fresh card', by: '   ' });
+  assert.equal(bad.statusCode, 400, bad.body);
+  const res = await api(app, sb, 'POST', '/cards', { title: 'Fresh card', by: 'Ann' });
+  assert.equal(res.statusCode, 201, res.body);
+  assert.equal(res.headers.etag, '"1"');
+});
+
+test('PATCH of an unknown card is 404 even when the body is invalid', async (t) => {
+  const { app, sb } = await setup(t);
+  const r = await api(app, sb, 'PATCH', '/cards/999', {});
+  assert.equal(r.statusCode, 404, r.body);
+});
+
+test('a finished export downloads as an attachment named after its id', async (t) => {
+  const { app, sb } = await setup(t);
+  await fault(app, sb, { exports: { stepMs: 10 } });
+  await startExport(app, sb);
+  const e = await startExport(app, sb);
+  await waitStatus(app, sb, e.id, 'done');
+  const r = await api(app, sb, 'GET', `/exports/${e.id}/file`);
+  assert.equal(r.statusCode, 200, r.body);
+  assert.equal(r.headers['content-disposition'], `attachment; filename="board-export-${e.id}.csv"`);
 });
