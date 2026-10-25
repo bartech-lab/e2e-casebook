@@ -20,3 +20,36 @@ test('a like is applied when its request finishes waiting, so paced requests can
   assert.equal((await f.inject({ url: '/api/s/a/songs' })).json().songs[0].liked, true);
   assert.equal((await f.inject({ url: '/api/s/b/songs' })).json().songs[0].liked, false);
 });
+
+test('song likes: unknown song is 404, liked must be a boolean, failures run out, hooks validate, clear restores', async () => {
+  const songs = createSongs();
+  const f = Fastify();
+  await f.register(async (scope) => songs.register(scope), { prefix: '/api/s/:sandbox' });
+  const put = (id: number, liked: unknown) => f.inject({ method: 'PUT', url: `/api/s/a/songs/${id}/like`, payload: { liked } });
+  assert.equal((await put(9, true)).statusCode, 404);
+  assert.equal((await put(1, 'true')).statusCode, 400);
+  assert.equal(songs.setFail('a', 2), true);
+  assert.equal((await put(1, true)).statusCode, 503);
+  assert.equal((await put(1, true)).statusCode, 503);
+  assert.equal((await put(1, true)).statusCode, 200);
+  assert.equal(songs.setFail('a', -1), false);
+  assert.equal(songs.setFail('a', 1.5), false);
+  assert.equal(songs.setPace('a', [10_001]), false);
+  assert.equal(songs.setPace('a', [-1]), false);
+  songs.clear('a');
+  assert.equal((await f.inject({ url: '/api/s/a/songs' })).json().songs[0].liked, false);
+  assert.deepEqual(songs.writes('a'), []);
+});
+
+test('setting a new pace list starts again from its first entry', async () => {
+  const songs = createSongs();
+  const f = Fastify();
+  await f.register(async (scope) => songs.register(scope), { prefix: '/api/s/:sandbox' });
+  const put = (liked: boolean) => f.inject({ method: 'PUT', url: '/api/s/a/songs/2/like', payload: { liked } });
+  songs.setPace('a', [0, 300]);
+  await put(true);
+  songs.setPace('a', [0, 300]);
+  const start = Date.now();
+  await put(false);
+  assert.ok(Date.now() - start < 200, 'the first entry of the new list (0 ms) should apply');
+});
