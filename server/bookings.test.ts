@@ -20,3 +20,20 @@ test('bookings: numbered per sandbox, priced in grosze, validated, cleared by re
   await app.inject({ method: 'POST', url: `/__test__/s/${sb}/reset` });
   assert.deepEqual((await app.inject({ method: 'GET', url: `/api/s/${sb}/bookings` })).json(), { bookings: [] });
 });
+
+async function sandboxApp(t: { after: (fn: () => Promise<void>) => void }) {
+  const app = await buildApp({ dbPath: ':memory:', testHooks: true });
+  t.after(async () => {
+    await app.close();
+  });
+  const sb = (await app.inject({ method: 'POST', url: '/api/sandboxes' })).json().id as string;
+  return { app, sb };
+}
+
+test('bookings: the top of each range is allowed, one more is not, and the date must be exactly YYYY-MM-DD', async (t) => {
+  const { app, sb } = await sandboxApp(t);
+  const book = (body: Record<string, unknown>) =>
+    app.inject({ method: 'POST', url: `/api/s/${sb}/bookings`, payload: { checkIn: '2026-11-02', nights: 1, adults: 1, children: 0, ...body } });
+  assert.equal((await book({ nights: 14, adults: 4, children: 3 })).statusCode, 201);
+  for (const bad of [{ children: 4 }, { checkIn: '2026-11-022' }, { checkIn: 'x2026-11-02' }]) assert.equal((await book(bad)).statusCode, 400, JSON.stringify(bad));
+});

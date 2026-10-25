@@ -22,3 +22,20 @@ test('checklist: saved in order, a known clientId is not saved again, validated,
   await app.inject({ method: 'POST', url: `/__test__/s/${sb}/reset` });
   assert.deepEqual(await list(), []);
 });
+
+async function sandboxApp(t: { after: (fn: () => Promise<void>) => void }) {
+  const app = await buildApp({ dbPath: ':memory:', testHooks: true });
+  t.after(async () => {
+    await app.close();
+  });
+  const sb = (await app.inject({ method: 'POST', url: '/api/sandboxes' })).json().id as string;
+  return { app, sb };
+}
+
+test('checklist: client ids are 8 to 64 word characters or dashes, and text may be exactly 100 characters', async (t) => {
+  const { app, sb } = await sandboxApp(t);
+  const add = (clientId: string, text = 'Milk') => app.inject({ method: 'POST', url: `/api/s/${sb}/checklist`, payload: { clientId, text } });
+  for (const bad of ['a'.repeat(7), 'a'.repeat(65), 'abc def!']) assert.equal((await add(bad)).statusCode, 400, bad);
+  assert.equal((await add('a'.repeat(64))).statusCode, 201);
+  assert.equal((await add('item-0001', 'x'.repeat(100))).statusCode, 201);
+});
