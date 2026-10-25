@@ -27,3 +27,23 @@ test('price list: strong ETag, 304 for a matching If-None-Match, a new ETag afte
   await app.inject({ method: 'POST', url: `/__test__/s/${sb}/reset` });
   assert.deepEqual((await app.inject({ method: 'GET', url: `/__test__/s/${sb}/price-list-requests` })).json(), { requests: [] });
 });
+
+test('price list: changes stay in their sandbox, reset restores the prices, and the log keeps the If-None-Match sent', async (t) => {
+  const app = await buildApp({ dbPath: ':memory:', testHooks: true });
+  t.after(async () => {
+    await app.close();
+  });
+  const sandbox = async () => (await app.inject({ method: 'POST', url: '/api/sandboxes' })).json().id as string;
+  const a = await sandbox();
+  const b = await sandbox();
+  const mug = async (sb: string) => (await app.inject({ method: 'GET', url: `/api/s/${sb}/price-list` })).json().items.find((i: { sku: string }) => i.sku === 'mug').price;
+  await app.inject({ method: 'POST', url: `/__test__/s/${a}/price-list`, payload: { sku: 'mug', price: 3950 } });
+  assert.equal(await mug(a), 3950);
+  assert.equal(await mug(b), 3900);
+  await app.inject({ method: 'POST', url: `/__test__/s/${a}/reset` });
+  assert.equal(await mug(a), 3900);
+  await app.inject({ method: 'GET', url: `/api/s/${a}/price-list`, headers: { 'if-none-match': '"stale"' } });
+  const log = (await app.inject({ method: 'GET', url: `/__test__/s/${a}/price-list-requests` })).json().requests;
+  assert.deepEqual(log.at(-1), { status: 200, ifNoneMatch: '"stale"' });
+  assert.equal(log[0].ifNoneMatch, null);
+});
