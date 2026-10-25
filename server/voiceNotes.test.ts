@@ -22,3 +22,17 @@ test('voice notes: refuse empty audio and bad durations, store and serve the byt
   await app.inject({ method: 'POST', url: `/__test__/s/${sb}/reset` });
   assert.deepEqual((await app.inject({ method: 'GET', url: `/api/s/${sb}/voice-notes` })).json(), { notes: [] });
 });
+
+test('voice notes: the duration is a whole number up to 31000 ms, and an unknown note has no audio', async (t) => {
+  const app = await buildApp({ dbPath: ':memory:', testHooks: true });
+  t.after(async () => {
+    await app.close();
+  });
+  const sb = (await app.inject({ method: 'POST', url: '/api/sandboxes' })).json().id as string;
+  const post = (durationMs: string) =>
+    app.inject({ method: 'POST', url: `/api/s/${sb}/voice-notes?durationMs=${durationMs}`, headers: { 'content-type': 'audio/webm' }, payload: Buffer.from([1, 2, 3]) });
+  assert.equal((await post('31000')).statusCode, 201);
+  assert.equal((await post('31001')).statusCode, 400);
+  assert.equal((await post('1500.5')).statusCode, 400);
+  assert.equal((await app.inject({ method: 'GET', url: `/api/s/${sb}/voice-notes/9/audio` })).statusCode, 404);
+});
