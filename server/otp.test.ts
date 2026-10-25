@@ -25,3 +25,24 @@ test('otp: a code works once, three wrong tries lock it, a new code unlocks', as
   await send();
   assert.equal((await verify(await code())).statusCode, 200);
 });
+
+async function makeSandboxes(t: { after: (fn: () => Promise<void>) => void }, n = 1) {
+  const app = await buildApp({ dbPath: ':memory:', testHooks: true });
+  t.after(async () => {
+    await app.close();
+  });
+  const ids: string[] = [];
+  for (let i = 0; i < n; i++) ids.push((await app.inject({ method: 'POST', url: '/api/sandboxes' })).json().id as string);
+  return { app, ids };
+}
+
+test('otp: the code must be sent as a string, and reset forgets the code', async (t) => {
+  const { app, ids: [sb] } = await makeSandboxes(t);
+  await app.inject({ method: 'POST', url: `/api/s/${sb}/otp/send` });
+  const code = (await app.inject({ method: 'GET', url: `/__test__/s/${sb}/otp` })).json().code as string;
+  assert.match(code, /^\d{6}$/);
+  const verify = (c: unknown) => app.inject({ method: 'POST', url: `/api/s/${sb}/otp/verify`, payload: { code: c } });
+  assert.equal((await verify(Number(code))).statusCode, 400);
+  await app.inject({ method: 'POST', url: `/__test__/s/${sb}/reset` });
+  assert.deepEqual((await verify(code)).json(), { error: 'Ask for a code first.' });
+});

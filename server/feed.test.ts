@@ -25,3 +25,28 @@ test('feed: 35 seeded posts, cursor and offset paging, newer posts, posting, res
   await app.inject({ method: 'POST', url: `/__test__/s/${sb}/reset` });
   assert.deepEqual(ids(await get('?after=35')), []);
 });
+
+async function makeSandboxes(t: { after: (fn: () => Promise<void>) => void }, n = 1) {
+  const app = await buildApp({ dbPath: ':memory:', testHooks: true });
+  t.after(async () => {
+    await app.close();
+  });
+  const ids: string[] = [];
+  for (let i = 0; i < n; i++) ids.push((await app.inject({ method: 'POST', url: '/api/sandboxes' })).json().id as string);
+  return { app, ids };
+}
+
+test('feed: newer posts come newest first, page flags are exact at the end, a bad offset reads as 0, text is 1 to 200 characters', async (t) => {
+  const { app, ids: [sb] } = await makeSandboxes(t);
+  const get = async (q: string) => (await app.inject({ method: 'GET', url: `/api/s/${sb}/feed?${q}` })).json();
+  const ids = (r: { posts: { id: number }[] }) => r.posts.map((p) => p.id);
+  assert.deepEqual(ids(await get('after=30')), [35, 34, 33, 32, 31]);
+  const last = await get('offset=25');
+  assert.deepEqual([ids(last).length, last.more], [10, false]);
+  assert.deepEqual(ids(await get('offset=abc')), [35, 34, 33, 32, 31, 30, 29, 28, 27, 26]);
+  assert.equal((await get('before=11')).more, false);
+  const post = (text: string) => app.inject({ method: 'POST', url: `/api/s/${sb}/feed`, payload: { text } });
+  const ok = await post('x'.repeat(200));
+  assert.equal(ok.statusCode, 201);
+  assert.equal((await post('x'.repeat(201))).statusCode, 400);
+});

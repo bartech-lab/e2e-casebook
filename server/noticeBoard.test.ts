@@ -16,3 +16,15 @@ test('notices start unread, a read is kept per sandbox, and every send is counte
   assert.deepEqual(board.reads('a'), { 2: 2, 3: 1 });
   assert.equal((await list('b')).filter((n) => n.read).length, 0);
 });
+
+test('notice ids must be a list of whole numbers from 1 to 8, and clear forgets reads', async () => {
+  const board = createNoticeBoard();
+  const f = Fastify();
+  await f.register(async (scope) => board.register(scope), { prefix: '/api/s/:sandbox' });
+  const read = (ids: unknown) => f.inject({ method: 'POST', url: '/api/s/a/notices/read', payload: { ids } });
+  for (const bad of [[0], [1.5], 'x', null]) assert.equal((await read(bad)).statusCode, 400, JSON.stringify(bad));
+  assert.equal((await read([8])).statusCode, 200);
+  assert.deepEqual(board.reads('a'), { 8: 1 });
+  board.clear('a');
+  assert.deepEqual(board.reads('a'), {});
+});
