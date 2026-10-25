@@ -19,3 +19,14 @@ test('feedback: saved in order, validated, reset clears', async (t) => {
   await app.inject({ method: 'POST', url: `/__test__/s/${sb}/reset` });
   assert.deepEqual(await list(), []);
 });
+
+test('feedback: a 500-character comment is allowed, and the comment must be text', async (t) => {
+  const app = await buildApp({ dbPath: ':memory:', testHooks: true });
+  t.after(async () => {
+    await app.close();
+  });
+  const sb = (await app.inject({ method: 'POST', url: '/api/sandboxes' })).json().id as string;
+  const send = (comment: unknown) => app.inject({ method: 'POST', url: `/api/s/${sb}/feedback`, payload: { rating: 4, comment } });
+  assert.equal((await send('x'.repeat(500))).statusCode, 201);
+  assert.equal((await send(42)).statusCode, 400);
+});
