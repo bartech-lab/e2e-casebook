@@ -15,3 +15,12 @@ test('the running order accepts only a reordering of every act, per sandbox', as
   assert.deepEqual((await f.inject({ url: '/api/s/a/running-order' })).json().acts, moved);
   assert.deepEqual((await f.inject({ url: '/api/s/b/running-order' })).json().acts, ACTS);
 });
+
+test('clear brings back the default running order', async () => {
+  const r = createRunningOrder();
+  const f = Fastify();
+  await f.register(async (scope) => r.register(scope), { prefix: '/api/s/:sandbox' });
+  await f.inject({ method: 'PUT', url: '/api/s/a/running-order', payload: { acts: [...ACTS].reverse() } });
+  r.clear('a');
+  assert.deepEqual((await f.inject({ url: '/api/s/a/running-order' })).json().acts, ACTS);
+});

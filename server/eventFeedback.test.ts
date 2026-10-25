@@ -20,3 +20,12 @@ test('stores trimmed entries with a rating from 1 to 5 sent as form text', async
   fb.clear('a');
   assert.deepEqual((await f.inject('/api/s/a/event-feedback')).json(), { entries: [] });
 });
+
+test('a rating of 5 is the highest allowed', async () => {
+  const fb = createEventFeedback();
+  const f = Fastify();
+  await f.register(async (scope) => fb.register(scope), { prefix: '/api/s/:sandbox' });
+  const send = (rating: string) => f.inject({ method: 'POST', url: '/api/s/a/event-feedback', payload: { name: 'Ola', rating } });
+  assert.equal((await send('5')).statusCode, 200);
+  assert.equal((await send('6')).statusCode, 400);
+});
