@@ -14,3 +14,13 @@ test('search: case-insensitive substring, encoded queries, empty returns everyth
   assert.deepEqual((await find('zzz')).results, []);
   assert.equal((await find('')).results.length, 12);
 });
+
+test('search: surrounding spaces are ignored for matching but the query is echoed as sent', async (t) => {
+  const app = await buildApp({ dbPath: ':memory:', testHooks: true });
+  t.after(async () => {
+    await app.close();
+  });
+  const sb = (await app.inject({ method: 'POST', url: '/api/sandboxes' })).json().id as string;
+  const res = (await app.inject({ method: 'GET', url: `/api/s/${sb}/search?q=${encodeURIComponent(' lamp ')}` })).json();
+  assert.deepEqual(res, { q: ' lamp ', results: ['Desk lamp', 'Lava lamp', 'Lamp shade'] });
+});
