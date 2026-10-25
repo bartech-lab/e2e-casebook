@@ -18,3 +18,18 @@ test('posts: validated, stored per sandbox with questions and the pin, cleared b
   await app.inject({ method: 'POST', url: `/__test__/s/${sb}/reset` });
   assert.deepEqual((await app.inject({ method: 'GET', url })).json(), { posts: [] });
 });
+
+test('posts: body, faq and pinned are all required', async (t) => {
+  const app = await buildApp({ dbPath: ':memory:', testHooks: true });
+  t.after(async () => {
+    await app.close();
+  });
+  const sb = (await app.inject({ method: 'POST', url: '/api/sandboxes' })).json().id as string;
+  const full = { title: 'Opening hours', body: 'We open at 9.', faq: [], pinned: false };
+  const post = (payload: object) => app.inject({ method: 'POST', url: `/api/s/${sb}/posts`, payload });
+  for (const missing of ['body', 'faq', 'pinned']) {
+    const { [missing]: _drop, ...rest } = full as Record<string, unknown>;
+    assert.equal((await post(rest)).statusCode, 400, missing);
+  }
+  assert.equal((await post(full)).statusCode, 201);
+});
