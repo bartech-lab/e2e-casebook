@@ -17,3 +17,15 @@ test('postal codes give a city after a short wait, and contacts are kept per san
   assert.deepEqual((await f.inject({ url: '/api/s/a/ticket-contacts' })).json(), { contacts: [contact] });
   assert.deepEqual((await f.inject({ url: '/api/s/b/ticket-contacts' })).json(), { contacts: [] });
 });
+
+test('a saved contact keeps only the known fields, contacts accumulate, and clear forgets them', async () => {
+  const t = createTicketContacts();
+  const f = Fastify();
+  await f.register(async (scope) => t.register(scope), { prefix: '/api/s/:sandbox' });
+  const contact = { givenName: 'Ola', familyName: 'Nowak', email: 'ola@example.com', tel: '1', postalCode: '30-001', city: 'Kraków', street: 'Floriańska 1' };
+  await f.inject({ method: 'POST', url: '/api/s/a/ticket-contacts', payload: { ...contact, admin: 'yes' } });
+  await f.inject({ method: 'POST', url: '/api/s/a/ticket-contacts', payload: { ...contact, givenName: 'Ewa' } });
+  assert.deepEqual((await f.inject({ url: '/api/s/a/ticket-contacts' })).json().contacts, [contact, { ...contact, givenName: 'Ewa' }]);
+  t.clear('a');
+  assert.deepEqual((await f.inject({ url: '/api/s/a/ticket-contacts' })).json(), { contacts: [] });
+});

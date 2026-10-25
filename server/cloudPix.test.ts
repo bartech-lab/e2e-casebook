@@ -17,3 +17,17 @@ test('a code works once, only in its own sandbox, and every exchange is counted'
   assert.equal(pix.exchanges('a'), 1);
   assert.equal(pix.exchanges('b'), 0);
 });
+
+test('each code is new, and clear forgets codes and the exchange count', async () => {
+  const pix = createCloudPix();
+  const f = Fastify();
+  await f.register(async (scope) => pix.register(scope), { prefix: '/api/s/:sandbox' });
+  const code = async () => (await f.inject({ method: 'POST', url: '/api/s/a/cloudpix/codes' })).json().code as string;
+  const first = await code();
+  assert.notEqual(await code(), first);
+  assert.equal((await f.inject({ method: 'POST', url: '/api/s/a/cloudpix/token', payload: { code: first } })).statusCode, 200);
+  const unused = await code();
+  pix.clear('a');
+  assert.equal(pix.exchanges('a'), 0);
+  assert.equal((await f.inject({ method: 'POST', url: '/api/s/a/cloudpix/token', payload: { code: unused } })).statusCode, 400);
+});
