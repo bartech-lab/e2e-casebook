@@ -201,6 +201,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 186 | [Library catalogue](cases/186-library-catalogue.md) | A search kept in the page's address, so it survives a reload, a shared link and Back, whatever the text. |
 | 187 | [Team overview](cases/187-team-overview.md) | Three panels loaded at once with a short-lived token that is renewed once, quietly, when it runs out. |
 | 188 | [Region packs](cases/188-region-packs.md) | Map downloads with a progress bar that follows the bytes as they arrive, and a Cancel button. |
+| 189 | [Gym membership](cases/189-gym-membership.md) | Renewal dates for a membership that starts late in the month, in any time zone. |
 
 ## Run it
 

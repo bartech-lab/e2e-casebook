@@ -187,6 +187,7 @@ import { QuickInvoice } from '../quick-invoice/QuickInvoice.tsx';
 import { Catalogue } from '../catalogue/Catalogue.tsx';
 import { TeamOverview } from '../team-overview/TeamOverview.tsx';
 import { RegionPacks } from '../region-packs/RegionPacks.tsx';
+import { GymMembership } from '../gym-membership/GymMembership.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -410,7 +411,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/quick-invoice`}>Quick invoice</Link> ·{' '}
         <Link href={`${base}/catalogue`}>Library catalogue</Link> ·{' '}
         <Link href={`${base}/team-overview`}>Team overview</Link> ·{' '}
-        <Link href={`${base}/region-packs`}>Region packs</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/region-packs`}>Region packs</Link> ·{' '}
+        <Link href={`${base}/gym-membership`}>Gym membership</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -464,6 +466,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <TeamOverview sandbox={sandbox} />
       ) : page === 'region-packs' ? (
         <RegionPacks sandbox={sandbox} />
+      ) : page === 'gym-membership' ? (
+        <GymMembership />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1330,6 +1334,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/region-packs`}>Region packs</Link>: map downloads with a progress bar read from the stream.
+        </li>
+        <li>
+          <Link href={`${base}/gym-membership`}>Gym membership</Link>: renewal dates when the month is shorter than the start day.
         </li>
       </ul>
     </section>
