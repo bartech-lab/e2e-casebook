@@ -189,6 +189,7 @@ import { TeamOverview } from '../team-overview/TeamOverview.tsx';
 import { RegionPacks } from '../region-packs/RegionPacks.tsx';
 import { GymMembership } from '../gym-membership/GymMembership.tsx';
 import { CourierPickup } from '../courier-pickup/CourierPickup.tsx';
+import { RecipeBox } from '../recipe-box/RecipeBox.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -414,7 +415,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/team-overview`}>Team overview</Link> ·{' '}
         <Link href={`${base}/region-packs`}>Region packs</Link> ·{' '}
         <Link href={`${base}/gym-membership`}>Gym membership</Link> ·{' '}
-        <Link href={`${base}/courier-pickup`}>Courier pickup</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/courier-pickup`}>Courier pickup</Link> ·{' '}
+        <Link href={`${base}/recipe-box`}>Recipe box</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -472,6 +474,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <GymMembership />
       ) : page === 'courier-pickup' ? (
         <CourierPickup />
+      ) : page === 'recipe-box' ? (
+        <RecipeBox sandbox={sandbox} />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1344,6 +1348,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/courier-pickup`}>Courier pickup</Link>: a two-column form whose Tab order must follow what you see.
+        </li>
+        <li>
+          <Link href={`${base}/recipe-box`}>Recipe box</Link>: a list that keeps up with edits made beside it.
         </li>
       </ul>
     </section>

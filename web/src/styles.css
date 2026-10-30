@@ -611,3 +611,6 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .courier-grid label { display: flex; flex-direction: column; gap: 0.25rem; }
 .courier-street, .courier-notes { grid-column: span 2; }
 .courier-actions { display: flex; gap: 0.5rem; margin-top: 1rem; }
+
+.recipe-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 48rem; }
+.recipe-layout form { display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start; }
