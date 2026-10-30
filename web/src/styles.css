@@ -654,3 +654,31 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .case-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.9rem; margin-top: 0.4rem; font-size: 0.9rem; }
 .case-actions button { padding: 0.3rem 0.8rem; }
 .muted { color: var(--muted); }
+
+/* Sandbox navigation: grouped by theme; a fixed sidebar on wide screens, stacked above the page on narrow ones */
+nav.sandbox-nav { display: block; font-size: 0.85rem; padding: 0.75rem 1rem 1rem; }
+nav.sandbox-nav > * { font-size: inherit; }
+.sandbox-nav .nav-top { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.6rem; padding-bottom: 0.6rem; margin-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+.sandbox-nav .nav-top span { margin-left: 0; }
+.sandbox-nav .nav-home { font-weight: 700; color: var(--text); padding: 0.2rem 0; margin-right: auto; }
+.sandbox-nav .nav-group { padding: 0.35rem 0; }
+.sandbox-nav .nav-group-title { display: block; margin: 0.4rem 0 0.2rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); white-space: normal; }
+.sandbox-nav .nav-links { display: flex; flex-wrap: wrap; gap: 0.05rem 0.1rem; }
+.sandbox-nav a { padding: 0.15rem 0.5rem; font-size: 0.85rem; }
+.sandbox-nav a[aria-current='page'] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+@media screen and (min-width: 64rem) {
+  body:has(nav.sandbox-nav) { max-width: 86rem; padding-left: 18rem; }
+  nav.sandbox-nav {
+    position: fixed; top: 0; bottom: 0; left: max(0px, calc((100vw - 86rem) / 2)); width: 17rem; margin: 0;
+    overflow-y: auto; border-bottom: 0; border-right: 1px solid var(--border);
+  }
+  .sandbox-nav .nav-links { flex-direction: column; flex-wrap: nowrap; }
+  .sandbox-nav a { border-radius: 6px; }
+}
+.sandbox-nav .case-strip { display: grid; gap: 0.4rem; margin: 0.2rem 0 0.4rem; padding: 0.6rem 0.7rem; border-radius: 8px; background: var(--accent-soft); }
+.sandbox-nav .case-strip-item { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.1rem 0.6rem; }
+.sandbox-nav .case-strip-title { margin: 0; color: var(--text); font-weight: 600; white-space: normal; flex-basis: 100%; }
+.sandbox-nav .case-strip a { padding: 0; color: var(--accent); }
+@media screen and (min-width: 64rem) {
+  .sandbox-nav .nav-head { position: sticky; top: -0.75rem; z-index: 1; margin: -0.75rem -1rem 0; padding: 0.75rem 1rem 0.2rem; background: var(--surface); }
+}

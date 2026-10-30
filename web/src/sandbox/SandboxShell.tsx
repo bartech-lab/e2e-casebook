@@ -37,13 +37,13 @@ import { Address } from '../address/Address.tsx';
 import { Feedback } from '../feedback/Feedback.tsx';
 import { Share } from '../share/Share.tsx';
 import { Updates } from '../updates/Updates.tsx';
-import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { Settings } from '../settings/Settings.tsx';
 import { Reviews } from '../shop/Reviews.tsx';
 import { Shop } from '../shop/Shop.tsx';
 import { Split } from '../shop/Split.tsx';
 import { HttpError } from '../http.ts';
 import { Link } from '../router.tsx';
+import { SandboxNav } from './SandboxNav.tsx';
 import { Inbox } from '../inbox/Inbox.tsx';
 import { Orders } from '../orders/Orders.tsx';
 import { Files } from '../files/Files.tsx';
@@ -248,198 +248,7 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
   const membersPage = /^members(?:\/(sign-in|minutes|accounts))?$/.exec(page);
   return (
     <>
-      <nav aria-label="Sandbox">
-        <Link href={`${base}/chat`}>Chat</Link> · <Link href={`${base}/board`}>Board</Link> ·{' '}
-        <Link href={`${base}/exports`}>Exports</Link> · <Link href={`${base}/activity`}>Activity</Link> ·{' '}
-        <Link href={`${base}/settings`}>Settings</Link> · <Link href={`${base}/account`}>Account</Link> ·{' '}
-        <Link href={`${base}/mail`}>Mail</Link> · <Link href={`${base}/shop`}>Shop</Link> ·{' '}
-        <Link href={`${base}/deals`}>Deals</Link> ·{' '}
-        <Link href={`${base}/gifts`}>Gift cards</Link> ·{' '}
-        <Link href={`${base}/notes`}>Notes</Link> ·{' '}
-        <Link href={`${base}/budget`}>Budget</Link> ·{' '}
-        <Link href={`${base}/plan`}>Plan</Link> ·{' '}
-        <Link href={`${base}/playlist`}>Playlist</Link> ·{' '}
-        <Link href={`${base}/topup`}>Top up</Link> ·{' '}
-        <Link href={`${base}/draft`}>Draft</Link> ·{' '}
-        <Link href={`${base}/calendar`}>Calendar</Link> ·{' '}
-        <Link href={`${base}/contacts`}>Contacts</Link> ·{' '}
-        <Link href={`${base}/stores`}>Stores</Link> ·{' '}
-        <Link href={`${base}/quote`}>Quote</Link> ·{' '}
-        <Link href={`${base}/booking/dates`}>Booking</Link> ·{' '}
-        <Link href={`${base}/feed`}>Feed</Link> ·{' '}
-        <Link href={`${base}/checklist`}>Checklist</Link> ·{' '}
-        <Link href={`${base}/vault`}>Vault</Link> ·{' '}
-        <Link href={`${base}/basket`}>Basket</Link> ·{' '}
-        <Link href={`${base}/support`}>Support</Link> ·{' '}
-        <Link href={`${base}/receipt`}>Receipt</Link> ·{' '}
-        <Link href={`${base}/signup`}>Sign up</Link> ·{' '}
-        <Link href={`${base}/bio`}>Bio</Link> ·{' '}
-        <Link href={`${base}/search`}>Search</Link> ·{' '}
-        <Link href={`${base}/invoices`}>Invoices</Link> ·{' '}
-        <Link href={`${base}/prices`}>Price filter</Link> ·{' '}
-        <Link href={`${base}/reminders`}>Reminders</Link> ·{' '}
-        <Link href={`${base}/address`}>Address</Link> ·{' '}
-        <Link href={`${base}/feedback`}>Feedback</Link> ·{' '}
-        <Link href={`${base}/share`}>Share</Link> ·{' '}
-        <Link href={`${base}/updates`}>Updates</Link> ·{' '}
-        <Link href={`${base}/inbox`}>Inbox</Link> ·{' '}
-        <Link href={`${base}/orders`}>Orders</Link> ·{' '}
-        <Link href={`${base}/files`}>Files</Link> ·{' '}
-        <Link href={`${base}/tasks`}>Tasks</Link> ·{' '}
-        <Link href={`${base}/itinerary`}>Itinerary</Link> ·{' '}
-        <Link href={`${base}/verify`}>Verify phone</Link> ·{' '}
-        <Link href={`${base}/summary`}>Order summary</Link> ·{' '}
-        <Link href={`${base}/shipping`}>Shipping address</Link> ·{' '}
-        <Link href={`${base}/gallery`}>Gallery</Link> ·{' '}
-        <Link href={`${base}/holiday`}>Holiday request</Link> ·{' '}
-        <Link href={`${base}/sign-in`}>Stay signed in</Link> ·{' '}
-        <Link href={`${base}/podcast`}>Podcast</Link> ·{' '}
-        <Link href={`${base}/bakery`}>Bakery</Link> ·{' '}
-        <Link href={`${base}/session`}>Session</Link> ·{' '}
-        <Link href={`${base}/team`}>Team</Link> ·{' '}
-        <Link href={`${base}/meetings`}>Meetings</Link> ·{' '}
-        <Link href={`${base}/directory`}>Directory</Link> ·{' '}
-        <Link href={`${base}/confirm-email`}>Confirm email</Link> ·{' '}
-        <Link href={`${base}/messages`}>Messages</Link> ·{' '}
-        <Link href={`${base}/passkeys`}>Passkeys</Link> ·{' '}
-        <Link href={`${base}/delivery`}>Delivery</Link> ·{' '}
-        <Link href={`${base}/import`}>Import</Link> ·{' '}
-        <Link href={`${base}/packing`}>Packing list</Link> ·{' '}
-        <Link href={`${base}/help`}>Help centre</Link> ·{' '}
-        <Link href={`${base}/review`}>Order review</Link> ·{' '}
-        <Link href={`${base}/report`}>Sales report</Link> ·{' '}
-        <Link href={`${base}/upload`}>Upload</Link> ·{' '}
-        <Link href={`${base}/ticket`}>Support ticket</Link> ·{' '}
-        <Link href={`${base}/timesheet`}>Timesheet</Link> ·{' '}
-        <Link href={`${base}/shop-reviews`}>Shop reviews</Link> ·{' '}
-        <Link href={`${base}/country`}>Country</Link> ·{' '}
-        <Link href={`${base}/appearance`}>Appearance</Link> ·{' '}
-        <Link href={`${base}/statement`}>Statement</Link> ·{' '}
-        <Link href={`${base}/plans`}>Plans</Link> ·{' '}
-        <Link href={`${base}/price-alert`}>Price alerts</Link> ·{' '}
-        <Link href={`${base}/live-score`}>Live score</Link> ·{' '}
-        <Link href={`${base}/mobile-inbox`}>Mobile inbox</Link> ·{' '}
-        <Link href={`${base}/password`}>Change password</Link> ·{' '}
-        <Link href={`${base}/flash-sale`}>Flash sale</Link> ·{' '}
-        <Link href={`${base}/class-list`}>Class list</Link> ·{' '}
-        <Link href={`${base}/newsletter`}>Newsletter</Link> ·{' '}
-        <Link href={`${base}/post-editor`}>Post editor</Link> ·{' '}
-        <Link href={`${base}/announcements`}>Announcements</Link> ·{' '}
-        <Link href={`${base}/voice-note`}>Voice note</Link> ·{' '}
-        <Link href={`${base}/price-list`}>Price list</Link> ·{' '}
-        <Link href={`${base}/contributors`}>Contributors</Link> ·{' '}
-        <Link href={`${base}/product-tabs`}>Product details</Link> ·{' '}
-        <Link href={`${base}/folder-tree`}>Files tree</Link> ·{' '}
-        <Link href={`${base}/promotions`}>Promotions</Link> ·{' '}
-        <Link href={`${base}/local-notes`}>Local notes</Link> ·{' '}
-        <Link href={`${base}/letter`}>Letter</Link> ·{' '}
-        <Link href={`${base}/share-recipe`}>Recipe</Link> ·{' '}
-        <Link href={`${base}/photos`}>Photos</Link> ·{' '}
-        <Link href={`${base}/delivery-form`}>Delivery details</Link> ·{' '}
-        <Link href={`${base}/hotels`}>Hotels</Link> ·{' '}
-        <Link href={`${base}/lamps`}>Lamps</Link> ·{' '}
-        <Link href={`${base}/mailing-list`}>Mailing list</Link> ·{' '}
-        <Link href={`${base}/trip-tags`}>Trip tags</Link> ·{' '}
-        <Link href={`${base}/gig-tickets`}>Concert tickets</Link> ·{' '}
-        <Link href={`${base}/privacy`}>Privacy settings</Link> ·{' '}
-        <Link href={`${base}/train-ticket`}>Train ticket</Link> ·{' '}
-        <Link href={`${base}/pancakes`}>Pancakes</Link> ·{' '}
-        <Link href={`${base}/album`}>Photo album</Link> ·{' '}
-        <Link href={`${base}/floor-plan`}>Floor plan</Link> ·{' '}
-        <Link href={`${base}/reading-list`}>Reading list</Link> ·{' '}
-        <Link href={`${base}/bus-stop`}>Bus stop</Link> ·{' '}
-        <Link href={`${base}/workspace`}>Workspace</Link> ·{' '}
-        <Link href={`${base}/saved-searches`}>Saved searches</Link> ·{' '}
-        <Link href={`${base}/groceries`}>Groceries</Link> ·{' '}
-        <Link href={`${base}/event-feedback`}>Event feedback</Link> ·{' '}
-        <Link href={`${base}/shop-dashboard`}>Shop dashboard</Link> ·{' '}
-        <Link href={`${base}/highlights`}>Highlights</Link> ·{' '}
-        <Link href={`${base}/sell-bike`}>Sell your bike</Link> ·{' '}
-        <Link href={`${base}/expense-claims`}>Expense claims</Link> ·{' '}
-        <Link href={`${base}/flats`}>Flats</Link> ·{' '}
-        <Link href={`${base}/parking`}>Parking permit</Link> ·{' '}
-        <Link href={`${base}/drive`}>Shared drive</Link> ·{' '}
-        <Link href={`${base}/village-hall`}>Village hall</Link> ·{' '}
-        <Link href={`${base}/assistant`}>Assistant</Link> ·{' '}
-        <Link href={`${base}/comments`}>Comments</Link> ·{' '}
-        <Link href={`${base}/alert-settings`}>Alert settings</Link> ·{' '}
-        <Link href={`${base}/choir`}>Choir sign-up</Link> ·{' '}
-        <Link href={`${base}/shared-photos`}>Shared photos</Link> ·{' '}
-        <Link href={`${base}/mail-reader`}>Mail reader</Link> ·{' '}
-        <Link href={`${base}/receipts`}>Receipts</Link> ·{' '}
-        <Link href={`${base}/guestbook`}>Guestbook</Link> ·{' '}
-        <Link href={`${base}/poster`}>Concert poster</Link> ·{' '}
-        <Link href={`${base}/field-notes`}>Field notes</Link> ·{' '}
-        <Link href={`${base}/club-activity`}>Club activity</Link> ·{' '}
-        <Link href={`${base}/notice-board`}>Notice board</Link> ·{' '}
-        <Link href={`${base}/prints`}>Prints</Link> ·{' '}
-        <Link href={`${base}/study-group`}>Study group</Link> ·{' '}
-        <Link href={`${base}/billing-details`}>Billing details</Link> ·{' '}
-        <Link href={`${base}/flight-search`}>Flight search</Link> ·{' '}
-        <Link href={`${base}/bank-transfer`}>Bank transfer</Link> ·{' '}
-        <Link href={`${base}/library-card`}>Library card</Link> ·{' '}
-        <Link href={`${base}/fete`}>Village fête</Link> ·{' '}
-        <Link href={`${base}/rooms`}>Rooms</Link> ·{' '}
-        <Link href={`${base}/favourites`}>Radio favourites</Link> ·{' '}
-        <Link href={`${base}/handover`}>Shift handover</Link> ·{' '}
-        <Link href={`${base}/ticket-contact`}>Ticket contact</Link> ·{' '}
-        <Link href={`${base}/handbook`}>Handbook</Link> ·{' '}
-        <Link href={`${base}/barber`}>Barber</Link> ·{' '}
-        <Link href={`${base}/running-order`}>Running order</Link> ·{' '}
-        <Link href={`${base}/site-photos`}>Site photos</Link> ·{' '}
-        <Link href={`${base}/staff`}>Staff</Link> ·{' '}
-        <Link href={`${base}/answers`}>Support answers</Link> ·{' '}
-        <Link href={`${base}/tile-order`}>Tile order</Link> ·{' '}
-        <Link href={`${base}/shoe-size`}>Shoe size</Link> ·{' '}
-        <Link href={`${base}/saved-cards`}>Saved cards</Link> ·{' '}
-        <Link href={`${base}/stock-take`}>Stock take</Link> ·{' '}
-        <Link href={`${base}/cookbook`}>Cookbook</Link> ·{' '}
-        <Link href={`${base}/trail-map`}>Trail map</Link> ·{' '}
-        <Link href={`${base}/phrasebook`}>Phrasebook</Link> ·{' '}
-        <Link href={`${base}/replies`}>Replies</Link> ·{' '}
-        <Link href={`${base}/payslips`}>Payslips</Link> ·{' '}
-        <Link href={`${base}/newsroom`}>Newsroom</Link> ·{' '}
-        <Link href={`${base}/members`}>Members</Link> ·{' '}
-        <Link href={`${base}/prime-counter`}>Prime counter</Link> ·{' '}
-        <Link href={`${base}/pay-by-bank`}>Pay by bank</Link> ·{' '}
-        <Link href={`${base}/kitchen-timer`}>Kitchen timer</Link> ·{' '}
-        <Link href={`${base}/transcript`}>Transcript</Link> ·{' '}
-        <Link href={`${base}/team-chat`}>Team chat</Link> ·{' '}
-        <Link href={`${base}/cinema`}>Cinema</Link> ·{' '}
-        <Link href={`${base}/parts`}>Parts search</Link> ·{' '}
-        <Link href={`${base}/staff-guide`}>Staff guide</Link> ·{' '}
-        <Link href={`${base}/help-desk`}>Help desk</Link> ·{' '}
-        <Link href={`${base}/video-upload`}>Video upload</Link> ·{' '}
-        <Link href={`${base}/chat-history`}>Chat history</Link> ·{' '}
-        <Link href={`${base}/close-account`}>Close account</Link> ·{' '}
-        <Link href={`${base}/shipments`}>Shipments</Link> ·{' '}
-        <Link href={`${base}/metronome`}>Metronome</Link> ·{' '}
-        <Link href={`${base}/loyalty-points`}>Loyalty points</Link> ·{' '}
-        <Link href={`${base}/cafe`}>Café dashboard</Link> ·{' '}
-        <Link href={`${base}/printer`}>Printer status</Link> ·{' '}
-        <Link href={`${base}/holiday-homes`}>Holiday homes</Link> ·{' '}
-        <Link href={`${base}/profile-photo`}>Profile photo</Link> ·{' '}
-        <Link href={`${base}/travel-article`}>Travel article</Link> ·{' '}
-        <Link href={`${base}/paper-boat`}>Paper boat</Link> ·{' '}
-        <Link href={`${base}/quick-invoice`}>Quick invoice</Link> ·{' '}
-        <Link href={`${base}/catalogue`}>Library catalogue</Link> ·{' '}
-        <Link href={`${base}/team-overview`}>Team overview</Link> ·{' '}
-        <Link href={`${base}/region-packs`}>Region packs</Link> ·{' '}
-        <Link href={`${base}/gym-membership`}>Gym membership</Link> ·{' '}
-        <Link href={`${base}/courier-pickup`}>Courier pickup</Link> ·{' '}
-        <Link href={`${base}/recipe-box`}>Recipe box</Link> ·{' '}
-        <Link href={`${base}/travel-wallet`}>Travel wallet</Link> ·{' '}
-        <Link href={`${base}/weather`}>Weather</Link> ·{' '}
-        <Link href={`${base}/meeting-rooms`}>Meeting rooms</Link> ·{' '}
-        <Link href={`${base}/shopping-list`}>Shopping list</Link> ·{' '}
-        <Link href={`${base}/class-timetable`}>Class timetable</Link> ·{' '}
-        <Link href={`${base}/guest-invites`}>Guest invites</Link> ·{' '}
-        <Link href={`${base}/shared-files`}>Shared files</Link> ·{' '}
-        <Link href={`${base}/exhibition`}>Exhibition</Link> ·{' '}
-        <Link href={`${base}/sms-reminders`}>Appointment reminders</Link> ·{' '}
-        <Link href={`${base}/parcel-lockers`}>Parcel lockers</Link> ·{' '}
-        <Link href={`${base}/ferry-tickets`}>Ferry tickets</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
-      </nav>
+      <SandboxNav sandbox={sandbox} page={page} name={name} />
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
       ) : page === 'prime-counter' ? (
