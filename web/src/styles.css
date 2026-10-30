@@ -577,3 +577,5 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .chat-history-top { color: var(--muted); text-align: center; }
 .chat-history-mine { text-align: right; }
 .close-account-preview { width: 100%; max-width: 36rem; height: 16rem; border: 1px solid var(--border); border-radius: var(--radius); }
+.cafe-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem; }
+.cafe-tile { padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }

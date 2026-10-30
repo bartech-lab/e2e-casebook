@@ -177,6 +177,7 @@ import { CloseAccountLink } from '../close-account/CloseAccountLink.tsx';
 import { Shipments } from '../shipments/Shipments.tsx';
 import { Metronome } from '../metronome/Metronome.tsx';
 import { LoyaltyPoints } from '../loyalty-points/LoyaltyPoints.tsx';
+import { CafeDashboard } from '../cafe/CafeDashboard.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -390,7 +391,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/close-account`}>Close account</Link> ·{' '}
         <Link href={`${base}/shipments`}>Shipments</Link> ·{' '}
         <Link href={`${base}/metronome`}>Metronome</Link> ·{' '}
-        <Link href={`${base}/loyalty-points`}>Loyalty points</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/loyalty-points`}>Loyalty points</Link> ·{' '}
+        <Link href={`${base}/cafe`}>Café dashboard</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -424,6 +426,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Metronome />
       ) : page === 'loyalty-points' ? (
         <LoyaltyPoints sandbox={sandbox} />
+      ) : page === 'cafe' ? (
+        <CafeDashboard sandbox={sandbox} />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1260,6 +1264,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/loyalty-points`}>Loyalty points</Link>: points kept by a partner on another origin, read straight from the browser.
+        </li>
+        <li>
+          <Link href={`${base}/cafe`}>Café dashboard</Link>: three tiles where one tile's failure stays in that tile.
         </li>
       </ul>
     </section>

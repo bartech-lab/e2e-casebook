@@ -191,6 +191,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 176 | [Shipments](cases/176-shipments.md) | Parcels with long tracking numbers that must stay exact from the server to the screen and back. |
 | 177 | [Metronome](cases/177-metronome.md) | A metronome with page-wide keys that keeps working the same however often you leave and come back. |
 | 178 | [Loyalty points](cases/178-loyalty-points.md) | Points read and spent through a partner API on another origin, straight from the browser. |
+| 179 | [Café dashboard](cases/179-cafe-dashboard.md) | Three tiles that fail one at a time: a broken tile says so, reports it, and leaves the others working. |
 
 ## Run it
 
