@@ -207,6 +207,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 192 | [Travel wallet](cases/192-travel-wallet.md) | Balances in złoty, yen and Bahraini dinar, which have 2, 0 and 3 decimal places. |
 | 193 | [Weather](cases/193-weather.md) | A weather widget that asks the server once per change and once every ten minutes, and no more. |
 | 194 | [Meeting rooms](cases/194-meeting-rooms.md) | Booking a room in three steps (book, send the invite, refresh the list) where a later step can fail on its own. |
+| 195 | [Shopping list](cases/195-shopping-list.md) | A list where a new item can be ticked or removed before the server has given it an id. |
 
 ## Run it
 
