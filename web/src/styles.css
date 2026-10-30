@@ -614,3 +614,9 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 
 .recipe-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 48rem; }
 .recipe-layout form { display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+
+.timetable-grid { border-collapse: collapse; margin-top: 0.75rem; }
+.timetable-grid caption { font-weight: 600; text-align: left; padding-bottom: 0.25rem; }
+.timetable-grid th, .timetable-grid td { width: 3rem; height: 2rem; text-align: center; border: 1px solid #e5e7eb; }
+.timetable-grid .weekend { background: #f3f4f6; }
+.timetable-grid [aria-current='date'] { outline: 2px solid #2563eb; font-weight: 700; }

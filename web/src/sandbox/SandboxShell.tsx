@@ -194,6 +194,7 @@ import { TravelWallet } from '../travel-wallet/TravelWallet.tsx';
 import { Weather } from '../weather/Weather.tsx';
 import { MeetingRooms } from '../meeting-rooms/MeetingRooms.tsx';
 import { ShoppingList } from '../shopping-list/ShoppingList.tsx';
+import { ClassTimetable } from '../class-timetable/ClassTimetable.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -424,7 +425,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/travel-wallet`}>Travel wallet</Link> ·{' '}
         <Link href={`${base}/weather`}>Weather</Link> ·{' '}
         <Link href={`${base}/meeting-rooms`}>Meeting rooms</Link> ·{' '}
-        <Link href={`${base}/shopping-list`}>Shopping list</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/shopping-list`}>Shopping list</Link> ·{' '}
+        <Link href={`${base}/class-timetable`}>Class timetable</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -492,6 +494,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <MeetingRooms sandbox={sandbox} />
       ) : page === 'shopping-list' ? (
         <ShoppingList sandbox={sandbox} />
+      ) : page === 'class-timetable' ? (
+        <ClassTimetable />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1379,6 +1383,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/shopping-list`}>Shopping list</Link>: items you can tick or remove before the server has saved them.
+        </li>
+        <li>
+          <Link href={`${base}/class-timetable`}>Class timetable</Link>: a month grid whose week starts where the visitor's does.
         </li>
       </ul>
     </section>
