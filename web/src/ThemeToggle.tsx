@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { saveTheme, storedTheme } from './theme.ts';
 
 // Named by what a press does next, so the name and the icon both flip with the theme (no aria-pressed).
+// The name is text content, not aria-label: getByLabel matches substrings, and "Switch to…" would answer
+// getByLabel('To') on case pages.
 export function ThemeToggle() {
   const [dark, setDark] = useState(() => storedTheme() === 'dark');
   const label = dark ? 'Switch to light theme' : 'Switch to dark theme';
@@ -9,7 +11,6 @@ export function ThemeToggle() {
     <button
       type="button"
       className="theme-toggle"
-      aria-label={label}
       title={label}
       onClick={() => {
         saveTheme(dark ? 'light' : 'dark');
@@ -17,6 +18,7 @@ export function ThemeToggle() {
       }}
     >
       {dark ? <SunIcon /> : <MoonIcon />}
+      <span className="sr-only">{label}</span>
     </button>
   );
 }
