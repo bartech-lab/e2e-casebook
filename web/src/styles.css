@@ -572,3 +572,7 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .cinema-seats { display: flex; gap: 0.5rem; list-style: none; padding: 0; }
 .guide-section { min-height: 100vh; scroll-margin-top: 4rem; }
 .staff-guide nav a[aria-current='location'] { background: var(--accent-soft); color: var(--accent); }
+.chat-history { height: 24rem; overflow-y: auto; overflow-anchor: none; list-style: none; margin: 0; padding: 0 0.75rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+.chat-history li { padding: 0.4rem 0; }
+.chat-history-top { color: var(--muted); text-align: center; }
+.chat-history-mine { text-align: right; }

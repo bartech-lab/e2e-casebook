@@ -172,6 +172,7 @@ import { PartsSearch } from '../parts/PartsSearch.tsx';
 import { StaffGuide } from '../staff-guide/StaffGuide.tsx';
 import { HelpDeskLink } from '../help-desk/HelpDeskLink.tsx';
 import { VideoUpload } from '../video-upload/VideoUpload.tsx';
+import { ChatHistory } from '../chat-history/ChatHistory.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -380,7 +381,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/parts`}>Parts search</Link> ·{' '}
         <Link href={`${base}/staff-guide`}>Staff guide</Link> ·{' '}
         <Link href={`${base}/help-desk`}>Help desk</Link> ·{' '}
-        <Link href={`${base}/video-upload`}>Video upload</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/video-upload`}>Video upload</Link> ·{' '}
+        <Link href={`${base}/chat-history`}>Chat history</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -404,6 +406,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <HelpDeskLink sandbox={sandbox} />
       ) : page === 'video-upload' ? (
         <VideoUpload sandbox={sandbox} />
+      ) : page === 'chat-history' ? (
+        <ChatHistory sandbox={sandbox} />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1225,6 +1229,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/video-upload`}>Video upload</Link>: a large upload that carries on where it stopped.
+        </li>
+        <li>
+          <Link href={`${base}/chat-history`}>Chat history</Link>: a long conversation that loads older messages above the ones you read.
         </li>
       </ul>
     </section>

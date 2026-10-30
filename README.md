@@ -186,6 +186,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 171 | [Staff guide](cases/171-staff-guide.md) | A contents bar that marks the section you are reading and jumps to a section on click. |
 | 172 | [Help desk](cases/172-help-desk.md) | A page under a strict Content-Security-Policy with a chat whose code loads on the first click. |
 | 173 | [Video upload](cases/173-video-upload.md) | An upload in 1 MB parts that carries on where the server stopped, after a lost connection or a reload. |
+| 174 | [Chat history](cases/174-chat-history.md) | A conversation that loads older messages above when you scroll up, without moving what you read. |
 
 ## Run it
 
