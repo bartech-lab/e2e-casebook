@@ -245,8 +245,8 @@ AI agents writing tests for the same cases. The other cases stay unsolved.
 docker compose up --build
 ```
 
-Open <http://localhost:3000> and start a sandbox. A sandbox is a private copy of the app; open its
-URL in a second window to be the second user.
+Open <http://localhost:3000> to browse the cases by theme, then start a sandbox. A sandbox is a
+private copy of the app; open its URL in a second window to be the second user.
 
 ## Test hooks and API
 
