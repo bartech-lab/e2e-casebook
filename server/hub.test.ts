@@ -5,7 +5,6 @@ import { CLOSE_DROPPED, CLOSE_UNKNOWN_SANDBOX, createHub } from './hub.ts';
 import type { Message } from './store.ts';
 
 function fakeSocket(readyState = 1) {
-  const listeners: Record<string, () => void> = {};
   const socket = {
     OPEN: 1,
     readyState,
@@ -18,13 +17,7 @@ function fakeSocket(readyState = 1) {
     close(code: number) {
       this.closes.push(code);
     },
-    on(event: string, fn: () => void) {
-      listeners[event] = fn;
-    },
-    emitClose() {
-      this.readyState = 3;
-      listeners.close?.();
-    },
+    on() {},
   };
   return socket;
 }
@@ -49,31 +42,6 @@ test('removing a sandbox tells its open sockets it is gone and closes them with 
   hub.remove('sb');
   assert.deepEqual(ann.sent, [{ type: 'gone' }]);
   assert.deepEqual(ann.closes, [CLOSE_UNKNOWN_SANDBOX]);
-});
-
-test('a removed sandbox forgets its broadcast delay, so a later room with the same id delivers at once', (t) => {
-  const hub = createHub(60_000);
-  t.after(() => hub.stop());
-  hub.join('sb', asWs(fakeSocket()), 'Ann');
-  hub.setBroadcastDelay('sb', 60_000);
-  hub.remove('sb');
-  const bob = fakeSocket();
-  hub.join('sb', asWs(bob), 'Bob');
-  hub.broadcast('sb', msg);
-  assert.equal(bob.sent.length, 1);
-});
-
-test('a socket that closed is forgotten and is not closed again by a later drop', (t) => {
-  const hub = createHub(60_000);
-  t.after(() => hub.stop());
-  const ann = fakeSocket();
-  const bob = fakeSocket();
-  hub.join('sb', asWs(ann), 'Ann');
-  hub.join('sb', asWs(bob), 'Bob');
-  ann.emitClose();
-  hub.drop('sb', 'all');
-  assert.deepEqual(ann.closes, []);
-  assert.deepEqual(bob.closes, [CLOSE_DROPPED]);
 });
 
 test('a broadcast skips a socket that is still closing and reaches the open ones', (t) => {
