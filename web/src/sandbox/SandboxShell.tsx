@@ -184,6 +184,7 @@ import { ProfilePhoto } from '../profile-photo/ProfilePhoto.tsx';
 import { TravelArticle } from '../travel-article/TravelArticle.tsx';
 import { PaperBoat } from '../paper-boat/PaperBoat.tsx';
 import { QuickInvoice } from '../quick-invoice/QuickInvoice.tsx';
+import { Catalogue } from '../catalogue/Catalogue.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -404,7 +405,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/profile-photo`}>Profile photo</Link> ·{' '}
         <Link href={`${base}/travel-article`}>Travel article</Link> ·{' '}
         <Link href={`${base}/paper-boat`}>Paper boat</Link> ·{' '}
-        <Link href={`${base}/quick-invoice`}>Quick invoice</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/quick-invoice`}>Quick invoice</Link> ·{' '}
+        <Link href={`${base}/catalogue`}>Library catalogue</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -452,6 +454,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <PaperBoat />
       ) : page === 'quick-invoice' ? (
         <QuickInvoice sandbox={sandbox} />
+      ) : page === 'catalogue' ? (
+        <Catalogue sandbox={sandbox} />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1309,6 +1313,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/quick-invoice`}>Quick invoice</Link>: a form where Enter saves, and the other buttons never do.
+        </li>
+        <li>
+          <Link href={`${base}/catalogue`}>Library catalogue</Link>: a search kept in the address, whatever the title contains.
         </li>
       </ul>
     </section>

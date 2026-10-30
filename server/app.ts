@@ -103,6 +103,7 @@ import { createPrinter } from './printer.ts';
 import { createHolidayHomes } from './holidayHomes.ts';
 import { createAvatars } from './avatars.ts';
 import { createQuickInvoice } from './quickInvoice.ts';
+import { registerCatalogue } from './catalogue.ts';
 
 export type AppOptions = {
   dbPath?: string;
@@ -319,6 +320,7 @@ export async function buildApp(opts: AppOptions = {}) {
       holidayHomes.register(scope);
       avatars.register(scope);
       quickInvoice.register(scope);
+      registerCatalogue(scope);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
         messages: store.messagesSince(req.params.sandbox, Number(req.query.since ?? 0) || 0),
