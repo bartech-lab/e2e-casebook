@@ -185,6 +185,7 @@ import { TravelArticle } from '../travel-article/TravelArticle.tsx';
 import { PaperBoat } from '../paper-boat/PaperBoat.tsx';
 import { QuickInvoice } from '../quick-invoice/QuickInvoice.tsx';
 import { Catalogue } from '../catalogue/Catalogue.tsx';
+import { TeamOverview } from '../team-overview/TeamOverview.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -406,7 +407,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/travel-article`}>Travel article</Link> ·{' '}
         <Link href={`${base}/paper-boat`}>Paper boat</Link> ·{' '}
         <Link href={`${base}/quick-invoice`}>Quick invoice</Link> ·{' '}
-        <Link href={`${base}/catalogue`}>Library catalogue</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/catalogue`}>Library catalogue</Link> ·{' '}
+        <Link href={`${base}/team-overview`}>Team overview</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -456,6 +458,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <QuickInvoice sandbox={sandbox} />
       ) : page === 'catalogue' ? (
         <Catalogue sandbox={sandbox} />
+      ) : page === 'team-overview' ? (
+        <TeamOverview sandbox={sandbox} />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1316,6 +1320,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/catalogue`}>Library catalogue</Link>: a search kept in the address, whatever the title contains.
+        </li>
+        <li>
+          <Link href={`${base}/team-overview`}>Team overview</Link>: three panels that renew an expired sign-in once, together.
         </li>
       </ul>
     </section>

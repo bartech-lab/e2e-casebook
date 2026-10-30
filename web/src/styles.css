@@ -598,3 +598,5 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .quick-invoice { display: grid; gap: 0.75rem; max-width: 36rem; }
 .invoice-line { display: flex; flex-wrap: wrap; align-items: end; gap: 0.5rem; margin-bottom: 0.5rem; }
 .catalogue-form { display: flex; flex-wrap: wrap; align-items: end; gap: 0.75rem; margin-bottom: 1rem; }
+.team-panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem; margin-top: 1rem; }
+.team-panel { padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }

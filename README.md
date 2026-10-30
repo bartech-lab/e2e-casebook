@@ -199,6 +199,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 184 | [Paper boat](cases/184-paper-boat.md) | A 12-second video with captions in English or Polish and a transcript that follows it. |
 | 185 | [Quick invoice](cases/185-quick-invoice.md) | An invoice form with many buttons, where Enter saves and no other button ever does. |
 | 186 | [Library catalogue](cases/186-library-catalogue.md) | A search kept in the page's address, so it survives a reload, a shared link and Back, whatever the text. |
+| 187 | [Team overview](cases/187-team-overview.md) | Three panels loaded at once with a short-lived token that is renewed once, quietly, when it runs out. |
 
 ## Run it
 

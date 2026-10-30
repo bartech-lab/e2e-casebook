@@ -86,11 +86,12 @@ import type { Printer } from './printer.ts';
 import type { HolidayHomes } from './holidayHomes.ts';
 import type { Avatars } from './avatars.ts';
 import type { QuickInvoice } from './quickInvoice.ts';
+import type { TeamOverview } from './teamOverview.ts';
 import { DEFAULT_CARDS, type Store } from './store.ts';
 import { cardInput, messageInput } from './validation.ts';
 
 type Params = { sandbox: string };
-type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts; teams: Teams; meetings: Meetings; otps: Otps; passkeys: Passkeys; deliveries: Deliveries; imports: Imports; uploads: Uploads; tickets: Tickets; appearances: Appearances; priceAlerts: PriceAlerts; scores: Scores; passwords: Passwords; sales: Sales; articles: Articles; posts: Posts; voiceNotes: VoiceNotes; priceList: PriceList; notesSchema: NotesSchema; gigTickets: GigTickets; albums: Albums; readerAuth: ReaderAuth; busTimes: BusTimes; workspaces: Workspaces; savedSearches: SavedSearches; eventFeedback: EventFeedback; expenseClaims: ExpenseClaims; cardPayments: CardPayments; assistant: Assistant; guestbook: Guestbook; clientErrors: ClientErrors; clubActivity: ClubActivity; noticeBoard: NoticeBoard; cloudPix: CloudPix; studyGroup: StudyGroup; billing: Billing; flights: Flights; transfers: Transfers; libraryCards: LibraryCards; rsvps: Rsvps; songs: Songs; handover: Handover; ticketContacts: TicketContacts; barber: Barber; runningOrder: RunningOrder; staffRoster: Staff; tileOrders: TileOrders; trailMap: TrailMap; payslips: Payslips; newsroom: Newsroom; members: Members; payByBank: PayByBank; kitchenTimer: KitchenTimer; teamChat: TeamChat; cinema: Cinema; partsSearch: PartsSearch; helpDesk: HelpDesk; resumableUploads: ResumableUploads; chatHistory: ChatHistory; closeAccount: CloseAccount; partnerPoints: PartnerPoints; cafe: Cafe; printer: Printer; holidayHomes: HolidayHomes; avatars: Avatars; quickInvoice: QuickInvoice };
+type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts; teams: Teams; meetings: Meetings; otps: Otps; passkeys: Passkeys; deliveries: Deliveries; imports: Imports; uploads: Uploads; tickets: Tickets; appearances: Appearances; priceAlerts: PriceAlerts; scores: Scores; passwords: Passwords; sales: Sales; articles: Articles; posts: Posts; voiceNotes: VoiceNotes; priceList: PriceList; notesSchema: NotesSchema; gigTickets: GigTickets; albums: Albums; readerAuth: ReaderAuth; busTimes: BusTimes; workspaces: Workspaces; savedSearches: SavedSearches; eventFeedback: EventFeedback; expenseClaims: ExpenseClaims; cardPayments: CardPayments; assistant: Assistant; guestbook: Guestbook; clientErrors: ClientErrors; clubActivity: ClubActivity; noticeBoard: NoticeBoard; cloudPix: CloudPix; studyGroup: StudyGroup; billing: Billing; flights: Flights; transfers: Transfers; libraryCards: LibraryCards; rsvps: Rsvps; songs: Songs; handover: Handover; ticketContacts: TicketContacts; barber: Barber; runningOrder: RunningOrder; staffRoster: Staff; tileOrders: TileOrders; trailMap: TrailMap; payslips: Payslips; newsroom: Newsroom; members: Members; payByBank: PayByBank; kitchenTimer: KitchenTimer; teamChat: TeamChat; cinema: Cinema; partsSearch: PartsSearch; helpDesk: HelpDesk; resumableUploads: ResumableUploads; chatHistory: ChatHistory; closeAccount: CloseAccount; partnerPoints: PartnerPoints; cafe: Cafe; printer: Printer; holidayHomes: HolidayHomes; avatars: Avatars; quickInvoice: QuickInvoice; teamOverview: TeamOverview };
 
 type FaultBody = {
   dropSockets?: unknown;
@@ -100,7 +101,7 @@ type FaultBody = {
   auth?: { tokenTtlMs?: unknown };
 };
 
-export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes, workspaces, savedSearches, eventFeedback, expenseClaims, cardPayments, assistant, guestbook, clientErrors, clubActivity, noticeBoard, cloudPix, studyGroup, billing, flights, transfers, libraryCards, rsvps, songs, handover, ticketContacts, barber, runningOrder, staffRoster, tileOrders, trailMap, payslips, newsroom, members, payByBank, kitchenTimer, teamChat, cinema, partsSearch, helpDesk, resumableUploads, chatHistory, closeAccount, partnerPoints, cafe, printer, holidayHomes, avatars, quickInvoice }: Deps) {
+export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes, workspaces, savedSearches, eventFeedback, expenseClaims, cardPayments, assistant, guestbook, clientErrors, clubActivity, noticeBoard, cloudPix, studyGroup, billing, flights, transfers, libraryCards, rsvps, songs, handover, ticketContacts, barber, runningOrder, staffRoster, tileOrders, trailMap, payslips, newsroom, members, payByBank, kitchenTimer, teamChat, cinema, partsSearch, helpDesk, resumableUploads, chatHistory, closeAccount, partnerPoints, cafe, printer, holidayHomes, avatars, quickInvoice, teamOverview }: Deps) {
   app.register(
     async (scope) => {
       scope.addHook('preHandler', async (req, reply) => {
@@ -198,6 +199,7 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         holidayHomes.clear(sandbox);
         avatars.clear(sandbox);
         quickInvoice.clear(sandbox);
+        teamOverview.clear(sandbox);
         hub.reset(sandbox);
         return { ok: true };
       });
@@ -490,6 +492,18 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
       });
 
       scope.get<{ Params: Params }>('/printer-checks', async (req) => ({ checks: printer.checks(req.params.sandbox) }));
+
+      scope.post<{ Params: Params }>('/team-expire-access', async (req) => {
+        teamOverview.expireAccess(req.params.sandbox);
+        return { ok: true };
+      });
+
+      scope.post<{ Params: Params }>('/team-end-session', async (req) => {
+        teamOverview.end(req.params.sandbox);
+        return { ok: true };
+      });
+
+      scope.get<{ Params: Params }>('/team-auth-stats', async (req) => teamOverview.stats(req.params.sandbox));
 
       scope.post<{ Params: Params }>('/expire-sessions', async (req) => {
         extras.expireSessions(req.params.sandbox);
