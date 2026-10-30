@@ -190,6 +190,7 @@ import { RegionPacks } from '../region-packs/RegionPacks.tsx';
 import { GymMembership } from '../gym-membership/GymMembership.tsx';
 import { CourierPickup } from '../courier-pickup/CourierPickup.tsx';
 import { RecipeBox } from '../recipe-box/RecipeBox.tsx';
+import { TravelWallet } from '../travel-wallet/TravelWallet.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -416,7 +417,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/region-packs`}>Region packs</Link> ·{' '}
         <Link href={`${base}/gym-membership`}>Gym membership</Link> ·{' '}
         <Link href={`${base}/courier-pickup`}>Courier pickup</Link> ·{' '}
-        <Link href={`${base}/recipe-box`}>Recipe box</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/recipe-box`}>Recipe box</Link> ·{' '}
+        <Link href={`${base}/travel-wallet`}>Travel wallet</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -476,6 +478,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <CourierPickup />
       ) : page === 'recipe-box' ? (
         <RecipeBox sandbox={sandbox} />
+      ) : page === 'travel-wallet' ? (
+        <TravelWallet sandbox={sandbox} />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1351,6 +1355,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/recipe-box`}>Recipe box</Link>: a list that keeps up with edits made beside it.
+        </li>
+        <li>
+          <Link href={`${base}/travel-wallet`}>Travel wallet</Link>: zloty, yen and dinar, each with its own number of decimal places.
         </li>
       </ul>
     </section>

@@ -204,6 +204,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 189 | [Gym membership](cases/189-gym-membership.md) | Renewal dates for a membership that starts late in the month, in any time zone. |
 | 190 | [Courier pickup](cases/190-courier-pickup.md) | A two-column booking form where the keyboard has to move in the order a person reads. |
 | 191 | [Recipe box](cases/191-recipe-box.md) | A list and an editor side by side, with answers kept in a cache that has to forget the right things. |
+| 192 | [Travel wallet](cases/192-travel-wallet.md) | Balances in złoty, yen and Bahraini dinar, which have 2, 0 and 3 decimal places. |
 
 ## Run it
 
