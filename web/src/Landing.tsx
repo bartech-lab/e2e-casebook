@@ -8,7 +8,7 @@ import { GitHubMark, LogoMark, hueStyle, themeMeta } from './themeMeta.tsx';
 import { BENCHMARK_URL, CASES, REPO_URL, SOLUTIONS_URL, THEMES, docUrl, solutionUrl, type Case } from './cases.ts';
 
 const ALL = 'All cases';
-const SOLVED = 'Worked solution';
+const SOLVED = 'With solution';
 const solvedCount = CASES.filter((c) => c.solution).length;
 const solvedIn = (theme: string) => CASES.filter((c) => c.theme === theme && c.solution).length;
 
@@ -55,9 +55,11 @@ export function Landing() {
     setFilter(name);
     setQuery('');
   };
+  const results = useRef<HTMLDivElement>(null);
   const browse = (name: string) => {
     pick(name);
-    catalogue.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const bar = results.current;
+    if (bar && bar.getBoundingClientRect().top > innerHeight * 0.6) bar.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
@@ -110,12 +112,8 @@ export function Landing() {
             <dd>{THEMES.length}</dd>
           </div>
           <div>
-            <dt>Scored solutions</dt>
+            <dt>Worked solutions</dt>
             <dd>{solvedCount}</dd>
-          </div>
-          <div>
-            <dt>Runs to count as caught</dt>
-            <dd>10/10</dd>
           </div>
         </dl>
       </section>
@@ -144,38 +142,9 @@ export function Landing() {
         </ol>
       </section>
 
-      <section className="themes" aria-labelledby="themes-title">
-        <h2 id="themes-title">What do you want to test?</h2>
-        <ul className="theme-grid">
-          {THEMES.map((t) => {
-            const { icon: Icon, blurb } = themeMeta(t);
-            return (
-              <li key={t} style={hueStyle(t)}>
-                <button type="button" className="theme-card" onClick={() => browse(t)}>
-                  <span className="theme-icon">
-                    <Icon size={20} aria-hidden="true" />
-                  </span>
-                  <span className="theme-name">{t}</span>
-                  <span className="theme-blurb">{blurb}</span>
-                  <span className="theme-count">
-                    {CASES.filter((c) => c.theme === t).length} cases
-                    {solvedIn(t) > 0 && (
-                      <span className="theme-solved">
-                        <Trophy size={12} aria-hidden="true" />
-                        {solvedIn(t)} solved
-                      </span>
-                    )}
-                  </span>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </section>
-
       <section className="catalogue" id="cases" ref={catalogue} aria-labelledby="catalogue-title">
         <div className="catalogue-head">
-          <h2 id="catalogue-title">Cases</h2>
+          <h2 id="catalogue-title">What do you want to test?</h2>
           <label className="search">
             <Search size={16} aria-hidden="true" />
             <span className="sr-only">Find a case</span>
@@ -189,32 +158,58 @@ export function Landing() {
             <kbd aria-hidden="true">/</kbd>
           </label>
         </div>
-        <div className="chips" role="group" aria-label="Show">
-          {[SOLVED, ALL, ...THEMES].map((name) => (
-            <button key={name} type="button" aria-pressed={!query && filter === name} onClick={() => pick(name)}>
-              {name === SOLVED && <Trophy size={14} aria-hidden="true" />}
-              {name}
-            </button>
-          ))}
-        </div>
-        <p className="muted catalogue-count" aria-live="polite">
-          {summary(shown.length, filter, query)}
-        </p>
-        {(query || filter !== SOLVED) && (
-          <p className="muted catalogue-note">
-            <Trophy size={14} aria-hidden="true" />
-            <span>
-              The trophy marks the {solvedCount} cases with a worked solution: several test approaches, each scored
-              against planted bugs.{' '}
-              <button type="button" className="link-button" onClick={() => pick(SOLVED)}>
-                Show them
+        <ul className="theme-grid" aria-label="Topics">
+          {THEMES.map((t) => {
+            const { icon: Icon, blurb } = themeMeta(t);
+            return (
+              <li key={t} style={hueStyle(t)}>
+                <button
+                  type="button"
+                  className="theme-card"
+                  aria-pressed={!query && filter === t}
+                  onClick={() => browse(filter === t && !query ? ALL : t)}
+                >
+                  <span className="theme-icon">
+                    <Icon size={20} aria-hidden="true" />
+                  </span>
+                  <span className="theme-name">{t}</span>
+                  <span className="theme-blurb">{blurb}</span>
+                  <span className="theme-count">
+                    {CASES.filter((c) => c.theme === t).length} cases
+                    {solvedIn(t) > 0 && (
+                      <span className="theme-solved">
+                        <Trophy size={12} aria-hidden="true" />
+                        {solvedIn(t)} with solution
+                      </span>
+                    )}
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+        <div className="results-bar" ref={results}>
+          <div className="chips" role="group" aria-label="Show">
+            {[SOLVED, ALL].map((name) => (
+              <button key={name} type="button" aria-pressed={!query && filter === name} onClick={() => pick(name)}>
+                {name === SOLVED && <Trophy size={14} aria-hidden="true" />}
+                {name}
               </button>
-            </span>
+            ))}
+          </div>
+          <p className="muted" aria-live="polite">
+            {summary(shown.length, filter, query)}
           </p>
-        )}
+        </div>
         <ul className="case-grid">
           {shown.map((c) => (
-            <CaseCard key={c.n} c={c} onTry={() => start.mutate(c.page)} busy={start.isPending} />
+            <CaseCard
+              key={c.n}
+              c={c}
+              showTopic={!!query || !THEMES.includes(filter)}
+              onTry={() => start.mutate(c.page)}
+              busy={start.isPending}
+            />
           ))}
         </ul>
       </section>
@@ -233,24 +228,20 @@ function summary(count: number, filter: string, query: string) {
   if (query) return `${count} of ${total} cases match.`;
   if (filter === ALL) return `All ${total} cases.`;
   if (filter === SOLVED)
-    return `${count} of ${total} cases have a worked solution: several test approaches, each scored against planted bugs. The rest stay open as exercises.`;
-  return `${count} of ${total} cases.`;
+    return `${count} of ${total} cases have a worked solution. The rest stay open as exercises.`;
+  return `${filter}: ${count} of ${total} cases.`;
 }
 
-function CaseCard({ c, onTry, busy }: { c: Case; onTry: () => void; busy: boolean }) {
+function CaseCard({ c, showTopic, onTry, busy }: { c: Case; showTopic: boolean; onTry: () => void; busy: boolean }) {
   const { icon: Icon } = themeMeta(c.theme);
   return (
     <li className="case-card" style={hueStyle(c.theme)}>
       <div className="case-meta">
         <span className="case-no">#{c.n}</span>
-        <span className="theme-tag">
-          <Icon size={12} aria-hidden="true" />
-          {c.theme}
-        </span>
-        {c.solution && (
-          <span className="solved-tag" title="Has a worked solution">
-            <Trophy size={14} aria-hidden="true" />
-            <span className="sr-only">Has a worked solution</span>
+        {showTopic && (
+          <span className="theme-tag">
+            <Icon size={12} aria-hidden="true" />
+            {c.theme}
           </span>
         )}
       </div>
@@ -258,13 +249,14 @@ function CaseCard({ c, onTry, busy }: { c: Case; onTry: () => void; busy: boolea
       <p>{c.featured ?? c.summary}</p>
       <div className="case-actions">
         <button type="button" onClick={onTry} disabled={busy}>
-          Try case {c.n}
+          Try<span className="sr-only"> case {c.n}</span>
         </button>
         <a href={docUrl(c)}>
           Requirements<span className="sr-only"> for case {c.n}</span>
         </a>
         {c.solution && (
-          <a href={solutionUrl(c)}>
+          <a href={solutionUrl(c)} className="solution-link">
+            <Trophy size={14} aria-hidden="true" />
             Solution<span className="sr-only"> for case {c.n}</span>
           </a>
         )}
