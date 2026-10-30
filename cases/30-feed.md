@@ -7,6 +7,8 @@ The Feed page lists posts, newest first. It starts with 35 posts, and anyone can
 
 - The page shows the 10 newest posts. Scrolling to the end loads the next 10, until every post
   is shown; then it says "No more posts."
+- On a window so tall that the posts shown do not reach its bottom, the page keeps loading the
+  next 10 by itself until they do, or until every post is shown.
 - Every post appears exactly once, in order, even when new posts arrive while you scroll.
 - New posts do not move the list. Within 3 seconds a button says how many arrived ("3 new
   posts"); clicking it puts them at the top.
