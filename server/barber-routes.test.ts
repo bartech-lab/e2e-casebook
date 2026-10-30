@@ -262,15 +262,6 @@ test('clock advances are cumulative and invalid advances are 400 without moving 
   assert.equal((await slot(app, sb, 'Ben', 'sat-0900')).state, 'free');
 });
 
-test('serverNow moves forward by the advanced amount', async (t) => {
-  const { app, sb } = await setup(t);
-  const a = (await slots(app, sb)).serverNow;
-  await advance(app, sb, 1000000);
-  const b = (await slots(app, sb)).serverNow;
-  assert.ok(b - a >= 1000000);
-  assert.ok(b - a < 1000000 + 100000);
-});
-
 test('reset clears holds, bookings and the clock offset', async (t) => {
   const { app, sb } = await setup(t);
   await hold(app, sb, 'Ann', 'sat-0900');

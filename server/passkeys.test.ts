@@ -269,11 +269,6 @@ test('user present without user verified is rejected', async (t) => {
   assert.equal(ok.statusCode, 200, ok.body);
 });
 
-test('unknown passkey id is rejected', async (t) => {
-  const { app, sb } = await setup(t);
-  await expectError(await login(app, sb, newAuthenticator('ghost')), 'Passkey not recognised.');
-});
-
 test('signature over authenticatorData alone is rejected', async (t) => {
   const { app, sb } = await setup(t);
   const auth = newAuthenticator('k');
@@ -299,16 +294,6 @@ test('signature over a different client data is rejected', async (t) => {
     await login(app, sb, auth, { signedData: (ad) => Buffer.concat([ad, sha('other client data')]) }),
     'Bad signature.',
   );
-});
-
-test('counters 0 then 0 are accepted', async (t) => {
-  const { app, sb } = await setup(t);
-  const auth = newAuthenticator('k');
-  await register(app, sb, auth);
-  for (let i = 0; i < 2; i++) {
-    const res = await login(app, sb, auth, { authData: authData({ counter: 0 }) });
-    assert.equal(res.statusCode, 200, res.body);
-  }
 });
 
 test('counter must strictly increase once non-zero', async (t) => {

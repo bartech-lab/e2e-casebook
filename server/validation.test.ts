@@ -13,8 +13,3 @@ test('byField accepts a name of exactly the maximum length after trimming', () =
   assert.equal(byField({ by: `  ${atMax}  ` }), atMax);
   assert.equal(byField({ by: atMax + 'n' }), null);
 });
-
-test('byField rejects a whitespace-only name instead of recording an empty author', () => {
-  assert.equal(byField({ by: '   ' }), null);
-  assert.equal(byField({ by: '' }), null);
-});

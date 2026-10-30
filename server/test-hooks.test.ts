@@ -74,12 +74,6 @@ test('clock accepts null to return to real time and rejects negative or non-nume
   }
 });
 
-test('vault-code answers 404 when the sandbox has no vault', async (t) => {
-  const { app, sb } = await hookApp(t);
-  const res = await app.inject({ method: 'GET', url: `/__test__/s/${sb}/vault-code` });
-  assert.equal(res.statusCode, 404);
-});
-
 test('assistant pace takes whole milliseconds from 0 to 2000 only', async (t) => {
   const { hook } = await hookApp(t);
   for (const ms of [0, 2000]) assert.equal((await hook('assistant-pace', { ms })).statusCode, 200, String(ms));

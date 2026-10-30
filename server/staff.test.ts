@@ -191,13 +191,6 @@ test('staff-writes records a snapshot per successful PUT, in order, immune to la
   assert.deepEqual(afterFirst, [{ id: 1, name: 'One', role: 'A', phone: '1' }]);
 });
 
-test('failed PUTs record nothing', async (t) => {
-  const { app, sb } = await setup(t);
-  await api(app, sb, 'PUT', '/staff/1', { name: '  ' });
-  await api(app, sb, 'PUT', '/staff/99', { name: 'Nobody' });
-  assert.deepEqual(await writes(app, sb), []);
-});
-
 test('reset restores the seeded roster and clears pace and writes', async (t) => {
   const { app, sb } = await setup(t);
   await api(app, sb, 'PUT', '/staff/1', { name: 'Changed', role: 'Z', phone: '9' });

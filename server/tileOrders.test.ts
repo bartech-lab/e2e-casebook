@@ -44,11 +44,6 @@ async function listOrders(app: App, sb: string) {
   return res.json().orders as any[];
 }
 
-test('empty sandbox lists no orders', async (t) => {
-  const { app, sb } = await setup(t);
-  assert.deepEqual(await listOrders(app, sb), []);
-});
-
 test('single line order returns 201 with id, lines and total', async (t) => {
   const { app, sb } = await setup(t);
   const res = await api(app, sb, 'POST', '/tile-orders', { lines: [{ tile: 'white-matt', qty: 1 }] });

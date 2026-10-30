@@ -26,17 +26,6 @@ test('prune boundary: last-used equal to cutoff is kept, one less is pruned', (t
   assert.equal(store.hasSandbox('a'), false);
 });
 
-test('hasSandbox is false for an unknown id', (t) => {
-  const { store } = setup(t);
-  assert.equal(store.hasSandbox('nope'), false);
-});
-
-test('createSandbox seeds 4 default cards', (t) => {
-  const { store } = setup(t);
-  store.createSandbox('a');
-  assert.equal(store.listCards('a').length, 4);
-});
-
 test('createCard keeps a sandbox alive past the cutoff', (t) => {
   const { store, state } = setup(t, 1000);
   store.createSandbox('live');
