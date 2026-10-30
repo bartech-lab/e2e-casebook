@@ -197,6 +197,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 182 | [Profile photo](cases/182-profile-photo.md) | A photo turned and cut to a 256 × 256 square in the browser, then sent as a PNG. |
 | 183 | [Travel article](cases/183-travel-article.md) | An article whose photos and newsletter box arrive after the text, without moving it. |
 | 184 | [Paper boat](cases/184-paper-boat.md) | A 12-second video with captions in English or Polish and a transcript that follows it. |
+| 185 | [Quick invoice](cases/185-quick-invoice.md) | An invoice form with many buttons, where Enter saves and no other button ever does. |
 
 ## Run it
 

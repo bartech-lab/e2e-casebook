@@ -595,3 +595,5 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .transcript-lines { padding-left: 1.2rem; }
 .transcript-lines button { border: 0; background: none; padding: 0.2rem 0; text-align: left; }
 .transcript-lines button[aria-current='true'] { color: var(--accent); font-weight: 600; }
+.quick-invoice { display: grid; gap: 0.75rem; max-width: 36rem; }
+.invoice-line { display: flex; flex-wrap: wrap; align-items: end; gap: 0.5rem; margin-bottom: 0.5rem; }
