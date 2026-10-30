@@ -1,5 +1,7 @@
 # e2e-casebook
 
+[![CI](https://github.com/bartech-lab/e2e-casebook/actions/workflows/ci.yml/badge.svg)](https://github.com/bartech-lab/e2e-casebook/actions/workflows/ci.yml)
+
 A small, realistic web app built to be tested end to end. Each case is a feature that is hard to
 test well, with a list of requirements. Write automated tests that check every requirement. Each
 case hides a detail that makes the obvious test miss a broken requirement.
