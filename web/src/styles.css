@@ -589,3 +589,9 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .photo-missing { margin: 0; padding: 1rem; color: var(--muted); }
 .newsletter-slot { min-height: 6.5rem; box-sizing: border-box; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
 .newsletter-slot p { margin: 0 0 0.5rem; }
+.video-box { position: relative; width: 480px; max-width: 100%; }
+.video-box video { display: block; width: 100%; height: auto; background: #000; }
+.video-caption { position: absolute; left: 0; right: 0; bottom: 3rem; text-align: center; color: #fff; text-shadow: 0 0 4px #000; white-space: pre-line; pointer-events: none; }
+.transcript-lines { padding-left: 1.2rem; }
+.transcript-lines button { border: 0; background: none; padding: 0.2rem 0; text-align: left; }
+.transcript-lines button[aria-current='true'] { color: var(--accent); font-weight: 600; }

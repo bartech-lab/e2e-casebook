@@ -196,6 +196,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 181 | [Holiday homes](cases/181-holiday-homes.md) | Cards that load a home's details as soon as the pointer or keyboard reaches them, counting a view only when it is opened. |
 | 182 | [Profile photo](cases/182-profile-photo.md) | A photo turned and cut to a 256 × 256 square in the browser, then sent as a PNG. |
 | 183 | [Travel article](cases/183-travel-article.md) | An article whose photos and newsletter box arrive after the text, without moving it. |
+| 184 | [Paper boat](cases/184-paper-boat.md) | A 12-second video with captions in English or Polish and a transcript that follows it. |
 
 ## Run it
 
