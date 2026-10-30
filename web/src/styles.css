@@ -576,3 +576,4 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .chat-history li { padding: 0.4rem 0; }
 .chat-history-top { color: var(--muted); text-align: center; }
 .chat-history-mine { text-align: right; }
+.close-account-preview { width: 100%; max-width: 36rem; height: 16rem; border: 1px solid var(--border); border-radius: var(--radius); }

@@ -77,13 +77,14 @@ import type { TeamChat } from './teamChat.ts';
 import type { Cinema } from './cinema.ts';
 import type { PartsSearch } from './partsSearch.ts';
 import type { HelpDesk } from './helpDesk.ts';
+import type { CloseAccount } from './closeAccount.ts';
 import type { ResumableUploads } from './resumableUploads.ts';
 import type { ChatHistory } from './chatHistory.ts';
 import { DEFAULT_CARDS, type Store } from './store.ts';
 import { cardInput, messageInput } from './validation.ts';
 
 type Params = { sandbox: string };
-type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts; teams: Teams; meetings: Meetings; otps: Otps; passkeys: Passkeys; deliveries: Deliveries; imports: Imports; uploads: Uploads; tickets: Tickets; appearances: Appearances; priceAlerts: PriceAlerts; scores: Scores; passwords: Passwords; sales: Sales; articles: Articles; posts: Posts; voiceNotes: VoiceNotes; priceList: PriceList; notesSchema: NotesSchema; gigTickets: GigTickets; albums: Albums; readerAuth: ReaderAuth; busTimes: BusTimes; workspaces: Workspaces; savedSearches: SavedSearches; eventFeedback: EventFeedback; expenseClaims: ExpenseClaims; cardPayments: CardPayments; assistant: Assistant; guestbook: Guestbook; clientErrors: ClientErrors; clubActivity: ClubActivity; noticeBoard: NoticeBoard; cloudPix: CloudPix; studyGroup: StudyGroup; billing: Billing; flights: Flights; transfers: Transfers; libraryCards: LibraryCards; rsvps: Rsvps; songs: Songs; handover: Handover; ticketContacts: TicketContacts; barber: Barber; runningOrder: RunningOrder; staffRoster: Staff; tileOrders: TileOrders; trailMap: TrailMap; payslips: Payslips; newsroom: Newsroom; members: Members; payByBank: PayByBank; kitchenTimer: KitchenTimer; teamChat: TeamChat; cinema: Cinema; partsSearch: PartsSearch; helpDesk: HelpDesk; resumableUploads: ResumableUploads; chatHistory: ChatHistory };
+type Deps = { store: Store; hub: Hub; faults: Faults; exportJobs: Exports; flags: Flags; extras: Extras; shop: Shop; reviews: Reviews; contacts: Contacts; bookings: Bookings; feed: Feed; checklist: Checklist; vaults: Vaults; bios: Bios; feedback: FeedbackStore; invites: Invites; releases: Releases; inbox: Inbox; orders: Orders; files: Files; sms: Sms; shipping: Shipping; accounts: Accounts; teams: Teams; meetings: Meetings; otps: Otps; passkeys: Passkeys; deliveries: Deliveries; imports: Imports; uploads: Uploads; tickets: Tickets; appearances: Appearances; priceAlerts: PriceAlerts; scores: Scores; passwords: Passwords; sales: Sales; articles: Articles; posts: Posts; voiceNotes: VoiceNotes; priceList: PriceList; notesSchema: NotesSchema; gigTickets: GigTickets; albums: Albums; readerAuth: ReaderAuth; busTimes: BusTimes; workspaces: Workspaces; savedSearches: SavedSearches; eventFeedback: EventFeedback; expenseClaims: ExpenseClaims; cardPayments: CardPayments; assistant: Assistant; guestbook: Guestbook; clientErrors: ClientErrors; clubActivity: ClubActivity; noticeBoard: NoticeBoard; cloudPix: CloudPix; studyGroup: StudyGroup; billing: Billing; flights: Flights; transfers: Transfers; libraryCards: LibraryCards; rsvps: Rsvps; songs: Songs; handover: Handover; ticketContacts: TicketContacts; barber: Barber; runningOrder: RunningOrder; staffRoster: Staff; tileOrders: TileOrders; trailMap: TrailMap; payslips: Payslips; newsroom: Newsroom; members: Members; payByBank: PayByBank; kitchenTimer: KitchenTimer; teamChat: TeamChat; cinema: Cinema; partsSearch: PartsSearch; helpDesk: HelpDesk; resumableUploads: ResumableUploads; chatHistory: ChatHistory; closeAccount: CloseAccount };
 
 type FaultBody = {
   dropSockets?: unknown;
@@ -93,7 +94,7 @@ type FaultBody = {
   auth?: { tokenTtlMs?: unknown };
 };
 
-export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes, workspaces, savedSearches, eventFeedback, expenseClaims, cardPayments, assistant, guestbook, clientErrors, clubActivity, noticeBoard, cloudPix, studyGroup, billing, flights, transfers, libraryCards, rsvps, songs, handover, ticketContacts, barber, runningOrder, staffRoster, tileOrders, trailMap, payslips, newsroom, members, payByBank, kitchenTimer, teamChat, cinema, partsSearch, helpDesk, resumableUploads, chatHistory }: Deps) {
+export function registerTestHooks(app: FastifyInstance, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes, workspaces, savedSearches, eventFeedback, expenseClaims, cardPayments, assistant, guestbook, clientErrors, clubActivity, noticeBoard, cloudPix, studyGroup, billing, flights, transfers, libraryCards, rsvps, songs, handover, ticketContacts, barber, runningOrder, staffRoster, tileOrders, trailMap, payslips, newsroom, members, payByBank, kitchenTimer, teamChat, cinema, partsSearch, helpDesk, resumableUploads, chatHistory, closeAccount }: Deps) {
   app.register(
     async (scope) => {
       scope.addHook('preHandler', async (req, reply) => {
@@ -182,6 +183,7 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         cinema.clear(sandbox);
         partsSearch.clear(sandbox);
         helpDesk.clear(sandbox);
+        closeAccount.clear(sandbox);
         resumableUploads.clear(sandbox);
         chatHistory.clear(sandbox);
         hub.reset(sandbox);
@@ -456,6 +458,8 @@ export function registerTestHooks(app: FastifyInstance, { store, hub, faults, ex
         chatHistory.fail(req.params.sandbox, times);
         return { ok: true };
       });
+
+      scope.get<{ Params: Params }>('/account-closed', async (req) => ({ closed: closeAccount.isClosed(req.params.sandbox) }));
 
       scope.post<{ Params: Params }>('/expire-sessions', async (req) => {
         extras.expireSessions(req.params.sandbox);
