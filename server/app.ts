@@ -86,6 +86,7 @@ import { createPayslips } from './payslips.ts';
 import { createHelpDesk } from './helpDesk.ts';
 import { createCloseAccount } from './closeAccount.ts';
 import { registerShipments } from './shipments.ts';
+import { registerTravelArticle } from './travelArticle.ts';
 import { createPartnerPoints } from './partnerPoints.ts';
 import { createNewsroom } from './newsroom.ts';
 import { createMembers } from './members.ts';
@@ -308,6 +309,7 @@ export async function buildApp(opts: AppOptions = {}) {
       partsSearch.register(scope);
       resumableUploads.register(scope);
       registerShipments(scope);
+      registerTravelArticle(scope);
       partnerPoints.register(scope);
       chatHistory.register(scope);
       cafe.register(scope);

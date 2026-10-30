@@ -181,6 +181,7 @@ import { CafeDashboard } from '../cafe/CafeDashboard.tsx';
 import { PrinterStatus } from '../printer/PrinterStatus.tsx';
 import { HolidayHomes } from '../holiday-homes/HolidayHomes.tsx';
 import { ProfilePhoto } from '../profile-photo/ProfilePhoto.tsx';
+import { TravelArticle } from '../travel-article/TravelArticle.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -398,7 +399,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/cafe`}>Café dashboard</Link> ·{' '}
         <Link href={`${base}/printer`}>Printer status</Link> ·{' '}
         <Link href={`${base}/holiday-homes`}>Holiday homes</Link> ·{' '}
-        <Link href={`${base}/profile-photo`}>Profile photo</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/profile-photo`}>Profile photo</Link> ·{' '}
+        <Link href={`${base}/travel-article`}>Travel article</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -440,6 +442,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <HolidayHomes sandbox={sandbox} />
       ) : page === 'profile-photo' ? (
         <ProfilePhoto sandbox={sandbox} />
+      ) : page === 'travel-article' ? (
+        <TravelArticle sandbox={sandbox} />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1288,6 +1292,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/profile-photo`}>Profile photo</Link>: a photo turned and cut to a square in the browser before it is sent.
+        </li>
+        <li>
+          <Link href={`${base}/travel-article`}>Travel article</Link>: an article whose photos and newsletter box arrive late without moving the text.
         </li>
       </ul>
     </section>
