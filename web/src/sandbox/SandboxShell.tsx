@@ -169,6 +169,7 @@ import { Transcript } from '../transcript/Transcript.tsx';
 import { TeamChat } from '../team-chat/TeamChat.tsx';
 import { Cinema } from '../cinema/Cinema.tsx';
 import { PartsSearch } from '../parts/PartsSearch.tsx';
+import { StaffGuide } from '../staff-guide/StaffGuide.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -374,7 +375,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/transcript`}>Transcript</Link> ·{' '}
         <Link href={`${base}/team-chat`}>Team chat</Link> ·{' '}
         <Link href={`${base}/cinema`}>Cinema</Link> ·{' '}
-        <Link href={`${base}/parts`}>Parts search</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/parts`}>Parts search</Link> ·{' '}
+        <Link href={`${base}/staff-guide`}>Staff guide</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -392,6 +394,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Cinema sandbox={sandbox} />
       ) : page === 'parts' ? (
         <PartsSearch sandbox={sandbox} />
+      ) : page === 'staff-guide' ? (
+        <StaffGuide />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1204,6 +1208,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/parts`}>Parts search</Link>: a search box that waits when the server says it is busy.
+        </li>
+        <li>
+          <Link href={`${base}/staff-guide`}>Staff guide</Link>: a long page with a contents bar that follows where you are.
         </li>
       </ul>
     </section>

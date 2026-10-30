@@ -570,3 +570,5 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .team-chat li { padding: 0.4rem 0; }
 .team-chat img { display: block; margin-top: 0.3rem; }
 .cinema-seats { display: flex; gap: 0.5rem; list-style: none; padding: 0; }
+.guide-section { min-height: 100vh; scroll-margin-top: 4rem; }
+.staff-guide nav a[aria-current='location'] { background: var(--accent-soft); color: var(--accent); }
