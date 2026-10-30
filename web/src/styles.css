@@ -695,8 +695,11 @@ nav.sandbox-nav > * { font-size: inherit; }
 :root[data-ui='dark'] button[type="submit"], :root[data-ui='dark'] .hero-actions button, :root[data-ui='dark'] .chips button[aria-pressed="true"] { color: #0f1320; }
 :root[data-ui='dark'] .hero { background: linear-gradient(135deg, var(--surface) 55%, var(--accent-soft)); }
 :root[data-ui='dark'] .solved-tag { background: #12301f; }
-.theme-toggle { margin-left: auto; }
-.hero-actions .theme-toggle { background: var(--surface); border-color: var(--border); color: var(--text); font-size: 0.9rem; padding: 0.35rem 0.9rem; }
-.hero-actions .theme-toggle:hover:not(:disabled) { background: var(--surface); border-color: var(--accent); color: var(--accent); }
-.hero-actions .theme-toggle[aria-pressed='true'] { border-color: var(--accent); color: var(--accent); }
-:root[data-ui='dark'] .hero-actions .theme-toggle { color: var(--accent); }
+
+/* Theme toggle: an icon button in the hero corner and the sidebar head */
+.theme-toggle { display: inline-grid; place-items: center; width: 2.1rem; height: 2.1rem; padding: 0; border-radius: 999px; color: var(--muted); background: var(--surface); border: 1px solid var(--border); }
+.theme-toggle:hover:not(:disabled) { color: var(--accent); border-color: var(--accent); }
+.theme-toggle svg { display: block; }
+.hero { position: relative; }
+.hero-corner { position: absolute; top: 1rem; right: 1rem; }
+.sandbox-nav .nav-top .theme-toggle { width: 1.9rem; height: 1.9rem; order: 1; }

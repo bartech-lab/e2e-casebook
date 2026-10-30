@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { casesOnPage, docUrl, solutionUrl, THEMES } from '../cases.ts';
 import { Link } from '../router.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
+import { ThemeToggle } from '../ThemeToggle.tsx';
 import { PAGES } from './pages.ts';
 
 const MORE = 'More pages';
@@ -33,6 +34,7 @@ export function SandboxNav({ sandbox, page, name }: { sandbox: string; page: str
           <a href="/" className="nav-home">
             Case catalogue
           </a>
+          <ThemeToggle />
           <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
         </div>
         {cases.length > 0 && (
