@@ -184,6 +184,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 169 | [Cinema](cases/169-cinema.md) | The Cinema page reserves seats, and its buttons must work from the moment they appear, on any connection. |
 | 170 | [Parts search](cases/170-parts-search.md) | A search box that waits as long as the server asks after `429 Too Many Requests`. |
 | 171 | [Staff guide](cases/171-staff-guide.md) | A contents bar that marks the section you are reading and jumps to a section on click. |
+| 172 | [Help desk](cases/172-help-desk.md) | A page under a strict Content-Security-Policy with a chat whose code loads on the first click. |
 
 ## Run it
 

@@ -170,6 +170,7 @@ import { TeamChat } from '../team-chat/TeamChat.tsx';
 import { Cinema } from '../cinema/Cinema.tsx';
 import { PartsSearch } from '../parts/PartsSearch.tsx';
 import { StaffGuide } from '../staff-guide/StaffGuide.tsx';
+import { HelpDeskLink } from '../help-desk/HelpDeskLink.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -376,7 +377,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/team-chat`}>Team chat</Link> ·{' '}
         <Link href={`${base}/cinema`}>Cinema</Link> ·{' '}
         <Link href={`${base}/parts`}>Parts search</Link> ·{' '}
-        <Link href={`${base}/staff-guide`}>Staff guide</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/staff-guide`}>Staff guide</Link> ·{' '}
+        <Link href={`${base}/help-desk`}>Help desk</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -396,6 +398,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <PartsSearch sandbox={sandbox} />
       ) : page === 'staff-guide' ? (
         <StaffGuide />
+      ) : page === 'help-desk' ? (
+        <HelpDeskLink sandbox={sandbox} />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1211,6 +1215,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/staff-guide`}>Staff guide</Link>: a long page with a contents bar that follows where you are.
+        </li>
+        <li>
+          <Link href={`${base}/help-desk`}>Help desk</Link>: a page under a strict security policy whose chat loads when you open it.
         </li>
       </ul>
     </section>
