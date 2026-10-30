@@ -3,3 +3,9 @@ dist/
 *.db
 e2e/test-results/
 e2e/playwright-report/
+solutions/test-results/
+solutions/playwright-report/
+solutions/benchmark/runs/
+solutions/benchmark/image/claude
+solutions/benchmark/image/omp
+solutions/benchmark/image/workspace/

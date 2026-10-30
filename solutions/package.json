@@ -1,0 +1,21 @@
+{
+  "name": "e2e-casebook-solutions",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "typecheck": "tsc --noEmit -p .",
+    "score": "node scripts/score.ts",
+    "score:check": "node scripts/score.ts --check",
+    "render-cards": "node scripts/render-cards.ts",
+    "test:scripts": "node --test scripts/*.test.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.5",
+    "fast-check": "^4.10.2",
+    "typescript": "^7.0.2"
+  },
+  "description": "Playwright approaches to 12 e2e-casebook cases, scored against planted bugs"
+}

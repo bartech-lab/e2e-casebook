@@ -9,6 +9,10 @@ Bring your own framework: Playwright, Cypress, WebdriverIO, or anything that dri
 **Live demo:** <https://e2e-proving-ground.onrender.com> (free tier: it sleeps after 15 minutes
 without traffic, takes about a minute to wake, and starts empty after every wake).
 
+**Worked solutions:** [`solutions/`](solutions/README.md) has Playwright approaches to 12 cases,
+each scored against bugs planted in the app, plus a [benchmark](solutions/benchmark/README.md) of
+AI agents writing tests for the same cases. The other cases stay unsolved.
+
 ## Start here
 
 202 cases is a lot. These twelve show the range:
