@@ -6,8 +6,10 @@ case hides a detail that makes the obvious test miss a broken requirement.
 
 Bring your own framework: Playwright, Cypress, WebdriverIO, or anything that drives a browser.
 
-**Live demo:** <https://e2e-proving-ground.onrender.com> (free tier: it sleeps after 15 minutes
-without traffic, takes about a minute to wake, and starts empty after every wake).
+[![The e2e-casebook landing page](docs/landing.png)](https://e2e-proving-ground.onrender.com)
+
+**Live demo:** <https://e2e-proving-ground.onrender.com> (free tier: if it has been idle, it takes
+about a minute to wake, and it starts empty after every wake).
 
 **Worked solutions:** [`solutions/`](solutions/README.md) has Playwright approaches to 12 cases,
 each scored against bugs planted in the app, plus a [benchmark](solutions/benchmark/README.md) of
@@ -70,7 +72,7 @@ AI agents writing tests for the same cases. The other cases stay unsolved.
 | 32 | [Vault](cases/32-vault.md) | The Vault page keeps notes behind two-step verification with an authenticator app. |
 | 33 | [Basket](cases/33-basket.md) | The Basket page keeps a basket in the browser, without the server. |
 | 34 | [Support](cases/34-support.md) | The Support page sends a message to support. |
-| 35 | [Receipt](cases/35-receipt.md) | The Receipt page shows a shop receipt with an order number and the time it was printed (24-hour clock).. |
+| 35 | [Receipt](cases/35-receipt.md) | The Receipt page shows a shop receipt with an order number and the time it was printed (24-hour clock). |
 | 36 | [Sign up](cases/36-sign-up.md) | The Sign up page creates an account (nothing is stored). |
 | 37 | [Bio](cases/37-bio.md) | The Bio page has a small rich-text editor with **Bold** and **Italic** buttons (Ctrl+B and Ctrl+I work too) and **Save**. |
 | 38 | [Search](cases/38-search.md) | The Search page finds products as you type. |
@@ -245,7 +247,7 @@ AI agents writing tests for the same cases. The other cases stay unsolved.
 docker compose up --build
 ```
 
-Open <http://localhost:3000> to browse the cases by theme, then start a sandbox. A sandbox is a
+Open <http://localhost:3000> to browse the cases by topic, then start a sandbox. A sandbox is a
 private copy of the app; open its URL in a second window to be the second user.
 
 ## Test hooks and API
@@ -266,7 +268,7 @@ npm run dev:server   # API on :3000 with test hooks
 npm run dev:web      # Vite on :5173, proxies /api and /__test__
 npm run typecheck
 npm run test:unit
-npm run build && npm run test:smoke   # opens every page in Chromium
+npm run build && npm run test:smoke   # opens every page in Chromium; axe scan of the shell
 ```
 
 ## License

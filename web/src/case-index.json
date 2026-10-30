@@ -288,7 +288,7 @@
  {
   "n": 35,
   "title": "Receipt",
-  "summary": "The Receipt page shows a shop receipt with an order number and the time it was printed (24-hour clock)..",
+  "summary": "The Receipt page shows a shop receipt with an order number and the time it was printed (24-hour clock).",
   "doc": "cases/35-receipt.md",
   "theme": "Files, uploads and downloads",
   "page": "receipt"
