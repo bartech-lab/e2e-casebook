@@ -9,4 +9,4 @@ The Region packs page downloads a cycling map for Kraków, Gdańsk or Tatry from
 - The bar never shows more than 100%.
 - **Cancel download** stops the download on the server too, says "Download cancelled.", and saves nothing.
 - A download that breaks off says "Download failed: <region>. Try again." and saves nothing.
-- A finished pack is listed under **On this device** with its size.
+- Every finished pack is listed under **On this device** with its size, and stays there when the next one finishes.
