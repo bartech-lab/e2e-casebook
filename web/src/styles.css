@@ -787,7 +787,6 @@ main > section > ul.case-grid > li { margin: 0; }
 .sandbox-nav .nav-group-title { color: hsl(var(--hue) 55% 32%); }
 .site-footer a { text-decoration: underline; text-underline-offset: 2px; }
 :root[data-ui='dark'] .hero-actions .primary, :root[data-ui='dark'] .hero-actions .primary:hover:not(:disabled) { color: #0f1320; }
-.theme-count { display: flex; flex-wrap: wrap; align-items: center; gap: 0.2rem 0.6rem; }
 .theme-solved { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--ok); font-weight: 600; }
 .site-links .icon-link { gap: 0.3rem; }
 .site-links .icon-link svg { opacity: 0.7; }
@@ -800,3 +799,8 @@ main > section > ul.case-grid > li { margin: 0; }
 .solution-link { display: inline-flex; align-items: center; gap: 0.25rem; }
 .solution-link svg { color: var(--ok); }
 @media (max-width: 40rem) { .results-bar { scroll-margin-top: 7rem; } }
+
+/* Topic card: count block pinned to the bottom, two fixed lines, so every card's lines align */
+.theme-card { grid-template-rows: auto auto 1fr; }
+.theme-icon { grid-row: 1 / -1; align-self: start; }
+.theme-count { display: grid; align-content: start; align-self: end; gap: 0.15rem; min-height: 2.7em; margin-top: 0.5rem; line-height: 1.3; }
