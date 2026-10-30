@@ -3,6 +3,7 @@ import { casesOnPage, docUrl, solutionUrl, THEMES } from '../cases.ts';
 import { Link } from '../router.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { ThemeToggle } from '../ThemeToggle.tsx';
+import { LogoMark, hueStyle, themeMeta } from '../themeMeta.tsx';
 import { PAGES } from './pages.ts';
 
 const MORE = 'More pages';
@@ -32,6 +33,7 @@ export function SandboxNav({ sandbox, page, name }: { sandbox: string; page: str
       <div className="nav-head">
         <div className="nav-top">
           <a href="/" className="nav-home">
+            <LogoMark />
             Case catalogue
           </a>
           <ThemeToggle />
@@ -40,7 +42,7 @@ export function SandboxNav({ sandbox, page, name }: { sandbox: string; page: str
         {cases.length > 0 && (
           <div className="case-strip">
             {cases.map((c) => (
-              <div key={c.n} className="case-strip-item">
+              <div key={c.n} className="case-strip-item" style={hueStyle(c.theme)}>
                 <span className="case-strip-title">
                   Case {c.n}: {c.title}
                 </span>
@@ -59,8 +61,11 @@ export function SandboxNav({ sandbox, page, name }: { sandbox: string; page: str
       </div>
       <div className="nav-scroll" ref={list}>
         {GROUPS.map((g) => (
-          <div key={g.theme} className="nav-group">
-            <span className="nav-group-title">{g.theme}</span>
+          <div key={g.theme} className="nav-group" style={hueStyle(g.theme)}>
+            <span className="nav-group-title">
+              <NavIcon theme={g.theme} />
+              {g.theme}
+            </span>
             <div className="nav-links">
               {g.pages.map((p) => (
                 <Link key={p.path} href={`${base}/${p.path}`} aria-current={p.path === active ? 'page' : undefined}>
@@ -73,4 +78,9 @@ export function SandboxNav({ sandbox, page, name }: { sandbox: string; page: str
       </div>
     </nav>
   );
+}
+
+function NavIcon({ theme }: { theme: string }) {
+  const { icon: Icon } = themeMeta(theme);
+  return <Icon size={13} aria-hidden="true" />;
 }

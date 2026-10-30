@@ -1,13 +1,16 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import { ArrowRight, BookOpen, Bug, Search, Sparkles, Target, Trophy } from 'lucide-react';
 import { navigate } from './router.tsx';
 import { createSandbox } from './chat/api.ts';
 import { ThemeToggle } from './ThemeToggle.tsx';
+import { GitHubMark, LogoMark, hueStyle, themeMeta } from './themeMeta.tsx';
 import { BENCHMARK_URL, CASES, REPO_URL, SOLUTIONS_URL, THEMES, docUrl, solutionUrl, type Case } from './cases.ts';
 
 const START_HERE = 'Start here';
 const ALL = 'All cases';
 const SOLVED = 'Solved';
+const solvedCount = CASES.filter((c) => c.solution).length;
 
 export function Landing() {
   const start = useMutation({
@@ -16,64 +19,165 @@ export function Landing() {
   });
   const [filter, setFilter] = useState(START_HERE);
   const [query, setQuery] = useState('');
+  const search = useRef<HTMLInputElement>(null);
+  const catalogue = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const typing = e.target instanceof HTMLElement && e.target.closest('input, textarea, [contenteditable]');
+      if (e.key === '/' && !typing) {
+        e.preventDefault();
+        search.current?.focus();
+      }
+    };
+    addEventListener('keydown', onKey);
+    return () => removeEventListener('keydown', onKey);
+  }, []);
 
   const shown = useMemo(() => {
     const q = query.trim().toLowerCase();
     return CASES.filter((c) => {
-      if (q) return `${c.n} ${c.title} ${c.summary} ${c.theme}`.toLowerCase().includes(q);
+      if (q) return `${c.n} ${c.title} ${c.summary} ${c.featured ?? ''} ${c.theme}`.toLowerCase().includes(q);
       if (filter === START_HERE) return c.featured;
       if (filter === SOLVED) return c.solution;
       return filter === ALL || c.theme === filter;
     });
   }, [filter, query]);
 
-  const chips: [string, number][] = [
-    [START_HERE, CASES.filter((c) => c.featured).length],
-    [SOLVED, CASES.filter((c) => c.solution).length],
-    [ALL, CASES.length],
-    ...THEMES.map((t): [string, number] => [t, CASES.filter((c) => c.theme === t).length]),
-  ];
+  const pick = (name: string) => {
+    setFilter(name);
+    setQuery('');
+  };
+  const browse = (name: string) => {
+    pick(name);
+    catalogue.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   return (
     <>
-      <section className="hero">
-        <div className="hero-corner">
+      <header className="site-header">
+        <a href="/" className="brand">
+          <LogoMark />
+          e2e-casebook
+        </a>
+        <div className="site-links">
+          <a href="#cases">Cases</a>
+          <a href={SOLUTIONS_URL}>Solutions</a>
+          <a href={BENCHMARK_URL}>Benchmark</a>
+          <a href={REPO_URL} className="icon-link">
+            <GitHubMark />
+            GitHub
+          </a>
           <ThemeToggle />
         </div>
-        <h1>e2e-casebook</h1>
-        <p className="lead">
-          {CASES.length} features that are hard to test end to end. Each one hides a detail that makes the obvious
-          test miss a broken requirement.
+      </header>
+
+      <section className="hero">
+        <p className="eyebrow">
+          <Sparkles size={15} aria-hidden="true" /> End-to-end testing practice, scored
         </p>
-        <p>
-          A sandbox is your own copy of the app. Share its URL to test with a second user. Every page lists the
-          requirements to test; {CASES.filter((c) => c.solution).length} cases also have scored Playwright solutions.
+        <h1>{CASES.length} features built to break the obvious test</h1>
+        <p className="lead">
+          A realistic web app where every feature hides one detail the first test you would write misses: a race, a
+          time zone, a reconnect, a focus trap. Practise on it, then see which approaches really catch the bugs.
         </p>
         <div className="hero-actions">
-          <button type="button" onClick={() => start.mutate('')} disabled={start.isPending}>
+          <button type="button" className="primary" onClick={() => start.mutate('')} disabled={start.isPending}>
             Start a sandbox
           </button>
-          <a href={REPO_URL}>Source on GitHub</a>
-          <a href={SOLUTIONS_URL}>Scored solutions</a>
-          <a href={BENCHMARK_URL}>AI agent benchmark</a>
+          <a href="#cases" className="ghost-link">
+            Browse cases <ArrowRight size={16} aria-hidden="true" />
+          </a>
         </div>
         {start.isError && <p role="alert">Could not start a sandbox: {start.error.message}</p>}
+        <dl className="stats">
+          <div>
+            <dt>Cases</dt>
+            <dd>{CASES.length}</dd>
+          </div>
+          <div>
+            <dt>Themes</dt>
+            <dd>{THEMES.length}</dd>
+          </div>
+          <div>
+            <dt>Scored solutions</dt>
+            <dd>{solvedCount}</dd>
+          </div>
+          <div>
+            <dt>Runs to count as caught</dt>
+            <dd>10/10</dd>
+          </div>
+        </dl>
       </section>
 
-      <section className="catalogue" aria-labelledby="catalogue-title">
-        <h2 id="catalogue-title">Cases</h2>
-        <div className="catalogue-tools">
-          <label>
-            Find a case
-            <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="dst, websocket, 92…" />
+      <section className="how" aria-labelledby="how-title">
+        <h2 id="how-title">How it works</h2>
+        <ol className="steps">
+          <li>
+            <Target size={22} aria-hidden="true" />
+            <h3>Pick a case</h3>
+            <p>Each page is one feature with its requirements. A sandbox is your own copy; share its URL to be two users.</p>
+          </li>
+          <li>
+            <BookOpen size={22} aria-hidden="true" />
+            <h3>Write the test</h3>
+            <p>Any framework that drives a browser. Test hooks reset, seed and break a sandbox when a test needs it.</p>
+          </li>
+          <li>
+            <Bug size={22} aria-hidden="true" />
+            <h3>Check it catches bugs</h3>
+            <p>
+              Solved cases plant real bugs. An approach counts only if it fails 10 of 10 runs on the buggy build and
+              passes 10 of 10 on the clean one.
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section className="themes" aria-labelledby="themes-title">
+        <h2 id="themes-title">Browse by theme</h2>
+        <ul className="theme-grid">
+          {THEMES.map((t) => {
+            const { icon: Icon, blurb } = themeMeta(t);
+            return (
+              <li key={t} style={hueStyle(t)}>
+                <button type="button" className="theme-card" onClick={() => browse(t)}>
+                  <span className="theme-icon">
+                    <Icon size={20} aria-hidden="true" />
+                  </span>
+                  <span className="theme-name">{t}</span>
+                  <span className="theme-blurb">{blurb}</span>
+                  <span className="theme-count">{CASES.filter((c) => c.theme === t).length} cases</span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <section className="catalogue" id="cases" ref={catalogue} aria-labelledby="catalogue-title">
+        <div className="catalogue-head">
+          <h2 id="catalogue-title">Cases</h2>
+          <label className="search">
+            <Search size={16} aria-hidden="true" />
+            <span className="sr-only">Find a case</span>
+            <input
+              ref={search}
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Find a case: dst, websocket, 92…"
+            />
+            <kbd aria-hidden="true">/</kbd>
           </label>
-          <div className="chips" role="group" aria-label="Show">
-            {chips.map(([name, count]) => (
-              <button key={name} type="button" aria-pressed={!query && filter === name} onClick={() => { setFilter(name); setQuery(''); }}>
-                {name} <span className="count">{count}</span>
-              </button>
-            ))}
-          </div>
+        </div>
+        <div className="chips" role="group" aria-label="Show">
+          {[START_HERE, SOLVED, ALL, ...THEMES].map((name) => (
+            <button key={name} type="button" aria-pressed={!query && filter === name} onClick={() => pick(name)}>
+              {name === SOLVED && <Trophy size={14} aria-hidden="true" />}
+              {name}
+            </button>
+          ))}
         </div>
         <p className="muted" aria-live="polite">
           {shown.length} {shown.length === 1 ? 'case' : 'cases'}
@@ -84,17 +188,36 @@ export function Landing() {
           ))}
         </ul>
       </section>
+
+      <footer className="site-footer">
+        <span>
+          Built by <a href="https://github.com/bartech-lab">Bartosz Kowalski</a> · MIT licence
+        </span>
+        <a href={REPO_URL} className="icon-link">
+          <GitHubMark />
+          Source
+        </a>
+      </footer>
     </>
   );
 }
 
 function CaseCard({ c, onTry, busy }: { c: Case; onTry: () => void; busy: boolean }) {
+  const { icon: Icon } = themeMeta(c.theme);
   return (
-    <li className="case-card">
+    <li className="case-card" style={hueStyle(c.theme)}>
       <div className="case-meta">
         <span className="case-no">#{c.n}</span>
-        <span className="theme-tag">{c.theme}</span>
-        {c.solution && <span className="solved-tag">Solved</span>}
+        <span className="theme-tag">
+          <Icon size={12} aria-hidden="true" />
+          {c.theme}
+        </span>
+        {c.solution && (
+          <span className="solved-tag">
+            <Trophy size={12} aria-hidden="true" />
+            Solved
+          </span>
+        )}
       </div>
       <h3>{c.title}</h3>
       <p>{c.featured ?? c.summary}</p>
