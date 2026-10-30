@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { ArrowRight, BookOpen, Bug, Search, Sparkles, Target, Trophy } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, BookOpen, Bug, Search, Sparkles, Target, Trophy } from 'lucide-react';
 import { navigate } from './router.tsx';
 import { createSandbox } from './chat/api.ts';
 import { ThemeToggle } from './ThemeToggle.tsx';
@@ -70,9 +70,12 @@ export function Landing() {
           e2e-casebook
         </a>
         <div className="site-links">
-          <a href="#cases">Cases</a>
-          <a href={SOLUTIONS_URL}>Solutions</a>
-          <a href={BENCHMARK_URL}>Benchmark</a>
+          <a href={SOLUTIONS_URL} className="icon-link">
+            Solutions <ArrowUpRight size={14} aria-hidden="true" />
+          </a>
+          <a href={BENCHMARK_URL} className="icon-link">
+            Benchmark <ArrowUpRight size={14} aria-hidden="true" />
+          </a>
           <a href={REPO_URL} className="icon-link">
             <GitHubMark />
             GitHub

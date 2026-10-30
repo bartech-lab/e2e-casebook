@@ -798,3 +798,5 @@ main > section > ul.case-grid > li { margin: 0; }
 :root[data-ui='dark'] .hero-actions .primary, :root[data-ui='dark'] .hero-actions .primary:hover:not(:disabled) { color: #0f1320; }
 .theme-count { display: flex; flex-wrap: wrap; align-items: center; gap: 0.2rem 0.6rem; }
 .theme-solved { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--ok); font-weight: 600; }
+.site-links .icon-link { gap: 0.3rem; }
+.site-links .icon-link svg { opacity: 0.7; }
