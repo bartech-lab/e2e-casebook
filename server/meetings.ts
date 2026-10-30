@@ -25,6 +25,18 @@ export function addDays(date: string, days: number) {
   return new Date(Date.UTC(y, m - 1, d + days)).toISOString().slice(0, 10);
 }
 
+// Accepts every IANA name Intl knows, including names Node lists only under an older alias
+// (Asia/Kolkata as Asia/Calcutta), but not UTC offsets such as +01:00.
+function knownZone(zone: unknown): zone is string {
+  if (typeof zone !== 'string' || /^[+-]/.test(zone)) return false;
+  try {
+    new Intl.DateTimeFormat('en', { timeZone: zone });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export type Meetings = ReturnType<typeof createMeetings>;
 
 export function createMeetings() {
@@ -43,7 +55,7 @@ export function createMeetings() {
         if (typeof title !== 'string' || !title.trim()) return reply.code(400).send({ error: 'Give the meeting a title.' });
         if (typeof date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return reply.code(400).send({ error: 'date must be YYYY-MM-DD' });
         if (typeof time !== 'string' || !/^\d{2}:\d{2}$/.test(time)) return reply.code(400).send({ error: 'time must be HH:MM' });
-        if (typeof zone !== 'string' || !Intl.supportedValuesOf('timeZone').includes(zone)) return reply.code(400).send({ error: 'Unknown time zone.' });
+        if (!knownZone(zone)) return reply.code(400).send({ error: 'Unknown time zone.' });
         const count = weeks === undefined ? 1 : Number(weeks);
         if (!Number.isInteger(count) || count < 1 || count > 12) return reply.code(400).send({ error: 'weeks must be 1 to 12' });
         const length = minutes === undefined ? 30 : Number(minutes);
