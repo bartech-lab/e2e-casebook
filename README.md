@@ -212,6 +212,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 197 | [Guest invites](cases/197-guest-invites.md) | A box for many email addresses at once, where real but unusual addresses must get through. |
 | 198 | [Shared files](cases/198-shared-files.md) | A list of shared file names, some of which use direction marks to hide what they are. |
 | 199 | [Exhibition](cases/199-exhibition.md) | Paintings that open in a dialog with its own address, where Back closes the dialog instead of leaving. |
+| 200 | [Appointment reminders](cases/200-appointment-reminders.md) | An SMS reminder box that counts characters and messages the way phone networks do. |
 
 ## Run it
 
