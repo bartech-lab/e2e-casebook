@@ -179,6 +179,7 @@ import { Metronome } from '../metronome/Metronome.tsx';
 import { LoyaltyPoints } from '../loyalty-points/LoyaltyPoints.tsx';
 import { CafeDashboard } from '../cafe/CafeDashboard.tsx';
 import { PrinterStatus } from '../printer/PrinterStatus.tsx';
+import { HolidayHomes } from '../holiday-homes/HolidayHomes.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -394,7 +395,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/metronome`}>Metronome</Link> ·{' '}
         <Link href={`${base}/loyalty-points`}>Loyalty points</Link> ·{' '}
         <Link href={`${base}/cafe`}>Café dashboard</Link> ·{' '}
-        <Link href={`${base}/printer`}>Printer status</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/printer`}>Printer status</Link> ·{' '}
+        <Link href={`${base}/holiday-homes`}>Holiday homes</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -432,6 +434,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <CafeDashboard sandbox={sandbox} />
       ) : page === 'printer' ? (
         <PrinterStatus sandbox={sandbox} />
+      ) : page === 'holiday-homes' ? (
+        <HolidayHomes sandbox={sandbox} />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1274,6 +1278,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/printer`}>Printer status</Link>: a status that checks less and less often while the printer is away.
+        </li>
+        <li>
+          <Link href={`${base}/holiday-homes`}>Holiday homes</Link>: cards that load a home's details before you open it.
         </li>
       </ul>
     </section>

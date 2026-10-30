@@ -193,6 +193,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 178 | [Loyalty points](cases/178-loyalty-points.md) | Points read and spent through a partner API on another origin, straight from the browser. |
 | 179 | [Café dashboard](cases/179-cafe-dashboard.md) | Three tiles that fail one at a time: a broken tile says so, reports it, and leaves the others working. |
 | 180 | [Printer status](cases/180-printer-status.md) | A status that checks less and less often while the printer cannot be reached, and normally again once it can. |
+| 181 | [Holiday homes](cases/181-holiday-homes.md) | Cards that load a home's details as soon as the pointer or keyboard reaches them, counting a view only when it is opened. |
 
 ## Run it
 
