@@ -191,6 +191,7 @@ import { GymMembership } from '../gym-membership/GymMembership.tsx';
 import { CourierPickup } from '../courier-pickup/CourierPickup.tsx';
 import { RecipeBox } from '../recipe-box/RecipeBox.tsx';
 import { TravelWallet } from '../travel-wallet/TravelWallet.tsx';
+import { Weather } from '../weather/Weather.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -418,7 +419,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/gym-membership`}>Gym membership</Link> ·{' '}
         <Link href={`${base}/courier-pickup`}>Courier pickup</Link> ·{' '}
         <Link href={`${base}/recipe-box`}>Recipe box</Link> ·{' '}
-        <Link href={`${base}/travel-wallet`}>Travel wallet</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/travel-wallet`}>Travel wallet</Link> ·{' '}
+        <Link href={`${base}/weather`}>Weather</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -480,6 +482,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <RecipeBox sandbox={sandbox} />
       ) : page === 'travel-wallet' ? (
         <TravelWallet sandbox={sandbox} />
+      ) : page === 'weather' ? (
+        <Weather sandbox={sandbox} />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1358,6 +1362,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/travel-wallet`}>Travel wallet</Link>: zloty, yen and dinar, each with its own number of decimal places.
+        </li>
+        <li>
+          <Link href={`${base}/weather`}>Weather</Link>: a widget that refreshes every ten minutes and not more.
         </li>
       </ul>
     </section>
