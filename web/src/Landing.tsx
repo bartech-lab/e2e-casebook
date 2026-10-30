@@ -11,6 +11,7 @@ const START_HERE = 'Start here';
 const ALL = 'All cases';
 const SOLVED = 'Worked solution';
 const solvedCount = CASES.filter((c) => c.solution).length;
+const solvedIn = (theme: string) => CASES.filter((c) => c.theme === theme && c.solution).length;
 
 export function Landing() {
   const start = useMutation({
@@ -155,7 +156,15 @@ export function Landing() {
                   </span>
                   <span className="theme-name">{t}</span>
                   <span className="theme-blurb">{blurb}</span>
-                  <span className="theme-count">{CASES.filter((c) => c.theme === t).length} cases</span>
+                  <span className="theme-count">
+                    {CASES.filter((c) => c.theme === t).length} cases
+                    {solvedIn(t) > 0 && (
+                      <span className="theme-solved">
+                        <Trophy size={12} aria-hidden="true" />
+                        {solvedIn(t)} solved
+                      </span>
+                    )}
+                  </span>
                 </button>
               </li>
             );

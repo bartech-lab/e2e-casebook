@@ -796,3 +796,5 @@ main > section > ul.case-grid > li { margin: 0; }
 .sandbox-nav .nav-group-title { color: hsl(var(--hue) 55% 32%); }
 .site-footer a { text-decoration: underline; text-underline-offset: 2px; }
 :root[data-ui='dark'] .hero-actions .primary, :root[data-ui='dark'] .hero-actions .primary:hover:not(:disabled) { color: #0f1320; }
+.theme-count { display: flex; flex-wrap: wrap; align-items: center; gap: 0.2rem 0.6rem; }
+.theme-solved { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--ok); font-weight: 600; }
