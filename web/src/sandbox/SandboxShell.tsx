@@ -197,6 +197,7 @@ import { ShoppingList } from '../shopping-list/ShoppingList.tsx';
 import { ClassTimetable } from '../class-timetable/ClassTimetable.tsx';
 import { GuestInvites } from '../guest-invites/GuestInvites.tsx';
 import { SharedFiles } from '../shared-files/SharedFiles.tsx';
+import { Exhibition } from '../exhibition/Exhibition.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -430,7 +431,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/shopping-list`}>Shopping list</Link> ·{' '}
         <Link href={`${base}/class-timetable`}>Class timetable</Link> ·{' '}
         <Link href={`${base}/guest-invites`}>Guest invites</Link> ·{' '}
-        <Link href={`${base}/shared-files`}>Shared files</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/shared-files`}>Shared files</Link> ·{' '}
+        <Link href={`${base}/exhibition`}>Exhibition</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -504,6 +506,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <GuestInvites />
       ) : page === 'shared-files' ? (
         <SharedFiles />
+      ) : page === 'exhibition' ? (
+        <Exhibition />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1400,6 +1404,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/shared-files`}>Shared files</Link>: file names that try to hide what they are.
+        </li>
+        <li>
+          <Link href={`${base}/exhibition`}>Exhibition</Link>: a painting in a dialog that the Back button closes.
         </li>
       </ul>
     </section>

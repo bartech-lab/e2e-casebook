@@ -211,6 +211,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 196 | [Class timetable](cases/196-class-timetable.md) | A month grid whose first weekday and weekend follow the visitor's language and region. |
 | 197 | [Guest invites](cases/197-guest-invites.md) | A box for many email addresses at once, where real but unusual addresses must get through. |
 | 198 | [Shared files](cases/198-shared-files.md) | A list of shared file names, some of which use direction marks to hide what they are. |
+| 199 | [Exhibition](cases/199-exhibition.md) | Paintings that open in a dialog with its own address, where Back closes the dialog instead of leaving. |
 
 ## Run it
 
