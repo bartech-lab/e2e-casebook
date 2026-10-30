@@ -1,5 +1,7 @@
 # e2e-casebook
 
+[![CI](https://github.com/bartech-lab/e2e-casebook/actions/workflows/ci.yml/badge.svg)](https://github.com/bartech-lab/e2e-casebook/actions/workflows/ci.yml)
+
 A small, realistic web app built to be tested end to end. Each case is a feature that is hard to
 test well, with a list of requirements. Write automated tests that check every requirement. Each
 case hides a detail that makes the obvious test miss a broken requirement.
@@ -8,6 +10,25 @@ Bring your own framework: Playwright, Cypress, WebdriverIO, or anything that dri
 
 **Live demo:** <https://e2e-proving-ground.onrender.com> (free tier: it sleeps after 15 minutes
 without traffic, takes about a minute to wake, and starts empty after every wake).
+
+## Start here
+
+202 cases is a lot. These twelve show the range:
+
+| Case | Why it is hard to test |
+|---|---|
+| [1. Two-user realtime chat](cases/01-two-user-realtime-chat.md) | Two browsers, a dropped socket, and messages that must arrive once and in order. |
+| [3. Optimistic moves](cases/03-optimistic-moves.md) | The screen changes before the server answers, and has to change back when it says no. |
+| [6. Due dates, time zones, and DST](cases/06-due-dates-time-zones-and-dst.md) | The bug only shows in some zones, on some dates. |
+| [24. Draft](cases/24-draft.md) | Autosave with retries, and a race you have to make happen. |
+| [38. Search](cases/38-search.md) | Answers that arrive out of order. |
+| [72. Upload](cases/72-upload.md) | Progress, cancel, and a server that must keep nothing from a broken upload. |
+| [95. Local notes](cases/95-local-notes.md) | An IndexedDB upgrade while another tab holds the old version open. |
+| [104. Concert tickets](cases/104-concert-tickets.md) | A page restored from the back/forward cache, which fires no `load`. |
+| [111. Bus stop](cases/111-bus-stop.md) | A service worker that has to work offline. |
+| [166. Kitchen timer](cases/166-kitchen-timer.md) | One alarm, however many tabs are open. |
+| [172. Help desk](cases/172-help-desk.md) | A strict Content Security Policy that nothing may break. |
+| [194. Meeting rooms](cases/194-meeting-rooms.md) | Three requests in a row, where each can fail on its own. |
 
 ## Cases
 
@@ -243,6 +264,7 @@ npm run dev:server   # API on :3000 with test hooks
 npm run dev:web      # Vite on :5173, proxies /api and /__test__
 npm run typecheck
 npm run test:unit
+npm run build && npm run test:smoke   # opens every page in Chromium
 ```
 
 ## License

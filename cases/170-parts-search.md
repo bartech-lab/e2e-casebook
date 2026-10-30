@@ -1,6 +1,6 @@
 # 170. Parts search
 
-The Parts search page searches a list of bike parts while you type. `GET /api/s/:id/parts?q=` answers `{ "parts": [...] }`. When too many searches arrive, it answers `429 Too Many Requests` with a `Retry-After` header, either a number of seconds or a date.
+The Parts search page searches a list of bike parts while you type. `GET /api/s/:id/parts?q=` answers `{ "parts": [...] }`. When too many searches arrive, it answers `429 Too Many Requests` with a `Retry-After` header, either a number of seconds or a date. The test hook `POST /__test__/s/:id/parts-limit` with `{ "allowed": 2, "retryAfter": 5, "form": "seconds" }` lets 2 more searches through, then answers `429` for 5 seconds, with `Retry-After` in seconds or (`"date"`) as a date. `GET /__test__/s/:id/parts-log` answers `{ "queries" }`, the search texts the server received.
 
 **Requirements to test:**
 

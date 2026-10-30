@@ -68,5 +68,33 @@ Each of these serves one case; the case file says how its tests use it. Paths ar
 | `POST /barber-clock` | `{ advanceMs }` | Moves the shop's clock forward. | [148](../cases/148-barber.md) |
 | `POST /staff-pace` | `{ ms: [n, ...] }` | Delays for successive details requests, used in turn. | [151](../cases/151-staff.md) |
 | `GET /staff-writes` |  | The saves the server received. | [151](../cases/151-staff.md) |
+| `POST /trail-deploy` |  | Releases the next version of the trail map page for the sandbox (it starts at version 1). | [158](../cases/158-trail-map.md) |
+| `POST /payslip` | `{ user: "alice" \| "bob", month, net }` | Adds a payslip for that person. | [161](../cases/161-payslips.md) |
+| `POST /news-publish` | `{ count }` | Publishes `count` new stories at the top (1 to 100). | [162](../cases/162-newsroom.md) |
+| `POST /team-chat` | `{ from, text, image?: { height } }` | Posts a message from someone else; the image height is in pixels. | [168](../cases/168-team-chat.md) |
+| `POST /parts-limit` | `{ allowed, retryAfter, form: "seconds" \| "date" }` | After `allowed` more searches, answers `429` with `Retry-After` as seconds or a date, `retryAfter` seconds long. | [170](../cases/170-parts-search.md) |
+| `GET /parts-log` |  | `{ queries }`: the search texts the server received, in order. | [170](../cases/170-parts-search.md) |
+| `GET /csp-reports` |  | `{ reports }`: the security policy violations the browser reported. | [172](../cases/172-help-desk.md) |
+| `POST /video-upload-faults` | `{ faults: [{ part, after }] }` | Breaks that `PATCH` from then on: before the server keeps the part, or with `after: true`, after it and with a `500`. | [173](../cases/173-video-upload.md) |
+| `GET /video-upload-received` |  | `{ bytes }`: how many bytes all `PATCH` requests carried. | [173](../cases/173-video-upload.md) |
+| `POST /chat-history-fail` | `{ times }` | The next `times` loads of older messages fail. | [174](../cases/174-chat-history.md) |
+| `GET /account-closed` |  | `{ closed }`: whether the account has been closed. | [175](../cases/175-close-account.md) |
+| `POST /cafe-faults` | `{ badStock?, reorderFails? }` | The next `badStock` stock answers are unusable (`{ items: null }`); the next `reorderFails` reorders fail. | [179](../cases/179-cafe-dashboard.md) |
+| `POST /printer-down` | `{ down }` | Takes the printer offline or back online. | [180](../cases/180-printer-status.md) |
+| `GET /printer-checks` |  | `{ checks }`: how many status checks the server received. | [180](../cases/180-printer-status.md) |
+| `POST /team-expire-access` |  | Expires the current access token. | [187](../cases/187-team-overview.md) |
+| `POST /team-end-session` |  | Ends the session on the server: every refresh token stops working. | [187](../cases/187-team-overview.md) |
+| `GET /team-auth-stats` |  | `{ refreshes, ended }`. | [187](../cases/187-team-overview.md) |
+| `POST /region-pace` | `{ ms }` | The pause between the 16 parts of a download (40 ms by default). | [188](../cases/188-region-packs.md) |
+| `POST /region-cut` | `{ region }` | Cuts the next download of that region (`krakow`, `gdansk`, `tatry`) off halfway. | [188](../cases/188-region-packs.md) |
+| `GET /region-stats` |  | `{ completed, stopped }` downloads. | [188](../cases/188-region-packs.md) |
+| `POST /recipe-delay` | `{ ms }` | Slows every save down. | [191](../cases/191-recipe-box.md) |
+| `POST /recipe-fail-next` |  | The next save fails. | [191](../cases/191-recipe-box.md) |
+| `GET /weather-requests` |  | `{ count }`: weather requests so far. | [193](../cases/193-weather.md) |
+| `POST /weather-fail` | `{ on }` | Makes the weather service fail, or work again. | [193](../cases/193-weather.md) |
+| `POST /room-fail` | `{ step: "book" \| "invite" \| "list" }` | The next request of that step fails. | [194](../cases/194-meeting-rooms.md) |
+| `GET /room-stats` |  | `{ bookAttempts, bookings, invites }`. | [194](../cases/194-meeting-rooms.md) |
+| `POST /shopping-delay` | `{ ms }` | Slows every add down. | [195](../cases/195-shopping-list.md) |
+| `POST /shopping-fail-next` |  | The next add fails. | [195](../cases/195-shopping-list.md) |
 
 With `TEST_HOOKS` unset, every `/__test__` path returns 404.
