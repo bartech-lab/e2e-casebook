@@ -3,7 +3,7 @@ import { casesOnPage, docUrl, solutionUrl, THEMES } from '../cases.ts';
 import { Link } from '../router.tsx';
 import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { ThemeToggle } from '../ThemeToggle.tsx';
-import { LogoMark, hueStyle, themeMeta } from '../themeMeta.tsx';
+import { LogoMark, themeMeta } from '../themeMeta.tsx';
 import { PAGES } from './pages.ts';
 
 const MORE = 'More pages';
@@ -42,7 +42,7 @@ export function SandboxNav({ sandbox, page, name }: { sandbox: string; page: str
         {cases.length > 0 && (
           <div className="case-strip">
             {cases.map((c) => (
-              <div key={c.n} className="case-strip-item" style={hueStyle(c.theme)}>
+              <div key={c.n} className="case-strip-item">
                 <span className="case-strip-title">
                   Case {c.n}: {c.title}
                 </span>
@@ -61,7 +61,7 @@ export function SandboxNav({ sandbox, page, name }: { sandbox: string; page: str
       </div>
       <div className="nav-scroll" ref={list}>
         {GROUPS.map((g) => (
-          <div key={g.theme} className="nav-group" style={hueStyle(g.theme)}>
+          <div key={g.theme} className="nav-group">
             <span className="nav-group-title">
               <NavIcon theme={g.theme} />
               {g.theme}

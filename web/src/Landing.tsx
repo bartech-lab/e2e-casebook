@@ -4,7 +4,7 @@ import { ArrowRight, ArrowUpRight, BookOpen, Bug, Search, Sparkles, Target, Trop
 import { navigate } from './router.tsx';
 import { createSandbox } from './chat/api.ts';
 import { ThemeToggle } from './ThemeToggle.tsx';
-import { GitHubMark, LogoMark, hueStyle, themeMeta } from './themeMeta.tsx';
+import { GitHubMark, LogoMark, themeMeta } from './themeMeta.tsx';
 import { BENCHMARK_URL, CASES, REPO_URL, SOLUTIONS_URL, THEMES, docUrl, solutionUrl, type Case } from './cases.ts';
 
 const ALL = 'All cases';
@@ -162,7 +162,7 @@ export function Landing() {
           {THEMES.map((t) => {
             const { icon: Icon, blurb } = themeMeta(t);
             return (
-              <li key={t} style={hueStyle(t)}>
+              <li key={t}>
                 <button
                   type="button"
                   className="theme-card"
@@ -235,7 +235,7 @@ function summary(count: number, filter: string, query: string) {
 function CaseCard({ c, showTopic, onTry, busy }: { c: Case; showTopic: boolean; onTry: () => void; busy: boolean }) {
   const { icon: Icon } = themeMeta(c.theme);
   return (
-    <li className="case-card" style={hueStyle(c.theme)}>
+    <li className={c.solution ? 'case-card solved' : 'case-card'}>
       <div className="case-meta">
         <span className="case-no">#{c.n}</span>
         {showTopic && (

@@ -3,25 +3,23 @@ import {
   TextCursorInput, Timer, WifiOff, type LucideIcon,
 } from 'lucide-react';
 
-// One icon and one hue per case theme; the hue drives --hue in CSS for tags, dots and card accents.
-export const THEME_META: Record<string, { icon: LucideIcon; hue: number; blurb: string }> = {
-  'Realtime and multi-user': { icon: Radio, hue: 265, blurb: 'Two browsers, sockets, replay after reconnect' },
-  'Async, races and network': { icon: Timer, hue: 25, blurb: 'Out-of-order responses, retries, slow servers' },
-  'Time, dates and locales': { icon: CalendarClock, hue: 200, blurb: 'Time zones, DST, plurals, formats' },
-  'Forms and input': { icon: TextCursorInput, hue: 160, blurb: 'Validation, paste, undo, unsaved changes' },
-  'Accessibility and keyboard': { icon: Accessibility, hue: 330, blurb: 'ARIA patterns, focus, screen readers' },
-  'Sign-in, sessions and security': { icon: ShieldCheck, hue: 0, blurb: 'Magic links, 2FA, tokens, CSP, roles' },
-  'Files, uploads and downloads': { icon: FileUp, hue: 45, blurb: 'Progress, cancel, PDFs, printing' },
-  'Money and checkout': { icon: CreditCard, hue: 140, blurb: 'Totals, VAT, discounts, minor units' },
-  'Lists, layout and scrolling': { icon: ListOrdered, hue: 220, blurb: 'Virtual lists, sticky bars, reflow' },
-  'Offline, caching and storage': { icon: WifiOff, hue: 290, blurb: 'Service workers, IndexedDB, ETags' },
-  'Browser APIs and devices': { icon: Cpu, hue: 185, blurb: 'Clipboard, media, touch, workers' },
-  'Test environments': { icon: FlaskConical, hue: 90, blurb: 'Shared data, flags, isolation' },
+export const THEME_META: Record<string, { icon: LucideIcon; blurb: string }> = {
+  'Realtime and multi-user': { icon: Radio, blurb: 'Two browsers, sockets, replay after reconnect' },
+  'Async, races and network': { icon: Timer, blurb: 'Out-of-order responses, retries, slow servers' },
+  'Time, dates and locales': { icon: CalendarClock, blurb: 'Time zones, DST, plurals, formats' },
+  'Forms and input': { icon: TextCursorInput, blurb: 'Validation, paste, undo, unsaved changes' },
+  'Accessibility and keyboard': { icon: Accessibility, blurb: 'ARIA patterns, focus, screen readers' },
+  'Sign-in, sessions and security': { icon: ShieldCheck, blurb: 'Magic links, 2FA, tokens, CSP, roles' },
+  'Files, uploads and downloads': { icon: FileUp, blurb: 'Progress, cancel, PDFs, printing' },
+  'Money and checkout': { icon: CreditCard, blurb: 'Totals, VAT, discounts, minor units' },
+  'Lists, layout and scrolling': { icon: ListOrdered, blurb: 'Virtual lists, sticky bars, reflow' },
+  'Offline, caching and storage': { icon: WifiOff, blurb: 'Service workers, IndexedDB, ETags' },
+  'Browser APIs and devices': { icon: Cpu, blurb: 'Clipboard, media, touch, workers' },
+  'Test environments': { icon: FlaskConical, blurb: 'Shared data, flags, isolation' },
 };
 
-export const OTHER = { icon: LayoutGrid, hue: 230, blurb: '' };
+export const OTHER = { icon: LayoutGrid, blurb: '' };
 export const themeMeta = (theme: string) => THEME_META[theme] ?? OTHER;
-export const hueStyle = (theme: string) => ({ '--hue': themeMeta(theme).hue }) as React.CSSProperties;
 
 export const GitHubMark = () => (
   <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
