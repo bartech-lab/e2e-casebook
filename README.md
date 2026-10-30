@@ -206,6 +206,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 191 | [Recipe box](cases/191-recipe-box.md) | A list and an editor side by side, with answers kept in a cache that has to forget the right things. |
 | 192 | [Travel wallet](cases/192-travel-wallet.md) | Balances in złoty, yen and Bahraini dinar, which have 2, 0 and 3 decimal places. |
 | 193 | [Weather](cases/193-weather.md) | A weather widget that asks the server once per change and once every ten minutes, and no more. |
+| 194 | [Meeting rooms](cases/194-meeting-rooms.md) | Booking a room in three steps (book, send the invite, refresh the list) where a later step can fail on its own. |
 
 ## Run it
 

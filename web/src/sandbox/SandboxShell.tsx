@@ -192,6 +192,7 @@ import { CourierPickup } from '../courier-pickup/CourierPickup.tsx';
 import { RecipeBox } from '../recipe-box/RecipeBox.tsx';
 import { TravelWallet } from '../travel-wallet/TravelWallet.tsx';
 import { Weather } from '../weather/Weather.tsx';
+import { MeetingRooms } from '../meeting-rooms/MeetingRooms.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -420,7 +421,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/courier-pickup`}>Courier pickup</Link> ·{' '}
         <Link href={`${base}/recipe-box`}>Recipe box</Link> ·{' '}
         <Link href={`${base}/travel-wallet`}>Travel wallet</Link> ·{' '}
-        <Link href={`${base}/weather`}>Weather</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/weather`}>Weather</Link> ·{' '}
+        <Link href={`${base}/meeting-rooms`}>Meeting rooms</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -484,6 +486,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <TravelWallet sandbox={sandbox} />
       ) : page === 'weather' ? (
         <Weather sandbox={sandbox} />
+      ) : page === 'meeting-rooms' ? (
+        <MeetingRooms sandbox={sandbox} />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1365,6 +1369,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/weather`}>Weather</Link>: a widget that refreshes every ten minutes and not more.
+        </li>
+        <li>
+          <Link href={`${base}/meeting-rooms`}>Meeting rooms</Link>: a booking that worked even when the invite after it did not.
         </li>
       </ul>
     </section>
