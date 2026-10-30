@@ -195,6 +195,7 @@ import { Weather } from '../weather/Weather.tsx';
 import { MeetingRooms } from '../meeting-rooms/MeetingRooms.tsx';
 import { ShoppingList } from '../shopping-list/ShoppingList.tsx';
 import { ClassTimetable } from '../class-timetable/ClassTimetable.tsx';
+import { GuestInvites } from '../guest-invites/GuestInvites.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -426,7 +427,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/weather`}>Weather</Link> ·{' '}
         <Link href={`${base}/meeting-rooms`}>Meeting rooms</Link> ·{' '}
         <Link href={`${base}/shopping-list`}>Shopping list</Link> ·{' '}
-        <Link href={`${base}/class-timetable`}>Class timetable</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/class-timetable`}>Class timetable</Link> ·{' '}
+        <Link href={`${base}/guest-invites`}>Guest invites</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -496,6 +498,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <ShoppingList sandbox={sandbox} />
       ) : page === 'class-timetable' ? (
         <ClassTimetable />
+      ) : page === 'guest-invites' ? (
+        <GuestInvites />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1386,6 +1390,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/class-timetable`}>Class timetable</Link>: a month grid whose week starts where the visitor's does.
+        </li>
+        <li>
+          <Link href={`${base}/guest-invites`}>Guest invites</Link>: a box of email addresses, including the unusual real ones.
         </li>
       </ul>
     </section>

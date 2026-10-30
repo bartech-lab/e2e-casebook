@@ -209,6 +209,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 194 | [Meeting rooms](cases/194-meeting-rooms.md) | Booking a room in three steps (book, send the invite, refresh the list) where a later step can fail on its own. |
 | 195 | [Shopping list](cases/195-shopping-list.md) | A list where a new item can be ticked or removed before the server has given it an id. |
 | 196 | [Class timetable](cases/196-class-timetable.md) | A month grid whose first weekday and weekend follow the visitor's language and region. |
+| 197 | [Guest invites](cases/197-guest-invites.md) | A box for many email addresses at once, where real but unusual addresses must get through. |
 
 ## Run it
 
