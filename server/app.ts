@@ -85,6 +85,7 @@ import { createTrailMap } from './trailMap.ts';
 import { createPayslips } from './payslips.ts';
 import { createHelpDesk } from './helpDesk.ts';
 import { createCloseAccount } from './closeAccount.ts';
+import { registerShipments } from './shipments.ts';
 import { createNewsroom } from './newsroom.ts';
 import { createMembers } from './members.ts';
 import { createPayByBank } from './payByBank.ts';
@@ -296,6 +297,7 @@ export async function buildApp(opts: AppOptions = {}) {
       cinema.register(scope);
       partsSearch.register(scope);
       resumableUploads.register(scope);
+      registerShipments(scope);
       chatHistory.register(scope);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
