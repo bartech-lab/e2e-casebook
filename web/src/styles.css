@@ -768,3 +768,16 @@ main > section > ul.case-grid > li { margin: 0; }
   .site-header { padding-right: 2.8rem; }
   .site-links .theme-toggle { position: absolute; top: 0.85rem; right: 0; }
 }
+
+/* Sticky landing header, full-bleed background */
+.site-header { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); box-shadow: 0 0 0 100vmax color-mix(in srgb, var(--bg) 88%, transparent); clip-path: inset(0 -100vmax); border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+.site-header.scrolled { border-bottom-color: var(--border); clip-path: inset(0 -100vmax -1px); }
+.catalogue, .themes, .how { scroll-margin-top: 5rem; }
+@media (max-width: 40rem) { .catalogue, .themes, .how { scroll-margin-top: 7rem; } }
+@media (max-width: 40rem) {
+  .site-header { padding-top: 0.6rem; padding-bottom: 0.5rem; row-gap: 0.35rem; }
+  .site-links { width: 100%; flex-wrap: nowrap; gap: 1rem; overflow-x: auto; scrollbar-width: none; }
+  .site-links .theme-toggle { top: 0.45rem; }
+  .chips { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 0.4rem; scrollbar-width: thin; }
+  .chips button { flex: none; }
+}

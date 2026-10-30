@@ -21,6 +21,14 @@ export function Landing() {
   const [query, setQuery] = useState('');
   const search = useRef<HTMLInputElement>(null);
   const catalogue = useRef<HTMLElement>(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(scrollY > 8);
+    onScroll();
+    addEventListener('scroll', onScroll, { passive: true });
+    return () => removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -55,7 +63,7 @@ export function Landing() {
 
   return (
     <>
-      <header className="site-header">
+      <header className={scrolled ? 'site-header scrolled' : 'site-header'}>
         <a href="/" className="brand">
           <LogoMark />
           e2e-casebook
