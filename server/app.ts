@@ -100,6 +100,7 @@ import { createChatHistory } from './chatHistory.ts';
 import { createCafe } from './cafe.ts';
 import { createPrinter } from './printer.ts';
 import { createHolidayHomes } from './holidayHomes.ts';
+import { createAvatars } from './avatars.ts';
 
 export type AppOptions = {
   dbPath?: string;
@@ -198,6 +199,7 @@ export async function buildApp(opts: AppOptions = {}) {
   const cafe = createCafe();
   const printer = createPrinter();
   const holidayHomes = createHolidayHomes();
+  const avatars = createAvatars();
   const app = Fastify({ trustProxy: true });
 
   await app.register(fastifyWebsocket);
@@ -311,6 +313,7 @@ export async function buildApp(opts: AppOptions = {}) {
       cafe.register(scope);
       printer.register(scope);
       holidayHomes.register(scope);
+      avatars.register(scope);
 
       scope.get<{ Params: Params; Querystring: { since?: string } }>('/messages', async (req) => ({
         messages: store.messagesSince(req.params.sandbox, Number(req.query.since ?? 0) || 0),
@@ -352,7 +355,7 @@ export async function buildApp(opts: AppOptions = {}) {
   closeAccount.serve(app);
   partnerPoints.serve(app);
   payByBank.serve(app);
-  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes, workspaces, savedSearches, eventFeedback, expenseClaims, cardPayments, assistant, guestbook, clientErrors, clubActivity, noticeBoard, cloudPix, studyGroup, billing, flights, transfers, libraryCards, rsvps, songs, handover, ticketContacts, barber, runningOrder, staffRoster, tileOrders, trailMap, payslips, newsroom, members, payByBank, kitchenTimer, teamChat, cinema, partsSearch, helpDesk, resumableUploads, chatHistory, closeAccount, partnerPoints, cafe, printer, holidayHomes });
+  if (opts.testHooks) registerTestHooks(app, { store, hub, faults, exportJobs, flags, extras, shop, reviews, contacts, bookings, feed, checklist, vaults, bios, feedback, invites, releases, inbox, orders, files, sms, shipping, accounts, teams, meetings, otps, passkeys, deliveries, imports, uploads, tickets, appearances, priceAlerts, scores, passwords, sales, articles, posts, voiceNotes, priceList, notesSchema, gigTickets, albums, readerAuth, busTimes, workspaces, savedSearches, eventFeedback, expenseClaims, cardPayments, assistant, guestbook, clientErrors, clubActivity, noticeBoard, cloudPix, studyGroup, billing, flights, transfers, libraryCards, rsvps, songs, handover, ticketContacts, barber, runningOrder, staffRoster, tileOrders, trailMap, payslips, newsroom, members, payByBank, kitchenTimer, teamChat, cinema, partsSearch, helpDesk, resumableUploads, chatHistory, closeAccount, partnerPoints, cafe, printer, holidayHomes, avatars });
 
   if (opts.clientDir && existsSync(join(opts.clientDir, 'index.html'))) {
     await app.register(fastifyStatic, { root: opts.clientDir, wildcard: false });
@@ -452,6 +455,7 @@ export async function buildApp(opts: AppOptions = {}) {
       cafe.clear(id);
       printer.clear(id);
       holidayHomes.clear(id);
+      avatars.clear(id);
     }
   }, Math.min(ttl, 60 * 60 * 1000));
   pruneTimer.unref();

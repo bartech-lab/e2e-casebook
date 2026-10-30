@@ -194,6 +194,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 179 | [Café dashboard](cases/179-cafe-dashboard.md) | Three tiles that fail one at a time: a broken tile says so, reports it, and leaves the others working. |
 | 180 | [Printer status](cases/180-printer-status.md) | A status that checks less and less often while the printer cannot be reached, and normally again once it can. |
 | 181 | [Holiday homes](cases/181-holiday-homes.md) | Cards that load a home's details as soon as the pointer or keyboard reaches them, counting a view only when it is opened. |
+| 182 | [Profile photo](cases/182-profile-photo.md) | A photo turned and cut to a 256 × 256 square in the browser, then sent as a PNG. |
 
 ## Run it
 
