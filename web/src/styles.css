@@ -781,3 +781,6 @@ main > section > ul.case-grid > li { margin: 0; }
   .chips { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 0.4rem; scrollbar-width: thin; }
   .chips button { flex: none; }
 }
+.catalogue-note { display: flex; align-items: center; gap: 0.4rem; margin-top: -0.4rem; font-size: 0.86rem; }
+.catalogue-note svg { flex: none; color: var(--ok); }
+.case-meta .solved-tag { margin-left: auto; flex: none; padding: 0; width: 1.35rem; height: 1.35rem; justify-content: center; }

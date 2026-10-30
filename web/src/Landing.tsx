@@ -9,7 +9,7 @@ import { BENCHMARK_URL, CASES, REPO_URL, SOLUTIONS_URL, THEMES, docUrl, solution
 
 const START_HERE = 'Start here';
 const ALL = 'All cases';
-const SOLVED = 'Solved';
+const SOLVED = 'Worked solution';
 const solvedCount = CASES.filter((c) => c.solution).length;
 
 export function Landing() {
@@ -135,7 +135,7 @@ export function Landing() {
             <Bug size={22} aria-hidden="true" />
             <h3>Check it catches bugs</h3>
             <p>
-              Solved cases plant real bugs. An approach counts only if it fails 10 of 10 runs on the buggy build and
+              Cases with a worked solution plant real bugs. An approach counts only if it fails 10 of 10 runs on the buggy build and
               passes 10 of 10 on the clean one.
             </p>
           </li>
@@ -190,6 +190,10 @@ export function Landing() {
         <p className="muted" aria-live="polite">
           {shown.length} {shown.length === 1 ? 'case' : 'cases'}
         </p>
+        <p className="muted catalogue-note">
+          <Trophy size={14} aria-hidden="true" /> {solvedCount} cases have a worked solution: several test approaches,
+          each scored against planted bugs. The rest stay open as exercises.
+        </p>
         <ul className="case-grid">
           {shown.map((c) => (
             <CaseCard key={c.n} c={c} onTry={() => start.mutate(c.page)} busy={start.isPending} />
@@ -199,12 +203,8 @@ export function Landing() {
 
       <footer className="site-footer">
         <span>
-          Built by <a href="https://github.com/bartech-lab">Bartosz Kowalski</a> · MIT licence
+          Built by <a href="https://www.linkedin.com/in/bkow/">Bartosz Kowalski</a> · MIT licence
         </span>
-        <a href={REPO_URL} className="icon-link">
-          <GitHubMark />
-          Source
-        </a>
       </footer>
     </>
   );
@@ -221,9 +221,9 @@ function CaseCard({ c, onTry, busy }: { c: Case; onTry: () => void; busy: boolea
           {c.theme}
         </span>
         {c.solution && (
-          <span className="solved-tag">
-            <Trophy size={12} aria-hidden="true" />
-            Solved
+          <span className="solved-tag" title="Has a worked solution">
+            <Trophy size={14} aria-hidden="true" />
+            <span className="sr-only">Has a worked solution</span>
           </span>
         )}
       </div>
