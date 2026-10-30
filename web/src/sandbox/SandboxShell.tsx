@@ -175,6 +175,7 @@ import { VideoUpload } from '../video-upload/VideoUpload.tsx';
 import { ChatHistory } from '../chat-history/ChatHistory.tsx';
 import { CloseAccountLink } from '../close-account/CloseAccountLink.tsx';
 import { Shipments } from '../shipments/Shipments.tsx';
+import { Metronome } from '../metronome/Metronome.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -386,7 +387,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/video-upload`}>Video upload</Link> ·{' '}
         <Link href={`${base}/chat-history`}>Chat history</Link> ·{' '}
         <Link href={`${base}/close-account`}>Close account</Link> ·{' '}
-        <Link href={`${base}/shipments`}>Shipments</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/shipments`}>Shipments</Link> ·{' '}
+        <Link href={`${base}/metronome`}>Metronome</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -416,6 +418,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <CloseAccountLink sandbox={sandbox} />
       ) : page === 'shipments' ? (
         <Shipments sandbox={sandbox} />
+      ) : page === 'metronome' ? (
+        <Metronome />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1246,6 +1250,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/shipments`}>Shipments</Link>: parcels with tracking numbers too long for a JavaScript number.
+        </li>
+        <li>
+          <Link href={`${base}/metronome`}>Metronome</Link>: a beat with keyboard controls that must not pile up when you come back.
         </li>
       </ul>
     </section>

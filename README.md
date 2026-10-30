@@ -189,6 +189,7 @@ without traffic, takes about a minute to wake, and starts empty after every wake
 | 174 | [Chat history](cases/174-chat-history.md) | A conversation that loads older messages above when you scroll up, without moving what you read. |
 | 175 | [Close account](cases/175-close-account.md) | A page that closes the account, shown in this app's own preview frame but never in another site's. |
 | 176 | [Shipments](cases/176-shipments.md) | Parcels with long tracking numbers that must stay exact from the server to the screen and back. |
+| 177 | [Metronome](cases/177-metronome.md) | A metronome with page-wide keys that keeps working the same however often you leave and come back. |
 
 ## Run it
 
