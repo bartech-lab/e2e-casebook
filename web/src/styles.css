@@ -669,16 +669,34 @@ nav.sandbox-nav > * { font-size: inherit; }
 @media screen and (min-width: 64rem) {
   body:has(nav.sandbox-nav) { max-width: 86rem; padding-left: 18rem; }
   nav.sandbox-nav {
-    position: fixed; top: 0; bottom: 0; left: max(0px, calc((100vw - 86rem) / 2)); width: 17rem; margin: 0;
-    overflow-y: auto; border-bottom: 0; border-right: 1px solid var(--border);
+    position: fixed; top: 0; bottom: 0; left: max(0px, calc((100vw - 86rem) / 2)); width: 17rem; margin: 0; padding: 0;
+    display: flex; flex-direction: column; border-bottom: 0; border-right: 1px solid var(--border);
   }
+  .sandbox-nav .nav-head { flex: none; padding: 0.9rem 1rem 0.6rem; border-bottom: 1px solid var(--border); }
+  .sandbox-nav .nav-scroll { flex: 1; overflow-y: auto; padding: 0.3rem 1rem 1.5rem; scrollbar-width: thin; }
   .sandbox-nav .nav-links { flex-direction: column; flex-wrap: nowrap; }
+  .sandbox-nav .case-strip { margin-bottom: 0; }
   .sandbox-nav a { border-radius: 6px; }
 }
 .sandbox-nav .case-strip { display: grid; gap: 0.4rem; margin: 0.2rem 0 0.4rem; padding: 0.6rem 0.7rem; border-radius: 8px; background: var(--accent-soft); }
 .sandbox-nav .case-strip-item { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.1rem 0.6rem; }
 .sandbox-nav .case-strip-title { margin: 0; color: var(--text); font-weight: 600; white-space: normal; flex-basis: 100%; }
 .sandbox-nav .case-strip a { padding: 0; color: var(--accent); }
-@media screen and (min-width: 64rem) {
-  .sandbox-nav .nav-head { position: sticky; top: -0.75rem; z-index: 1; margin: -0.75rem -1rem 0; padding: 0.75rem 1rem 0.2rem; background: var(--surface); }
+
+/* Dark theme: opt-in from the catalogue page, never from the system setting, so tests always see the light theme */
+:root[data-ui='dark'] {
+  --bg: #0f1320; --surface: #171c2b; --text: #e6e9f2; --muted: #9aa3bd; --border: #2a3247;
+  --accent: #8b95ff; --accent-dark: #a5adff; --accent-soft: #232a4a;
+  --ok: #4ade80; --error: #f87171; --warn: #fbbf24;
+  --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 4px 16px rgb(0 0 0 / 30%);
+  color-scheme: dark;
 }
+:root[data-ui='dark'] input, :root[data-ui='dark'] select, :root[data-ui='dark'] textarea { background: var(--bg); color: var(--text); border-color: var(--border); }
+:root[data-ui='dark'] button[type="submit"], :root[data-ui='dark'] .hero-actions button, :root[data-ui='dark'] .chips button[aria-pressed="true"] { color: #0f1320; }
+:root[data-ui='dark'] .hero { background: linear-gradient(135deg, var(--surface) 55%, var(--accent-soft)); }
+:root[data-ui='dark'] .solved-tag { background: #12301f; }
+.theme-toggle { margin-left: auto; }
+.hero-actions .theme-toggle { background: var(--surface); border-color: var(--border); color: var(--text); font-size: 0.9rem; padding: 0.35rem 0.9rem; }
+.hero-actions .theme-toggle:hover:not(:disabled) { background: var(--surface); border-color: var(--accent); color: var(--accent); }
+.hero-actions .theme-toggle[aria-pressed='true'] { border-color: var(--accent); color: var(--accent); }
+:root[data-ui='dark'] .hero-actions .theme-toggle { color: var(--accent); }

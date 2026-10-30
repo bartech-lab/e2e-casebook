@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { navigate } from './router.tsx';
 import { createSandbox } from './chat/api.ts';
+import { saveTheme, storedTheme } from './theme.ts';
 import { BENCHMARK_URL, CASES, REPO_URL, SOLUTIONS_URL, THEMES, docUrl, solutionUrl, type Case } from './cases.ts';
 
 const START_HERE = 'Start here';
@@ -15,6 +16,7 @@ export function Landing() {
   });
   const [filter, setFilter] = useState(START_HERE);
   const [query, setQuery] = useState('');
+  const [dark, setDark] = useState(() => storedTheme() === 'dark');
 
   const shown = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -52,6 +54,17 @@ export function Landing() {
           <a href={REPO_URL}>Source on GitHub</a>
           <a href={SOLUTIONS_URL}>Scored solutions</a>
           <a href={BENCHMARK_URL}>AI agent benchmark</a>
+          <button
+            type="button"
+            className="theme-toggle"
+            aria-pressed={dark}
+            onClick={() => {
+              saveTheme(dark ? 'light' : 'dark');
+              setDark(!dark);
+            }}
+          >
+            Dark theme
+          </button>
         </div>
         {start.isError && <p role="alert">Could not start a sandbox: {start.error.message}</p>}
       </section>
