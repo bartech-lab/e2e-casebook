@@ -168,6 +168,7 @@ import { KitchenTimer } from '../kitchen-timer/KitchenTimer.tsx';
 import { Transcript } from '../transcript/Transcript.tsx';
 import { TeamChat } from '../team-chat/TeamChat.tsx';
 import { Cinema } from '../cinema/Cinema.tsx';
+import { PartsSearch } from '../parts/PartsSearch.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -372,7 +373,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/kitchen-timer`}>Kitchen timer</Link> ·{' '}
         <Link href={`${base}/transcript`}>Transcript</Link> ·{' '}
         <Link href={`${base}/team-chat`}>Team chat</Link> ·{' '}
-        <Link href={`${base}/cinema`}>Cinema</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/cinema`}>Cinema</Link> ·{' '}
+        <Link href={`${base}/parts`}>Parts search</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -388,6 +390,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <TeamChat sandbox={sandbox} />
       ) : page === 'cinema' ? (
         <Cinema sandbox={sandbox} />
+      ) : page === 'parts' ? (
+        <PartsSearch sandbox={sandbox} />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1197,6 +1201,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/cinema`}>Cinema</Link>: seat buttons that work before the page has finished loading its code.
+        </li>
+        <li>
+          <Link href={`${base}/parts`}>Parts search</Link>: a search box that waits when the server says it is busy.
         </li>
       </ul>
     </section>
