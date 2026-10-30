@@ -7,7 +7,6 @@ import { ThemeToggle } from './ThemeToggle.tsx';
 import { GitHubMark, LogoMark, hueStyle, themeMeta } from './themeMeta.tsx';
 import { BENCHMARK_URL, CASES, REPO_URL, SOLUTIONS_URL, THEMES, docUrl, solutionUrl, type Case } from './cases.ts';
 
-const START_HERE = 'Start here';
 const ALL = 'All cases';
 const SOLVED = 'Worked solution';
 const solvedCount = CASES.filter((c) => c.solution).length;
@@ -18,7 +17,7 @@ export function Landing() {
     mutationFn: async (page: string) => ({ id: (await createSandbox()).id, page }),
     onSuccess: ({ id, page }) => navigate(page ? `/s/${id}/${page}` : `/s/${id}`),
   });
-  const [filter, setFilter] = useState(START_HERE);
+  const [filter, setFilter] = useState(SOLVED);
   const [query, setQuery] = useState('');
   const search = useRef<HTMLInputElement>(null);
   const catalogue = useRef<HTMLElement>(null);
@@ -47,7 +46,6 @@ export function Landing() {
     const q = query.trim().toLowerCase();
     return CASES.filter((c) => {
       if (q) return `${c.n} ${c.title} ${c.summary} ${c.featured ?? ''} ${c.theme}`.toLowerCase().includes(q);
-      if (filter === START_HERE) return c.featured;
       if (filter === SOLVED) return c.solution;
       return filter === ALL || c.theme === filter;
     });
@@ -192,7 +190,7 @@ export function Landing() {
           </label>
         </div>
         <div className="chips" role="group" aria-label="Show">
-          {[START_HERE, SOLVED, ALL, ...THEMES].map((name) => (
+          {[SOLVED, ALL, ...THEMES].map((name) => (
             <button key={name} type="button" aria-pressed={!query && filter === name} onClick={() => pick(name)}>
               {name === SOLVED && <Trophy size={14} aria-hidden="true" />}
               {name}
@@ -233,7 +231,6 @@ export function Landing() {
 function summary(count: number, filter: string, query: string) {
   const total = CASES.length;
   if (query) return `${count} of ${total} cases match.`;
-  if (filter === START_HERE) return `${count} cases to start with, picked from all ${total}.`;
   if (filter === ALL) return `All ${total} cases.`;
   if (filter === SOLVED)
     return `${count} of ${total} cases have a worked solution: several test approaches, each scored against planted bugs. The rest stay open as exercises.`;
