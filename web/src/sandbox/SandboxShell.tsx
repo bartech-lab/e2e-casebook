@@ -178,6 +178,7 @@ import { Shipments } from '../shipments/Shipments.tsx';
 import { Metronome } from '../metronome/Metronome.tsx';
 import { LoyaltyPoints } from '../loyalty-points/LoyaltyPoints.tsx';
 import { CafeDashboard } from '../cafe/CafeDashboard.tsx';
+import { PrinterStatus } from '../printer/PrinterStatus.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -392,7 +393,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/shipments`}>Shipments</Link> ·{' '}
         <Link href={`${base}/metronome`}>Metronome</Link> ·{' '}
         <Link href={`${base}/loyalty-points`}>Loyalty points</Link> ·{' '}
-        <Link href={`${base}/cafe`}>Café dashboard</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/cafe`}>Café dashboard</Link> ·{' '}
+        <Link href={`${base}/printer`}>Printer status</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -428,6 +430,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <LoyaltyPoints sandbox={sandbox} />
       ) : page === 'cafe' ? (
         <CafeDashboard sandbox={sandbox} />
+      ) : page === 'printer' ? (
+        <PrinterStatus sandbox={sandbox} />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1267,6 +1271,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/cafe`}>Café dashboard</Link>: three tiles where one tile's failure stays in that tile.
+        </li>
+        <li>
+          <Link href={`${base}/printer`}>Printer status</Link>: a status that checks less and less often while the printer is away.
         </li>
       </ul>
     </section>
