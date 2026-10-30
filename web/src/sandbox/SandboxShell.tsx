@@ -186,6 +186,7 @@ import { PaperBoat } from '../paper-boat/PaperBoat.tsx';
 import { QuickInvoice } from '../quick-invoice/QuickInvoice.tsx';
 import { Catalogue } from '../catalogue/Catalogue.tsx';
 import { TeamOverview } from '../team-overview/TeamOverview.tsx';
+import { RegionPacks } from '../region-packs/RegionPacks.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -408,7 +409,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/paper-boat`}>Paper boat</Link> ·{' '}
         <Link href={`${base}/quick-invoice`}>Quick invoice</Link> ·{' '}
         <Link href={`${base}/catalogue`}>Library catalogue</Link> ·{' '}
-        <Link href={`${base}/team-overview`}>Team overview</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/team-overview`}>Team overview</Link> ·{' '}
+        <Link href={`${base}/region-packs`}>Region packs</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -460,6 +462,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Catalogue sandbox={sandbox} />
       ) : page === 'team-overview' ? (
         <TeamOverview sandbox={sandbox} />
+      ) : page === 'region-packs' ? (
+        <RegionPacks sandbox={sandbox} />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1323,6 +1327,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/team-overview`}>Team overview</Link>: three panels that renew an expired sign-in once, together.
+        </li>
+        <li>
+          <Link href={`${base}/region-packs`}>Region packs</Link>: map downloads with a progress bar read from the stream.
         </li>
       </ul>
     </section>
