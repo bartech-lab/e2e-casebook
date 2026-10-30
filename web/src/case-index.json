@@ -1,0 +1,1642 @@
+[
+ {
+  "n": 1,
+  "title": "Two-user realtime chat",
+  "summary": "Open a sandbox, join with a name, and send messages.",
+  "doc": "cases/01-two-user-realtime-chat.md",
+  "theme": "Realtime and multi-user",
+  "page": "chat",
+  "solution": "realtime-chat",
+  "featured": "Two browsers, a dropped socket, and messages that must arrive once and in order."
+ },
+ {
+  "n": 2,
+  "title": "Concurrent edit",
+  "summary": "Two people open the same card on the board and both edit it.",
+  "doc": "cases/02-concurrent-edit.md",
+  "theme": "Realtime and multi-user",
+  "page": "board",
+  "solution": "concurrent-edit"
+ },
+ {
+  "n": 3,
+  "title": "Optimistic moves",
+  "summary": "Cards move between columns at once, before the server answers.",
+  "doc": "cases/03-optimistic-moves.md",
+  "theme": "Async, races and network",
+  "page": "board",
+  "solution": "optimistic-moves",
+  "featured": "The screen changes before the server answers, and has to change back when it says no."
+ },
+ {
+  "n": 4,
+  "title": "Export job",
+  "summary": "Export board as CSV starts a background job with progress.",
+  "doc": "cases/04-export-job.md",
+  "theme": "Async, races and network",
+  "page": "exports",
+  "solution": "export-job"
+ },
+ {
+  "n": 5,
+  "title": "Feature flag",
+  "summary": "New cards are created with one of two variants: an inline form or a dialog.",
+  "doc": "cases/05-feature-flag.md",
+  "theme": "Test environments",
+  "page": "board",
+  "solution": "feature-flag"
+ },
+ {
+  "n": 6,
+  "title": "Due dates, time zones, and DST",
+  "summary": "Cards can have a due date.",
+  "doc": "cases/06-due-dates-time-zones-and-dst.md",
+  "theme": "Time, dates and locales",
+  "page": "board",
+  "solution": "due-dates",
+  "featured": "The bug only shows in some zones, on some dates."
+ },
+ {
+  "n": 7,
+  "title": "A shared environment",
+  "summary": "Card titles are unique within a sandbox, and the board shows how many cards it has.",
+  "doc": "cases/07-a-shared-environment.md",
+  "theme": "Test environments",
+  "page": "board",
+  "solution": "shared-environment"
+ },
+ {
+  "n": 8,
+  "title": "Magic-link sign-in",
+  "summary": "The Account page signs you in with a link sent by email.",
+  "doc": "cases/08-magic-link-sign-in.md",
+  "theme": "Sign-in, sessions and security",
+  "page": "account",
+  "solution": "magic-link"
+ },
+ {
+  "n": 9,
+  "title": "A virtualized list",
+  "summary": "The Activity page lists 10,000 entries, rendering only the rows in view and loading them in pages.",
+  "doc": "cases/09-a-virtualized-list.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "activity"
+ },
+ {
+  "n": 10,
+  "title": "A toast and a page that is never idle",
+  "summary": "Saving Settings shows \"Settings saved\" for 2 seconds.",
+  "doc": "cases/10-a-toast-and-a-page-that-is-never-idle.md",
+  "theme": "Async, races and network",
+  "page": "settings",
+  "solution": "toast-and-polling"
+ },
+ {
+  "n": 11,
+  "title": "Checkout total",
+  "summary": "The Shop page sells three products.",
+  "doc": "cases/11-checkout-total.md",
+  "theme": "Money and checkout",
+  "page": "shop",
+  "solution": "checkout-total"
+ },
+ {
+  "n": 12,
+  "title": "Shipping insurance",
+  "summary": "Checkout offers shipping insurance for 4.99 PLN, with no VAT on it.",
+  "doc": "cases/12-shipping-insurance.md",
+  "theme": "Money and checkout",
+  "page": "shop"
+ },
+ {
+  "n": 13,
+  "title": "Product reviews",
+  "summary": "Each product has a reviews page, linked from the Shop.",
+  "doc": "cases/13-product-reviews.md",
+  "theme": "Forms and input",
+  "page": "shop"
+ },
+ {
+  "n": 14,
+  "title": "Editing a review",
+  "summary": "The browser that posted a review can edit it.",
+  "doc": "cases/14-editing-a-review.md",
+  "theme": "Forms and input",
+  "page": "shop"
+ },
+ {
+  "n": 15,
+  "title": "Splitting an order",
+  "summary": "Under your orders, \"Split order\" opens a page that divides the order total between 2 and 8 people.",
+  "doc": "cases/15-splitting-an-order.md",
+  "theme": "Money and checkout",
+  "page": "shop"
+ },
+ {
+  "n": 16,
+  "title": "The People picker",
+  "summary": "The split page chooses the number of people with a list built from ARIA roles, not a native select.",
+  "doc": "cases/16-the-people-picker.md",
+  "theme": "Accessibility and keyboard",
+  "page": "shop"
+ },
+ {
+  "n": 17,
+  "title": "Cookie consent",
+  "summary": "The Deals page asks for cookie consent before it shows deals picked for you.",
+  "doc": "cases/17-cookie-consent.md",
+  "theme": "Browser APIs and devices",
+  "page": "deals"
+ },
+ {
+  "n": 18,
+  "title": "Gift cards",
+  "summary": "The Gift cards page sells gift cards.",
+  "doc": "cases/18-gift-cards.md",
+  "theme": "Money and checkout",
+  "page": "gifts"
+ },
+ {
+  "n": 19,
+  "title": "Notes",
+  "summary": "The Notes page lists notes you can star, archive, or delete.",
+  "doc": "cases/19-notes.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "notes"
+ },
+ {
+  "n": 20,
+  "title": "Budget",
+  "summary": "The Budget page keeps a list of expenses and charts them.",
+  "doc": "cases/20-budget.md",
+  "theme": "Money and checkout",
+  "page": "budget"
+ },
+ {
+  "n": 21,
+  "title": "Your plan",
+  "summary": "The Plan page shows your Pro plan, 49.00 PLN a month, with the next payment on 1 December 2026.",
+  "doc": "cases/21-your-plan.md",
+  "theme": "Money and checkout",
+  "page": "plan"
+ },
+ {
+  "n": 22,
+  "title": "Playlist",
+  "summary": "The Playlist page lists five songs in an order you can change.",
+  "doc": "cases/22-playlist.md",
+  "theme": "Accessibility and keyboard",
+  "page": "playlist"
+ },
+ {
+  "n": 23,
+  "title": "Top up",
+  "summary": "The Top up page adds money to a wallet.",
+  "doc": "cases/23-top-up.md",
+  "theme": "Money and checkout",
+  "page": "topup"
+ },
+ {
+  "n": 24,
+  "title": "Draft",
+  "summary": "The Draft page holds one letter that saves itself.",
+  "doc": "cases/24-draft.md",
+  "theme": "Async, races and network",
+  "page": "draft",
+  "featured": "Autosave with retries, and a race you have to make happen."
+ },
+ {
+  "n": 25,
+  "title": "Calendar",
+  "summary": "The Calendar page connects a calendar from Example Calendar, a separate sign-in service.",
+  "doc": "cases/25-calendar.md",
+  "theme": "Sign-in, sessions and security",
+  "page": "calendar"
+ },
+ {
+  "n": 26,
+  "title": "Contacts",
+  "summary": "The Contacts page imports contacts from a CSV file.",
+  "doc": "cases/26-contacts.md",
+  "theme": "Files, uploads and downloads",
+  "page": "contacts"
+ },
+ {
+  "n": 27,
+  "title": "Stores",
+  "summary": "The Stores page finds the three stores nearest to you.",
+  "doc": "cases/27-stores.md",
+  "theme": "Browser APIs and devices",
+  "page": "stores"
+ },
+ {
+  "n": 28,
+  "title": "Quote",
+  "summary": "The Quote page multiplies a unit price by a quantity.",
+  "doc": "cases/28-quote.md",
+  "theme": "Forms and input",
+  "page": "quote"
+ },
+ {
+  "n": 29,
+  "title": "Booking",
+  "summary": "The Booking page books a room in three steps: Dates, Guests, and Review.",
+  "doc": "cases/29-booking.md",
+  "theme": "Forms and input",
+  "page": "booking/dates"
+ },
+ {
+  "n": 30,
+  "title": "Feed",
+  "summary": "The Feed page lists posts, newest first.",
+  "doc": "cases/30-feed.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "feed"
+ },
+ {
+  "n": 31,
+  "title": "Checklist",
+  "summary": "The Checklist page keeps a list of items and keeps working when the connection drops.",
+  "doc": "cases/31-checklist.md",
+  "theme": "Offline, caching and storage",
+  "page": "checklist"
+ },
+ {
+  "n": 32,
+  "title": "Vault",
+  "summary": "The Vault page keeps notes behind two-step verification with an authenticator app.",
+  "doc": "cases/32-vault.md",
+  "theme": "Sign-in, sessions and security",
+  "page": "vault"
+ },
+ {
+  "n": 33,
+  "title": "Basket",
+  "summary": "The Basket page keeps a basket in the browser, without the server.",
+  "doc": "cases/33-basket.md",
+  "theme": "Offline, caching and storage",
+  "page": "basket"
+ },
+ {
+  "n": 34,
+  "title": "Support",
+  "summary": "The Support page sends a message to support.",
+  "doc": "cases/34-support.md",
+  "theme": "Sign-in, sessions and security",
+  "page": "support"
+ },
+ {
+  "n": 35,
+  "title": "Receipt",
+  "summary": "The Receipt page shows a shop receipt with an order number and the time it was printed (24-hour clock)..",
+  "doc": "cases/35-receipt.md",
+  "theme": "Files, uploads and downloads",
+  "page": "receipt"
+ },
+ {
+  "n": 36,
+  "title": "Sign up",
+  "summary": "The Sign up page creates an account (nothing is stored).",
+  "doc": "cases/36-sign-up.md",
+  "theme": "Accessibility and keyboard",
+  "page": "signup"
+ },
+ {
+  "n": 37,
+  "title": "Bio",
+  "summary": "The Bio page has a small rich-text editor with Bold and Italic buttons (Ctrl+B and Ctrl+I work too) and Save.",
+  "doc": "cases/37-bio.md",
+  "theme": "Forms and input",
+  "page": "bio"
+ },
+ {
+  "n": 38,
+  "title": "Search",
+  "summary": "The Search page finds products as you type.",
+  "doc": "cases/38-search.md",
+  "theme": "Async, races and network",
+  "page": "search",
+  "solution": "search-race",
+  "featured": "Answers that arrive out of order."
+ },
+ {
+  "n": 39,
+  "title": "Invoices",
+  "summary": "The Invoices page lists two invoices with a Download PDF link each.",
+  "doc": "cases/39-invoices.md",
+  "theme": "Files, uploads and downloads",
+  "page": "invoices"
+ },
+ {
+  "n": 40,
+  "title": "Price filter",
+  "summary": "The Price filter page shows products between a lowest and a highest price, chosen with a slider that has two handles.",
+  "doc": "cases/40-price-filter.md",
+  "theme": "Forms and input",
+  "page": "prices"
+ },
+ {
+  "n": 41,
+  "title": "Reminders",
+  "summary": "The Reminders page reminds you about something in 1, 5, 15 or 60 minutes.",
+  "doc": "cases/41-reminders.md",
+  "theme": "Browser APIs and devices",
+  "page": "reminders"
+ },
+ {
+  "n": 42,
+  "title": "Address",
+  "summary": "The Address page edits your street, city and postcode.",
+  "doc": "cases/42-address.md",
+  "theme": "Forms and input",
+  "page": "address"
+ },
+ {
+  "n": 43,
+  "title": "Feedback",
+  "summary": "The Feedback page sends a star rating and an optional comment.",
+  "doc": "cases/43-feedback.md",
+  "theme": "Accessibility and keyboard",
+  "page": "feedback"
+ },
+ {
+  "n": 44,
+  "title": "Share",
+  "summary": "The Share page shows an invite link with Copy link and New link buttons.",
+  "doc": "cases/44-share.md",
+  "theme": "Browser APIs and devices",
+  "page": "share"
+ },
+ {
+  "n": 45,
+  "title": "Updates",
+  "summary": "The Updates page tells you when a new version of the app has been released while the page was open.",
+  "doc": "cases/45-updates.md",
+  "theme": "Async, races and network",
+  "page": "updates"
+ },
+ {
+  "n": 46,
+  "title": "Inbox",
+  "summary": "The Inbox page lists eight messages with a checkbox each.",
+  "doc": "cases/46-inbox.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "inbox"
+ },
+ {
+  "n": 47,
+  "title": "Orders",
+  "summary": "The Orders page shows orders ten at a time, sorted on the server.",
+  "doc": "cases/47-orders.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "orders"
+ },
+ {
+  "n": 48,
+  "title": "Files",
+  "summary": "The Files page lists five files.",
+  "doc": "cases/48-files.md",
+  "theme": "Files, uploads and downloads",
+  "page": "files"
+ },
+ {
+  "n": 49,
+  "title": "Tasks",
+  "summary": "The Tasks page is a small to-do list with keyboard shortcuts.",
+  "doc": "cases/49-tasks.md",
+  "theme": "Accessibility and keyboard",
+  "page": "tasks"
+ },
+ {
+  "n": 50,
+  "title": "Itinerary",
+  "summary": "The Itinerary page shows a three-day trip with a Print itinerary button.",
+  "doc": "cases/50-itinerary.md",
+  "theme": "Files, uploads and downloads",
+  "page": "itinerary"
+ },
+ {
+  "n": 51,
+  "title": "Verify phone",
+  "summary": "The Verify phone page texts a code (nothing is really sent).",
+  "doc": "cases/51-verify-phone.md",
+  "theme": "Async, races and network",
+  "page": "verify"
+ },
+ {
+  "n": 52,
+  "title": "Order summary",
+  "summary": "The Order summary page can be shown in English or Arabic.",
+  "doc": "cases/52-order-summary.md",
+  "theme": "Accessibility and keyboard",
+  "page": "summary"
+ },
+ {
+  "n": 53,
+  "title": "Shipping address",
+  "summary": "The Shipping address page saves a country and a postcode, and a state for the United States.",
+  "doc": "cases/53-shipping-address.md",
+  "theme": "Forms and input",
+  "page": "shipping"
+ },
+ {
+  "n": 54,
+  "title": "Gallery",
+  "summary": "The Gallery page shows 24 photos in two columns.",
+  "doc": "cases/54-gallery.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "gallery"
+ },
+ {
+  "n": 55,
+  "title": "Holiday request",
+  "summary": "The Holiday request page picks a first and a last day, on a calendar or in the From and To fields.",
+  "doc": "cases/55-holiday-request.md",
+  "theme": "Time, dates and locales",
+  "page": "holiday"
+ },
+ {
+  "n": 56,
+  "title": "Stay signed in",
+  "summary": "The Stay signed in page signs in `ann@example.test` with the password `correct horse`.",
+  "doc": "cases/56-stay-signed-in.md",
+  "theme": "Sign-in, sessions and security",
+  "page": "sign-in"
+ },
+ {
+  "n": 57,
+  "title": "Podcast",
+  "summary": "The Podcast page plays a 30-second episode (a quiet tone) with its own controls.",
+  "doc": "cases/57-podcast.md",
+  "theme": "Browser APIs and devices",
+  "page": "podcast"
+ },
+ {
+  "n": 58,
+  "title": "Bakery",
+  "summary": "The Bakery page has a site header with four links.",
+  "doc": "cases/58-bakery.md",
+  "theme": "Accessibility and keyboard",
+  "page": "bakery"
+ },
+ {
+  "n": 59,
+  "title": "Session",
+  "summary": "The Session page signs you out after 90 seconds without activity.",
+  "doc": "cases/59-session.md",
+  "theme": "Sign-in, sessions and security",
+  "page": "session"
+ },
+ {
+  "n": 60,
+  "title": "Team",
+  "summary": "The Team page shows a Roadmap document and its members.",
+  "doc": "cases/60-team.md",
+  "theme": "Sign-in, sessions and security",
+  "page": "team"
+ },
+ {
+  "n": 61,
+  "title": "Meetings",
+  "summary": "The Meetings page adds a meeting at a date and time, once or every week for 4 weeks.",
+  "doc": "cases/61-meetings.md",
+  "theme": "Time, dates and locales",
+  "page": "meetings"
+ },
+ {
+  "n": 62,
+  "title": "Directory",
+  "summary": "The Directory page lists 10,000 customers.",
+  "doc": "cases/62-directory.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "directory"
+ },
+ {
+  "n": 63,
+  "title": "Confirm email",
+  "summary": "The Confirm email page asks for a 6-digit code, one box per digit.",
+  "doc": "cases/63-confirm-email.md",
+  "theme": "Forms and input",
+  "page": "confirm-email"
+ },
+ {
+  "n": 64,
+  "title": "Messages",
+  "summary": "The Messages page counts new messages in English or Polish.",
+  "doc": "cases/64-messages.md",
+  "theme": "Time, dates and locales",
+  "page": "messages"
+ },
+ {
+  "n": 65,
+  "title": "Passkeys",
+  "summary": "The Passkeys page creates passkeys for ann and signs in with them.",
+  "doc": "cases/65-passkeys.md",
+  "theme": "Sign-in, sessions and security",
+  "page": "passkeys"
+ },
+ {
+  "n": 66,
+  "title": "Delivery",
+  "summary": "The Delivery page asks you to sign for a parcel.",
+  "doc": "cases/66-delivery.md",
+  "theme": "Forms and input",
+  "page": "delivery"
+ },
+ {
+  "n": 67,
+  "title": "Import",
+  "summary": "The Import page imports 100 customers and shows the progress as it happens.",
+  "doc": "cases/67-import.md",
+  "theme": "Async, races and network",
+  "page": "import"
+ },
+ {
+  "n": 68,
+  "title": "Packing list",
+  "summary": "The Packing list page edits a list of things to pack.",
+  "doc": "cases/68-packing-list.md",
+  "theme": "Forms and input",
+  "page": "packing"
+ },
+ {
+  "n": 69,
+  "title": "Help centre",
+  "summary": "The Help centre opens articles without reloading the page.",
+  "doc": "cases/69-help-centre.md",
+  "theme": "Accessibility and keyboard",
+  "page": "help"
+ },
+ {
+  "n": 70,
+  "title": "Order review",
+  "summary": "The Order review page lists 12 items under a header that stays at the top, with a pay bar that stays at the bottom.",
+  "doc": "cases/70-order-review.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "review"
+ },
+ {
+  "n": 71,
+  "title": "Sales report",
+  "summary": "The Sales report page adds up 20,000,000 sales by region.",
+  "doc": "cases/71-sales-report.md",
+  "theme": "Async, races and network",
+  "page": "report"
+ },
+ {
+  "n": 72,
+  "title": "Upload",
+  "summary": "The Upload page sends a file of up to 20 MB to the server.",
+  "doc": "cases/72-upload.md",
+  "theme": "Files, uploads and downloads",
+  "page": "upload",
+  "featured": "Progress, cancel, and a server that must keep nothing from a broken upload."
+ },
+ {
+  "n": 73,
+  "title": "Support ticket",
+  "summary": "The Support ticket page takes a description and pasted screenshots.",
+  "doc": "cases/73-support-ticket.md",
+  "theme": "Forms and input",
+  "page": "ticket"
+ },
+ {
+  "n": 74,
+  "title": "Timesheet",
+  "summary": "The Timesheet page is a grid of hours per day and project.",
+  "doc": "cases/74-timesheet.md",
+  "theme": "Accessibility and keyboard",
+  "page": "timesheet"
+ },
+ {
+  "n": 75,
+  "title": "Shop reviews",
+  "summary": "The Shop reviews page shows a reviews widget in a sandboxed frame.",
+  "doc": "cases/75-shop-reviews.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "shop-reviews"
+ },
+ {
+  "n": 76,
+  "title": "Country",
+  "summary": "The Country page is a list of 30 countries you can pick from with the keyboard.",
+  "doc": "cases/76-country.md",
+  "theme": "Accessibility and keyboard",
+  "page": "country"
+ },
+ {
+  "n": 77,
+  "title": "Appearance",
+  "summary": "The Appearance page lets you pick a theme and how much motion you see.",
+  "doc": "cases/77-appearance.md",
+  "theme": "Accessibility and keyboard",
+  "page": "appearance"
+ },
+ {
+  "n": 78,
+  "title": "Statement",
+  "summary": "The Statement page lists a month of transactions and downloads them as a CSV file.",
+  "doc": "cases/78-statement.md",
+  "theme": "Files, uploads and downloads",
+  "page": "statement"
+ },
+ {
+  "n": 79,
+  "title": "Plans",
+  "summary": "The Plans page compares three plans, each with an info button that shows a tooltip.",
+  "doc": "cases/79-plans.md",
+  "theme": "Accessibility and keyboard",
+  "page": "plans"
+ },
+ {
+  "n": 80,
+  "title": "Price alerts",
+  "summary": "The Price alerts page sends a browser notification when a product gets cheaper.",
+  "doc": "cases/80-price-alerts.md",
+  "theme": "Browser APIs and devices",
+  "page": "price-alert"
+ },
+ {
+  "n": 81,
+  "title": "Live score",
+  "summary": "The Live score page follows a match and stops asking the server while the tab is hidden.",
+  "doc": "cases/81-live-score.md",
+  "theme": "Realtime and multi-user",
+  "page": "live-score"
+ },
+ {
+  "n": 82,
+  "title": "Mobile inbox",
+  "summary": "The Mobile inbox page deletes a message when you swipe it to the left, with an undo.",
+  "doc": "cases/82-mobile-inbox.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "mobile-inbox"
+ },
+ {
+  "n": 83,
+  "title": "Change password",
+  "summary": "The Change password page changes the account password and works with password managers.",
+  "doc": "cases/83-change-password.md",
+  "theme": "Sign-in, sessions and security",
+  "page": "password"
+ },
+ {
+  "n": 84,
+  "title": "Flash sale",
+  "summary": "The Flash sale page counts down to the end of a sale by the shop's clock.",
+  "doc": "cases/84-flash-sale.md",
+  "theme": "Time, dates and locales",
+  "page": "flash-sale"
+ },
+ {
+  "n": 85,
+  "title": "Class list",
+  "summary": "The Class list page sorts and searches 15 pupils with Polish names.",
+  "doc": "cases/85-class-list.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "class-list"
+ },
+ {
+  "n": 86,
+  "title": "Newsletter",
+  "summary": "The Newsletter page marks an article as read once it has been on screen for 2 seconds.",
+  "doc": "cases/86-newsletter.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "newsletter"
+ },
+ {
+  "n": 87,
+  "title": "Post editor",
+  "summary": "The Post editor page writes and publishes a blog post in a panel that scrolls.",
+  "doc": "cases/87-post-editor.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "post-editor"
+ },
+ {
+  "n": 88,
+  "title": "Announcements",
+  "summary": "The Announcements page shows three banners you can dismiss.",
+  "doc": "cases/88-announcements.md",
+  "theme": "Accessibility and keyboard",
+  "page": "announcements"
+ },
+ {
+  "n": 89,
+  "title": "Voice note",
+  "summary": "The Voice note page records a voice note with the microphone and saves it.",
+  "doc": "cases/89-voice-note.md",
+  "theme": "Browser APIs and devices",
+  "page": "voice-note"
+ },
+ {
+  "n": 90,
+  "title": "Price list",
+  "summary": "The Price list page checks for new prices and downloads the list only when it changed.",
+  "doc": "cases/90-price-list.md",
+  "theme": "Offline, caching and storage",
+  "page": "price-list"
+ },
+ {
+  "n": 91,
+  "title": "Contributors",
+  "summary": "The Contributors page shows names on small cards, cutting the ones that do not fit.",
+  "doc": "cases/91-contributors.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "contributors"
+ },
+ {
+  "n": 92,
+  "title": "Product details",
+  "summary": "The Product details page shows four tabs of details about a hand grinder.",
+  "doc": "cases/92-product-details.md",
+  "theme": "Accessibility and keyboard",
+  "page": "product-tabs",
+  "solution": "aria-tabs"
+ },
+ {
+  "n": 93,
+  "title": "Files tree",
+  "summary": "The Files tree page shows folders and files in a tree you can open and close.",
+  "doc": "cases/93-files-tree.md",
+  "theme": "Accessibility and keyboard",
+  "page": "folder-tree"
+ },
+ {
+  "n": 94,
+  "title": "Promotions",
+  "summary": "The Promotions page shows a carousel of four offers that changes every 5 seconds.",
+  "doc": "cases/94-promotions.md",
+  "theme": "Accessibility and keyboard",
+  "page": "promotions"
+ },
+ {
+  "n": 95,
+  "title": "Local notes",
+  "summary": "The Local notes page keeps notes in the browser's database and updates it safely across tabs.",
+  "doc": "cases/95-local-notes.md",
+  "theme": "Offline, caching and storage",
+  "page": "local-notes",
+  "featured": "An IndexedDB upgrade while another tab holds the old version open."
+ },
+ {
+  "n": 96,
+  "title": "Letter",
+  "summary": "The Letter page is a text box with its own Undo and Redo that work a word at a time.",
+  "doc": "cases/96-letter.md",
+  "theme": "Forms and input",
+  "page": "letter"
+ },
+ {
+  "n": 97,
+  "title": "Recipe",
+  "summary": "The Recipe page shares a recipe with the device's share sheet, or copies its link.",
+  "doc": "cases/97-recipe.md",
+  "theme": "Browser APIs and devices",
+  "page": "share-recipe"
+ },
+ {
+  "n": 98,
+  "title": "Photos",
+  "summary": "The Photos page shows five photos in a viewer that can go full screen.",
+  "doc": "cases/98-photos.md",
+  "theme": "Browser APIs and devices",
+  "page": "photos"
+ },
+ {
+  "n": 99,
+  "title": "Delivery details",
+  "summary": "The Delivery details page is a form that reflows on narrow screens and with large text.",
+  "doc": "cases/99-delivery-details.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "delivery-form"
+ },
+ {
+  "n": 100,
+  "title": "Hotels",
+  "summary": "The Hotels page filters a hotel list in a sheet that covers the whole window.",
+  "doc": "cases/100-hotels.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "hotels"
+ },
+ {
+  "n": 101,
+  "title": "Lamps",
+  "summary": "The Lamps page shows product cards with Save and Compare buttons for mouse, keyboard and touch.",
+  "doc": "cases/101-lamps.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "lamps"
+ },
+ {
+  "n": 102,
+  "title": "Mailing list",
+  "summary": "The Mailing list page embeds a sign-up form that a separate script wires up after the page loads.",
+  "doc": "cases/102-mailing-list.md",
+  "theme": "Forms and input",
+  "page": "mailing-list"
+ },
+ {
+  "n": 103,
+  "title": "Trip tags",
+  "summary": "The Trip tags page turns typed text into tags, also when the text comes from an input method.",
+  "doc": "cases/103-trip-tags.md",
+  "theme": "Forms and input",
+  "page": "trip-tags"
+ },
+ {
+  "n": 104,
+  "title": "Concert tickets",
+  "summary": "The Concert tickets page sells tickets and must be up to date when the user returns with Back.",
+  "doc": "cases/104-concert-tickets.md",
+  "theme": "Money and checkout",
+  "page": "gig-tickets",
+  "featured": "A page restored from the back/forward cache, which fires no `load`."
+ },
+ {
+  "n": 105,
+  "title": "Privacy settings",
+  "summary": "The Privacy settings page has a pop-up hint for each option and a confirmation after saving.",
+  "doc": "cases/105-privacy-settings.md",
+  "theme": "Accessibility and keyboard",
+  "page": "privacy"
+ },
+ {
+  "n": 106,
+  "title": "Train ticket",
+  "summary": "The Train ticket page sells a ticket with optional extras over three steps.",
+  "doc": "cases/106-train-ticket.md",
+  "theme": "Money and checkout",
+  "page": "train-ticket"
+ },
+ {
+  "n": 107,
+  "title": "Pancakes",
+  "summary": "The Pancakes page scales a recipe by servings and works out how many servings your flour makes.",
+  "doc": "cases/107-pancakes.md",
+  "theme": "Forms and input",
+  "page": "pancakes"
+ },
+ {
+  "n": 108,
+  "title": "Photo album",
+  "summary": "The Photo album page uploads a whole folder of photos, keeping its subfolders.",
+  "doc": "cases/108-photo-album.md",
+  "theme": "Files, uploads and downloads",
+  "page": "album"
+ },
+ {
+  "n": 109,
+  "title": "Floor plan",
+  "summary": "The Floor plan page zooms a plan with a pinch, Ctrl and the mouse wheel, or buttons.",
+  "doc": "cases/109-floor-plan.md",
+  "theme": "Browser APIs and devices",
+  "page": "floor-plan"
+ },
+ {
+  "n": 110,
+  "title": "Reading list",
+  "summary": "The Reading list page keeps the user signed in with a session stored in IndexedDB.",
+  "doc": "cases/110-reading-list.md",
+  "theme": "Sign-in, sessions and security",
+  "page": "reading-list"
+ },
+ {
+  "n": 111,
+  "title": "Bus stop",
+  "summary": "The Bus stop page links to a departures board that keeps working offline.",
+  "doc": "cases/111-bus-stop.md",
+  "theme": "Offline, caching and storage",
+  "page": "bus-stop",
+  "featured": "A service worker that has to work offline."
+ },
+ {
+  "n": 112,
+  "title": "Workspace",
+  "summary": "The Workspace page opens on Setup or on the Dashboard, depending on the workspace's settings.",
+  "doc": "cases/112-workspace.md",
+  "theme": "Async, races and network",
+  "page": "workspace"
+ },
+ {
+  "n": 113,
+  "title": "Saved searches",
+  "summary": "The Saved searches page lists saved searches and shows an empty state when there are none.",
+  "doc": "cases/113-saved-searches.md",
+  "theme": "Async, races and network",
+  "page": "saved-searches"
+ },
+ {
+  "n": 114,
+  "title": "Groceries",
+  "summary": "The Groceries page adds products to a basket and announces each change to screen readers.",
+  "doc": "cases/114-groceries.md",
+  "theme": "Accessibility and keyboard",
+  "page": "groceries"
+ },
+ {
+  "n": 115,
+  "title": "Event feedback",
+  "summary": "The Event feedback page has a form whose star rating is a custom element.",
+  "doc": "cases/115-event-feedback.md",
+  "theme": "Accessibility and keyboard",
+  "page": "event-feedback"
+ },
+ {
+  "n": 116,
+  "title": "Shop dashboard",
+  "summary": "The Shop dashboard page has an orders widget that switches layout with its own width.",
+  "doc": "cases/116-shop-dashboard.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "shop-dashboard"
+ },
+ {
+  "n": 117,
+  "title": "Highlights",
+  "summary": "The Highlights page lets the reader save selected text from an article.",
+  "doc": "cases/117-highlights.md",
+  "theme": "Browser APIs and devices",
+  "page": "highlights"
+ },
+ {
+  "n": 118,
+  "title": "Sell your bike",
+  "summary": "The Sell your bike page explains, to every user, why Publish is not available yet.",
+  "doc": "cases/118-sell-your-bike.md",
+  "theme": "Accessibility and keyboard",
+  "page": "sell-bike"
+ },
+ {
+  "n": 119,
+  "title": "Expense claims",
+  "summary": "The Expense claims page submits claims after you sign in, and lets you sign in again without losing a claim when the session ends.",
+  "doc": "cases/119-expense-claims.md",
+  "theme": "Sign-in, sessions and security",
+  "page": "expense-claims"
+ },
+ {
+  "n": 120,
+  "title": "Flats",
+  "summary": "The Flats page lists flats to rent as cards that open the flat, with Save and Compare on each card.",
+  "doc": "cases/120-flats.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "flats"
+ },
+ {
+  "n": 121,
+  "title": "Parking permit",
+  "summary": "The Parking permit page takes payment through card fields in an embedded frame.",
+  "doc": "cases/121-parking-permit.md",
+  "theme": "Money and checkout",
+  "page": "parking"
+ },
+ {
+  "n": 122,
+  "title": "Shared drive",
+  "summary": "The Shared drive page lists files with a custom right-click menu: Open, Duplicate and Delete.",
+  "doc": "cases/122-shared-drive.md",
+  "theme": "Accessibility and keyboard",
+  "page": "drive"
+ },
+ {
+  "n": 123,
+  "title": "Village hall",
+  "summary": "The Village hall page lists questions whose answers open and close, and can still be found while closed.",
+  "doc": "cases/123-village-hall.md",
+  "theme": "Accessibility and keyboard",
+  "page": "village-hall"
+ },
+ {
+  "n": 124,
+  "title": "Assistant",
+  "summary": "The Assistant page has three conversations; answers arrive word by word, also while you read another conversation.",
+  "doc": "cases/124-assistant.md",
+  "theme": "Realtime and multi-user",
+  "page": "assistant"
+ },
+ {
+  "n": 125,
+  "title": "Comments",
+  "summary": "The Comments page has a comment box that grows with its text, up to six lines.",
+  "doc": "cases/125-comments.md",
+  "theme": "Forms and input",
+  "page": "comments"
+ },
+ {
+  "n": 126,
+  "title": "Alert settings",
+  "summary": "The Alert settings page has three on/off switches and a choice of summary email.",
+  "doc": "cases/126-alert-settings.md",
+  "theme": "Accessibility and keyboard",
+  "page": "alert-settings"
+ },
+ {
+  "n": 127,
+  "title": "Choir sign-up",
+  "summary": "The Choir sign-up page shows its form step by step on narrow screens and all at once on wide ones.",
+  "doc": "cases/127-choir-sign-up.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "choir"
+ },
+ {
+  "n": 128,
+  "title": "Shared photos",
+  "summary": "The Shared photos page opens a photo on a tap and starts selecting photos when one is pressed and held.",
+  "doc": "cases/128-shared-photos.md",
+  "theme": "Browser APIs and devices",
+  "page": "shared-photos"
+ },
+ {
+  "n": 129,
+  "title": "Mail reader",
+  "summary": "The Mail reader page shows a message list and a message side by side, divided by a bar you can drag.",
+  "doc": "cases/129-mail-reader.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "mail-reader"
+ },
+ {
+  "n": 130,
+  "title": "Receipts",
+  "summary": "The Receipts page attaches receipt files dragged from the computer onto it, or chosen with a button.",
+  "doc": "cases/130-receipts.md",
+  "theme": "Files, uploads and downloads",
+  "page": "receipts"
+ },
+ {
+  "n": 131,
+  "title": "Guestbook",
+  "summary": "The Guestbook is a plain HTML page with a form, served by the server and usable without JavaScript.",
+  "doc": "cases/131-guestbook.md",
+  "theme": "Forms and input",
+  "page": "guestbook"
+ },
+ {
+  "n": 132,
+  "title": "Concert poster",
+  "summary": "The Concert poster page sizes the poster's headline so it fits on one line at any width.",
+  "doc": "cases/132-concert-poster.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "poster"
+ },
+ {
+  "n": 133,
+  "title": "Field notes",
+  "summary": "The Field notes page keeps notes in the browser's storage as you type.",
+  "doc": "cases/133-field-notes.md",
+  "theme": "Offline, caching and storage",
+  "page": "field-notes"
+ },
+ {
+  "n": 134,
+  "title": "Club activity",
+  "summary": "The Club activity page lists what happened in the club, with times such as \"3 minutes ago\".",
+  "doc": "cases/134-club-activity.md",
+  "theme": "Time, dates and locales",
+  "page": "club-activity"
+ },
+ {
+  "n": 135,
+  "title": "Notice board",
+  "summary": "The Notice board page lists office notices and counts the ones you have not read yet.",
+  "doc": "cases/135-notice-board.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "notice-board"
+ },
+ {
+  "n": 136,
+  "title": "Prints",
+  "summary": "The Prints page connects your CloudPix photo account through a pop-up window.",
+  "doc": "cases/136-prints.md",
+  "theme": "Sign-in, sessions and security",
+  "page": "prints"
+ },
+ {
+  "n": 137,
+  "title": "Study group",
+  "summary": "The Study group page is a group chat that shows who is typing.",
+  "doc": "cases/137-study-group.md",
+  "theme": "Realtime and multi-user",
+  "page": "study-group"
+ },
+ {
+  "n": 138,
+  "title": "Billing details",
+  "summary": "The Billing details page saves who invoices are made out to: a private person or a company.",
+  "doc": "cases/138-billing-details.md",
+  "theme": "Forms and input",
+  "page": "billing-details"
+ },
+ {
+  "n": 139,
+  "title": "Flight search",
+  "summary": "The Flight search page finds flights, and copes when the search is slow.",
+  "doc": "cases/139-flight-search.md",
+  "theme": "Async, races and network",
+  "page": "flight-search"
+ },
+ {
+  "n": 140,
+  "title": "Bank transfer",
+  "summary": "The Bank transfer page sends money to an account number that is formatted as you type.",
+  "doc": "cases/140-bank-transfer.md",
+  "theme": "Forms and input",
+  "page": "bank-transfer"
+ },
+ {
+  "n": 141,
+  "title": "Library card",
+  "summary": "The Library card page takes a date of birth typed by hand and works out your age.",
+  "doc": "cases/141-library-card.md",
+  "theme": "Time, dates and locales",
+  "page": "library-card"
+ },
+ {
+  "n": 142,
+  "title": "Village fête",
+  "summary": "The Village fête page links to a reply form that the server builds and a script improves.",
+  "doc": "cases/142-village-fete.md",
+  "theme": "Forms and input",
+  "page": "fete"
+ },
+ {
+  "n": 143,
+  "title": "Rooms",
+  "summary": "The Rooms page shows a guest house's three rooms with photos sized for each screen.",
+  "doc": "cases/143-rooms.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "rooms"
+ },
+ {
+  "n": 144,
+  "title": "Radio favourites",
+  "summary": "The Radio favourites page lets you like songs, and keeps the saved likes in step with the screen.",
+  "doc": "cases/144-radio-favourites.md",
+  "theme": "Async, races and network",
+  "page": "favourites"
+ },
+ {
+  "n": 145,
+  "title": "Shift handover",
+  "summary": "The Shift handover page sends a note for the next shift, where @ mentions people.",
+  "doc": "cases/145-shift-handover.md",
+  "theme": "Forms and input",
+  "page": "handover"
+ },
+ {
+  "n": 146,
+  "title": "Ticket contact",
+  "summary": "The Ticket contact page asks where to send tickets, and works with the browser's autofill.",
+  "doc": "cases/146-ticket-contact.md",
+  "theme": "Forms and input",
+  "page": "ticket-contact"
+ },
+ {
+  "n": 147,
+  "title": "Handbook",
+  "summary": "The Handbook page has a menu of sections that open and close, usable with a keyboard and a screen reader.",
+  "doc": "cases/147-handbook.md",
+  "theme": "Accessibility and keyboard",
+  "page": "handbook"
+ },
+ {
+  "n": 148,
+  "title": "Barber",
+  "summary": "The Barber page books a haircut and holds the chosen time for 5 minutes.",
+  "doc": "cases/148-barber.md",
+  "theme": "Realtime and multi-user",
+  "page": "barber"
+ },
+ {
+  "n": 149,
+  "title": "Running order",
+  "summary": "The Running order page lists 30 acts of a village show, in an order you change by dragging.",
+  "doc": "cases/149-running-order.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "running-order"
+ },
+ {
+  "n": 150,
+  "title": "Site photos",
+  "summary": "The Site photos page lists folders and photos in a table you sort by name, size or date.",
+  "doc": "cases/150-site-photos.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "site-photos"
+ },
+ {
+  "n": 151,
+  "title": "Staff",
+  "summary": "The Staff page opens an edit dialog that loads a person's details while you move around it.",
+  "doc": "cases/151-staff.md",
+  "theme": "Accessibility and keyboard",
+  "page": "staff"
+ },
+ {
+  "n": 152,
+  "title": "Support answers",
+  "summary": "The Support answers page filters help articles as you type and highlights the matches.",
+  "doc": "cases/152-support-answers.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "answers"
+ },
+ {
+  "n": 153,
+  "title": "Tile order",
+  "summary": "The Tile order page builds an order that belongs to one browser tab and survives a reload.",
+  "doc": "cases/153-tile-order.md",
+  "theme": "Money and checkout",
+  "page": "tile-order"
+ },
+ {
+  "n": 154,
+  "title": "Shoe size",
+  "summary": "The Shoe size page picks a size from a custom list that opens over its button.",
+  "doc": "cases/154-shoe-size.md",
+  "theme": "Forms and input",
+  "page": "shoe-size"
+ },
+ {
+  "n": 155,
+  "title": "Saved cards",
+  "summary": "The Saved cards page asks before removing a card, in a question that fades out.",
+  "doc": "cases/155-saved-cards.md",
+  "theme": "Accessibility and keyboard",
+  "page": "saved-cards"
+ },
+ {
+  "n": 156,
+  "title": "Stock take",
+  "summary": "The Stock take page is a grid of counts you can fill by pasting cells from a spreadsheet.",
+  "doc": "cases/156-stock-take.md",
+  "theme": "Forms and input",
+  "page": "stock-take"
+ },
+ {
+  "n": 157,
+  "title": "Cookbook",
+  "summary": "The Cookbook page opens dialogs over a long list that must stay put behind them.",
+  "doc": "cases/157-cookbook.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "cookbook"
+ },
+ {
+  "n": 158,
+  "title": "Trail map",
+  "summary": "The Trail map page opens from a service worker's saved copy and must update to a new version cleanly.",
+  "doc": "cases/158-trail-map.md",
+  "theme": "Offline, caching and storage",
+  "page": "trail-map"
+ },
+ {
+  "n": 159,
+  "title": "Phrasebook",
+  "summary": "The Phrasebook page adds phrases with Enter, including ones typed with an input method (IME).",
+  "doc": "cases/159-phrasebook.md",
+  "theme": "Forms and input",
+  "page": "phrasebook"
+ },
+ {
+  "n": 160,
+  "title": "Replies",
+  "summary": "The Replies page keeps an unsent reply per conversation in the browser, up to the last letter typed.",
+  "doc": "cases/160-replies.md",
+  "theme": "Offline, caching and storage",
+  "page": "replies"
+ },
+ {
+  "n": 161,
+  "title": "Payslips",
+  "summary": "On the Payslips site, the browser's Back and Forward buttons must never show payslips to someone who signed out.",
+  "doc": "cases/161-payslips.md",
+  "theme": "Sign-in, sessions and security",
+  "page": "payslips"
+ },
+ {
+  "n": 162,
+  "title": "Newsroom",
+  "summary": "The Newsroom page pages through stories with Load more, without repeats or gaps, and keeps your place when you come back from a story.",
+  "doc": "cases/162-newsroom.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "newsroom"
+ },
+ {
+  "n": 163,
+  "title": "Members",
+  "summary": "The Members area sends you to the page you asked for after signing in, but never off the site.",
+  "doc": "cases/163-members.md",
+  "theme": "Sign-in, sessions and security",
+  "page": "members"
+ },
+ {
+  "n": 164,
+  "title": "Prime counter",
+  "summary": "The Prime counter page runs a count of several seconds that must not freeze the page, and can be cancelled or replaced.",
+  "doc": "cases/164-prime-counter.md",
+  "theme": "Browser APIs and devices",
+  "page": "prime-counter"
+ },
+ {
+  "n": 165,
+  "title": "Pay by bank",
+  "summary": "The Pay by bank page sends you to a bank on another site, which sends you back with the result.",
+  "doc": "cases/165-pay-by-bank.md",
+  "theme": "Money and checkout",
+  "page": "pay-by-bank"
+ },
+ {
+  "n": 166,
+  "title": "Kitchen timer",
+  "summary": "The Kitchen timer is shared by all open tabs of the page and must ring exactly once when it ends.",
+  "doc": "cases/166-kitchen-timer.md",
+  "theme": "Realtime and multi-user",
+  "page": "kitchen-timer",
+  "featured": "One alarm, however many tabs are open."
+ },
+ {
+  "n": 167,
+  "title": "Transcript",
+  "summary": "The Transcript page has a link for every line, and each link must land on its line, under the page's sticky header.",
+  "doc": "cases/167-transcript.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "transcript"
+ },
+ {
+  "n": 168,
+  "title": "Team chat",
+  "summary": "The Team chat keeps you at the newest message as messages and photos arrive, unless you scrolled up to read.",
+  "doc": "cases/168-team-chat.md",
+  "theme": "Realtime and multi-user",
+  "page": "team-chat"
+ },
+ {
+  "n": 169,
+  "title": "Cinema",
+  "summary": "The Cinema page reserves seats, and its buttons must work from the moment they appear, on any connection.",
+  "doc": "cases/169-cinema.md",
+  "theme": "Async, races and network",
+  "page": "cinema"
+ },
+ {
+  "n": 170,
+  "title": "Parts search",
+  "summary": "A search box that waits as long as the server asks after `429 Too Many Requests`.",
+  "doc": "cases/170-parts-search.md",
+  "theme": "Async, races and network",
+  "page": "parts"
+ },
+ {
+  "n": 171,
+  "title": "Staff guide",
+  "summary": "A contents bar that marks the section you are reading and jumps to a section on click.",
+  "doc": "cases/171-staff-guide.md",
+  "theme": "Accessibility and keyboard",
+  "page": "staff-guide"
+ },
+ {
+  "n": 172,
+  "title": "Help desk",
+  "summary": "A page under a strict Content-Security-Policy with a chat whose code loads on the first click.",
+  "doc": "cases/172-help-desk.md",
+  "theme": "Sign-in, sessions and security",
+  "page": "help-desk",
+  "featured": "A strict Content Security Policy that nothing may break."
+ },
+ {
+  "n": 173,
+  "title": "Video upload",
+  "summary": "An upload in 1 MB parts that carries on where the server stopped, after a lost connection or a reload.",
+  "doc": "cases/173-video-upload.md",
+  "theme": "Files, uploads and downloads",
+  "page": "video-upload"
+ },
+ {
+  "n": 174,
+  "title": "Chat history",
+  "summary": "A conversation that loads older messages above when you scroll up, without moving what you read.",
+  "doc": "cases/174-chat-history.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "chat-history"
+ },
+ {
+  "n": 175,
+  "title": "Close account",
+  "summary": "A page that closes the account, shown in this app's own preview frame but never in another site's.",
+  "doc": "cases/175-close-account.md",
+  "theme": "Sign-in, sessions and security",
+  "page": "close-account"
+ },
+ {
+  "n": 176,
+  "title": "Shipments",
+  "summary": "Parcels with long tracking numbers that must stay exact from the server to the screen and back.",
+  "doc": "cases/176-shipments.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "shipments"
+ },
+ {
+  "n": 177,
+  "title": "Metronome",
+  "summary": "A metronome with page-wide keys that keeps working the same however often you leave and come back.",
+  "doc": "cases/177-metronome.md",
+  "theme": "Time, dates and locales",
+  "page": "metronome"
+ },
+ {
+  "n": 178,
+  "title": "Loyalty points",
+  "summary": "Points read and spent through a partner API on another origin, straight from the browser.",
+  "doc": "cases/178-loyalty-points.md",
+  "theme": "Money and checkout",
+  "page": "loyalty-points"
+ },
+ {
+  "n": 179,
+  "title": "Café dashboard",
+  "summary": "Three tiles that fail one at a time: a broken tile says so, reports it, and leaves the others working.",
+  "doc": "cases/179-cafe-dashboard.md",
+  "theme": "Async, races and network",
+  "page": "cafe"
+ },
+ {
+  "n": 180,
+  "title": "Printer status",
+  "summary": "A status that checks less and less often while the printer cannot be reached, and normally again once it can.",
+  "doc": "cases/180-printer-status.md",
+  "theme": "Async, races and network",
+  "page": "printer"
+ },
+ {
+  "n": 181,
+  "title": "Holiday homes",
+  "summary": "Cards that load a home's details as soon as the pointer or keyboard reaches them, counting a view only when it is opened.",
+  "doc": "cases/181-holiday-homes.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "holiday-homes"
+ },
+ {
+  "n": 182,
+  "title": "Profile photo",
+  "summary": "A photo turned and cut to a 256 × 256 square in the browser, then sent as a PNG.",
+  "doc": "cases/182-profile-photo.md",
+  "theme": "Files, uploads and downloads",
+  "page": "profile-photo"
+ },
+ {
+  "n": 183,
+  "title": "Travel article",
+  "summary": "An article whose photos and newsletter box arrive after the text, without moving it.",
+  "doc": "cases/183-travel-article.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "travel-article"
+ },
+ {
+  "n": 184,
+  "title": "Paper boat",
+  "summary": "A 12-second video with captions in English or Polish and a transcript that follows it.",
+  "doc": "cases/184-paper-boat.md",
+  "theme": "Browser APIs and devices",
+  "page": "paper-boat"
+ },
+ {
+  "n": 185,
+  "title": "Quick invoice",
+  "summary": "An invoice form with many buttons, where Enter saves and no other button ever does.",
+  "doc": "cases/185-quick-invoice.md",
+  "theme": "Forms and input",
+  "page": "quick-invoice"
+ },
+ {
+  "n": 186,
+  "title": "Library catalogue",
+  "summary": "A search kept in the page's address, so it survives a reload, a shared link and Back, whatever the text.",
+  "doc": "cases/186-library-catalogue.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "catalogue"
+ },
+ {
+  "n": 187,
+  "title": "Team overview",
+  "summary": "Three panels loaded at once with a short-lived token that is renewed once, quietly, when it runs out.",
+  "doc": "cases/187-team-overview.md",
+  "theme": "Sign-in, sessions and security",
+  "page": "team-overview"
+ },
+ {
+  "n": 188,
+  "title": "Region packs",
+  "summary": "Map downloads with a progress bar that follows the bytes as they arrive, and a Cancel button.",
+  "doc": "cases/188-region-packs.md",
+  "theme": "Files, uploads and downloads",
+  "page": "region-packs"
+ },
+ {
+  "n": 189,
+  "title": "Gym membership",
+  "summary": "Renewal dates for a membership that starts late in the month, in any time zone.",
+  "doc": "cases/189-gym-membership.md",
+  "theme": "Time, dates and locales",
+  "page": "gym-membership"
+ },
+ {
+  "n": 190,
+  "title": "Courier pickup",
+  "summary": "A two-column booking form where the keyboard has to move in the order a person reads.",
+  "doc": "cases/190-courier-pickup.md",
+  "theme": "Accessibility and keyboard",
+  "page": "courier-pickup"
+ },
+ {
+  "n": 191,
+  "title": "Recipe box",
+  "summary": "A list and an editor side by side, with answers kept in a cache that has to forget the right things.",
+  "doc": "cases/191-recipe-box.md",
+  "theme": "Offline, caching and storage",
+  "page": "recipe-box"
+ },
+ {
+  "n": 192,
+  "title": "Travel wallet",
+  "summary": "Balances in złoty, yen and Bahraini dinar, which have 2, 0 and 3 decimal places.",
+  "doc": "cases/192-travel-wallet.md",
+  "theme": "Money and checkout",
+  "page": "travel-wallet"
+ },
+ {
+  "n": 193,
+  "title": "Weather",
+  "summary": "A weather widget that asks the server once per change and once every ten minutes, and no more.",
+  "doc": "cases/193-weather.md",
+  "theme": "Async, races and network",
+  "page": "weather"
+ },
+ {
+  "n": 194,
+  "title": "Meeting rooms",
+  "summary": "Booking a room in three steps (book, send the invite, refresh the list) where a later step can fail on its own.",
+  "doc": "cases/194-meeting-rooms.md",
+  "theme": "Async, races and network",
+  "page": "meeting-rooms",
+  "featured": "Three requests in a row, where each can fail on its own."
+ },
+ {
+  "n": 195,
+  "title": "Shopping list",
+  "summary": "A list where a new item can be ticked or removed before the server has given it an id.",
+  "doc": "cases/195-shopping-list.md",
+  "theme": "Async, races and network",
+  "page": "shopping-list"
+ },
+ {
+  "n": 196,
+  "title": "Class timetable",
+  "summary": "A month grid whose first weekday and weekend follow the visitor's language and region.",
+  "doc": "cases/196-class-timetable.md",
+  "theme": "Time, dates and locales",
+  "page": "class-timetable"
+ },
+ {
+  "n": 197,
+  "title": "Guest invites",
+  "summary": "A box for many email addresses at once, where real but unusual addresses must get through.",
+  "doc": "cases/197-guest-invites.md",
+  "theme": "Forms and input",
+  "page": "guest-invites"
+ },
+ {
+  "n": 198,
+  "title": "Shared files",
+  "summary": "A list of shared file names, some of which use direction marks to hide what they are.",
+  "doc": "cases/198-shared-files.md",
+  "theme": "Files, uploads and downloads",
+  "page": "shared-files"
+ },
+ {
+  "n": 199,
+  "title": "Exhibition",
+  "summary": "Paintings that open in a dialog with its own address, where Back closes the dialog instead of leaving.",
+  "doc": "cases/199-exhibition.md",
+  "theme": "Accessibility and keyboard",
+  "page": "exhibition"
+ },
+ {
+  "n": 200,
+  "title": "Appointment reminders",
+  "summary": "An SMS reminder box that counts characters and messages the way phone networks do.",
+  "doc": "cases/200-appointment-reminders.md",
+  "theme": "Forms and input",
+  "page": "sms-reminders"
+ },
+ {
+  "n": 201,
+  "title": "Parcel lockers",
+  "summary": "Choosing a parcel locker from a list sorted by distance, where full lockers cannot be chosen.",
+  "doc": "cases/201-parcel-lockers.md",
+  "theme": "Lists, layout and scrolling",
+  "page": "parcel-lockers"
+ },
+ {
+  "n": 202,
+  "title": "Ferry tickets",
+  "summary": "Ferry fares for adults and children with a family discount and a passenger limit.",
+  "doc": "cases/202-ferry-tickets.md",
+  "theme": "Money and checkout",
+  "page": "ferry-tickets"
+ }
+]

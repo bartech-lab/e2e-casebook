@@ -13,6 +13,7 @@
     "build": "vite build",
     "start": "node server/main.ts",
     "typecheck": "tsc --noEmit -p .",
+    "case-index": "node scripts/case-index.ts",
     "test:unit": "node --test \"server/**/*.test.ts\" \"web/**/*.test.ts\"",
     "test:smoke": "playwright test -c e2e"
   },
