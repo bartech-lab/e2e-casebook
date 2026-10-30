@@ -199,6 +199,7 @@ import { GuestInvites } from '../guest-invites/GuestInvites.tsx';
 import { SharedFiles } from '../shared-files/SharedFiles.tsx';
 import { Exhibition } from '../exhibition/Exhibition.tsx';
 import { SmsReminders } from '../sms-reminders/SmsReminders.tsx';
+import { ParcelLockers } from '../parcel-lockers/ParcelLockers.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -434,7 +435,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/guest-invites`}>Guest invites</Link> ·{' '}
         <Link href={`${base}/shared-files`}>Shared files</Link> ·{' '}
         <Link href={`${base}/exhibition`}>Exhibition</Link> ·{' '}
-        <Link href={`${base}/sms-reminders`}>Appointment reminders</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/sms-reminders`}>Appointment reminders</Link> ·{' '}
+        <Link href={`${base}/parcel-lockers`}>Parcel lockers</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -512,6 +514,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Exhibition />
       ) : page === 'sms-reminders' ? (
         <SmsReminders />
+      ) : page === 'parcel-lockers' ? (
+        <ParcelLockers />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1414,6 +1418,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/sms-reminders`}>Appointment reminders</Link>: an SMS that counts characters the way phone networks do.
+        </li>
+        <li>
+          <Link href={`${base}/parcel-lockers`}>Parcel lockers</Link>: choosing where a parcel goes, nearest first.
         </li>
       </ul>
     </section>
