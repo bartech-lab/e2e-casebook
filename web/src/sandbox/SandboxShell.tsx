@@ -188,6 +188,7 @@ import { Catalogue } from '../catalogue/Catalogue.tsx';
 import { TeamOverview } from '../team-overview/TeamOverview.tsx';
 import { RegionPacks } from '../region-packs/RegionPacks.tsx';
 import { GymMembership } from '../gym-membership/GymMembership.tsx';
+import { CourierPickup } from '../courier-pickup/CourierPickup.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -412,7 +413,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/catalogue`}>Library catalogue</Link> ·{' '}
         <Link href={`${base}/team-overview`}>Team overview</Link> ·{' '}
         <Link href={`${base}/region-packs`}>Region packs</Link> ·{' '}
-        <Link href={`${base}/gym-membership`}>Gym membership</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/gym-membership`}>Gym membership</Link> ·{' '}
+        <Link href={`${base}/courier-pickup`}>Courier pickup</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -468,6 +470,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <RegionPacks sandbox={sandbox} />
       ) : page === 'gym-membership' ? (
         <GymMembership />
+      ) : page === 'courier-pickup' ? (
+        <CourierPickup />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1337,6 +1341,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/gym-membership`}>Gym membership</Link>: renewal dates when the month is shorter than the start day.
+        </li>
+        <li>
+          <Link href={`${base}/courier-pickup`}>Courier pickup</Link>: a two-column form whose Tab order must follow what you see.
         </li>
       </ul>
     </section>

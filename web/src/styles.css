@@ -606,3 +606,8 @@ ol[aria-label="Transcript"] li[aria-current="true"] { font-weight: 700; }
 .region-bar { height: 100%; background: #2563eb; }
 .region-bar.busy { width: 30%; animation: region-busy 1.2s linear infinite; }
 @keyframes region-busy { from { margin-left: -30%; } to { margin-left: 100%; } }
+
+.courier-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 1rem; max-width: 36rem; }
+.courier-grid label { display: flex; flex-direction: column; gap: 0.25rem; }
+.courier-street, .courier-notes { grid-column: span 2; }
+.courier-actions { display: flex; gap: 0.5rem; margin-top: 1rem; }
