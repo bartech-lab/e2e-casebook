@@ -200,6 +200,7 @@ import { SharedFiles } from '../shared-files/SharedFiles.tsx';
 import { Exhibition } from '../exhibition/Exhibition.tsx';
 import { SmsReminders } from '../sms-reminders/SmsReminders.tsx';
 import { ParcelLockers } from '../parcel-lockers/ParcelLockers.tsx';
+import { FerryTickets } from '../ferry-tickets/FerryTickets.tsx';
 
 const nameKey = (sandbox: string) => `name:${sandbox}`;
 
@@ -436,7 +437,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <Link href={`${base}/shared-files`}>Shared files</Link> ·{' '}
         <Link href={`${base}/exhibition`}>Exhibition</Link> ·{' '}
         <Link href={`${base}/sms-reminders`}>Appointment reminders</Link> ·{' '}
-        <Link href={`${base}/parcel-lockers`}>Parcel lockers</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
+        <Link href={`${base}/parcel-lockers`}>Parcel lockers</Link> ·{' '}
+        <Link href={`${base}/ferry-tickets`}>Ferry tickets</Link> <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
       </nav>
       {page === 'chat' ? (
         <ChatRoom sandbox={sandbox} name={name} />
@@ -516,6 +518,8 @@ export function SandboxShell({ sandbox, page }: { sandbox: string; page: string 
         <SmsReminders />
       ) : page === 'parcel-lockers' ? (
         <ParcelLockers />
+      ) : page === 'ferry-tickets' ? (
+        <FerryTickets />
       ) : page === 'board' ? (
         <Board sandbox={sandbox} name={name} />
       ) : card ? (
@@ -1421,6 +1425,9 @@ function SandboxHome({ base }: { base: string }) {
         </li>
         <li>
           <Link href={`${base}/parcel-lockers`}>Parcel lockers</Link>: choosing where a parcel goes, nearest first.
+        </li>
+        <li>
+          <Link href={`${base}/ferry-tickets`}>Ferry tickets</Link>: adult and child fares with a family discount.
         </li>
       </ul>
     </section>
