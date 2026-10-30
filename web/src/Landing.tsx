@@ -104,7 +104,7 @@ export function Landing() {
             <dd>{CASES.length}</dd>
           </div>
           <div>
-            <dt>Themes</dt>
+            <dt>Topics</dt>
             <dd>{THEMES.length}</dd>
           </div>
           <div>
@@ -143,7 +143,7 @@ export function Landing() {
       </section>
 
       <section className="themes" aria-labelledby="themes-title">
-        <h2 id="themes-title">Browse by theme</h2>
+        <h2 id="themes-title">What do you want to test?</h2>
         <ul className="theme-grid">
           {THEMES.map((t) => {
             const { icon: Icon, blurb } = themeMeta(t);
@@ -187,13 +187,21 @@ export function Landing() {
             </button>
           ))}
         </div>
-        <p className="muted" aria-live="polite">
-          {shown.length} {shown.length === 1 ? 'case' : 'cases'}
+        <p className="muted catalogue-count" aria-live="polite">
+          {summary(shown.length, filter, query)}
         </p>
-        <p className="muted catalogue-note">
-          <Trophy size={14} aria-hidden="true" /> {solvedCount} cases have a worked solution: several test approaches,
-          each scored against planted bugs. The rest stay open as exercises.
-        </p>
+        {(query || filter !== SOLVED) && (
+          <p className="muted catalogue-note">
+            <Trophy size={14} aria-hidden="true" />
+            <span>
+              The trophy marks the {solvedCount} cases with a worked solution: several test approaches, each scored
+              against planted bugs.{' '}
+              <button type="button" className="link-button" onClick={() => pick(SOLVED)}>
+                Show them
+              </button>
+            </span>
+          </p>
+        )}
         <ul className="case-grid">
           {shown.map((c) => (
             <CaseCard key={c.n} c={c} onTry={() => start.mutate(c.page)} busy={start.isPending} />
@@ -208,6 +216,16 @@ export function Landing() {
       </footer>
     </>
   );
+}
+
+function summary(count: number, filter: string, query: string) {
+  const total = CASES.length;
+  if (query) return `${count} of ${total} cases match.`;
+  if (filter === START_HERE) return `${count} cases to start with, picked from all ${total}.`;
+  if (filter === ALL) return `All ${total} cases.`;
+  if (filter === SOLVED)
+    return `${count} of ${total} cases have a worked solution: several test approaches, each scored against planted bugs. The rest stay open as exercises.`;
+  return `${count} of ${total} cases.`;
 }
 
 function CaseCard({ c, onTry, busy }: { c: Case; onTry: () => void; busy: boolean }) {

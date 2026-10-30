@@ -784,3 +784,15 @@ main > section > ul.case-grid > li { margin: 0; }
 .catalogue-note { display: flex; align-items: center; gap: 0.4rem; margin-top: -0.4rem; font-size: 0.86rem; }
 .catalogue-note svg { flex: none; color: var(--ok); }
 .case-meta .solved-tag { margin-left: auto; flex: none; padding: 0; width: 1.35rem; height: 1.35rem; justify-content: center; }
+.catalogue-count { margin-bottom: 0.2rem; }
+.catalogue-note { align-items: flex-start; }
+.catalogue-note svg { margin-top: 0.2rem; }
+.link-button { background: none; border: 0; padding: 0; color: var(--accent); font: inherit; cursor: pointer; }
+.link-button:hover:not(:disabled) { text-decoration: underline; background: none; }
+
+/* Contrast (axe, WCAG 1.4.3 / 1.4.1) */
+.theme-count { color: hsl(var(--hue) 60% 30%); }
+.theme-tag { color: hsl(var(--hue) 60% 30%); }
+.sandbox-nav .nav-group-title { color: hsl(var(--hue) 55% 32%); }
+.site-footer a { text-decoration: underline; text-underline-offset: 2px; }
+:root[data-ui='dark'] .hero-actions .primary, :root[data-ui='dark'] .hero-actions .primary:hover:not(:disabled) { color: #0f1320; }
