@@ -776,8 +776,8 @@ main > section > ul.case-grid > li { margin: 0; }
 @media (max-width: 40rem) { .catalogue, .how { scroll-margin-top: 7rem; } }
 @media (max-width: 40rem) {
   .site-header { padding-top: 0.6rem; padding-bottom: 0.5rem; row-gap: 0.35rem; }
-  .site-links { width: 100%; flex-wrap: nowrap; gap: 1rem; overflow-x: auto; scrollbar-width: none; }
-  .site-links .theme-toggle { top: 0.45rem; }
+  .site-header .site-links { width: 100%; flex-wrap: nowrap; gap: 1rem; overflow-x: auto; scrollbar-width: none; }
+  .site-header .site-links .theme-toggle { top: 0.45rem; }
   .chips { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 0.4rem; scrollbar-width: thin; }
   .chips button { flex: none; }
 }
