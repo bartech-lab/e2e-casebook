@@ -12,6 +12,7 @@ export function TeamChat({ sandbox }: { sandbox: string }) {
   const inner = useRef<HTMLOListElement>(null);
   const pinned = useRef(true);
   const lastId = useRef(0);
+  const lastTop = useRef(0);
 
   const toBottom = () => {
     const el = box.current;
@@ -51,6 +52,9 @@ export function TeamChat({ sandbox }: { sandbox: string }) {
 
   function onScroll() {
     const el = box.current!;
+    const down = el.scrollTop >= lastTop.current;
+    lastTop.current = el.scrollTop;
+    if (pinned.current && down) return;
     pinned.current = el.scrollHeight - el.scrollTop - el.clientHeight <= NEAR;
     if (pinned.current) setUnseen(0);
   }
