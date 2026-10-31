@@ -11,6 +11,7 @@ export function ConfirmEmail({ sandbox }: { sandbox: string }) {
   const [locked, setLocked] = useState(false);
   const [done, setDone] = useState(false);
   const [checking, setChecking] = useState(false);
+  const [focusFirst, setFocusFirst] = useState(false);
   const boxes = useRef<(HTMLInputElement | null)[]>([]);
 
   async function send() {
@@ -18,7 +19,7 @@ export function ConfirmEmail({ sandbox }: { sandbox: string }) {
     setDigits(empty());
     setLocked(false);
     setMessage('');
-    boxes.current[0]?.focus();
+    setFocusFirst(true);
   }
 
   useEffect(() => {
@@ -35,9 +36,15 @@ export function ConfirmEmail({ sandbox }: { sandbox: string }) {
       setMessage(((await res.json()) as { error: string }).error);
       setDigits(empty());
       if (res.status === 429) setLocked(true);
-      else boxes.current[0]?.focus();
+      else setFocusFirst(true);
     })();
   }, [digits]);
+
+  useEffect(() => {
+    if (!focusFirst || locked || checking) return;
+    setFocusFirst(false);
+    boxes.current[0]?.focus();
+  }, [focusFirst, locked, checking]);
 
   function put(from: number, text: string) {
     const next = [...digits];
