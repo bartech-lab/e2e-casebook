@@ -24,7 +24,12 @@ export function Playlist({ sandbox }: { sandbox: string }) {
       if (client.getQueryData<{ songs: Song[] }>(key)?.songs === sent) client.setQueryData(key, data);
     },
   });
-  const [drag, setDrag] = useState<Drag | null>(null);
+  const [drag, setDragState] = useState<Drag | null>(null);
+  const dragNow = useRef<Drag | null>(null);
+  const setDrag = (next: Drag | null) => {
+    dragNow.current = next;
+    setDragState(next);
+  };
   const [grabbed, setGrabbed] = useState<number | null>(null);
   const [message, setMessage] = useState('');
   const rows = useRef<HTMLOListElement>(null);
@@ -55,12 +60,14 @@ export function Playlist({ sandbox }: { sandbox: string }) {
   }
 
   function onPointerMove(e: PointerEvent<HTMLButtonElement>) {
+    const drag = dragNow.current;
     if (!drag) return;
     const moving = drag.moving || Math.abs(e.clientY - drag.startY) > THRESHOLD;
     setDrag({ ...drag, moving, gap: moving ? gapAt(e.clientY) : drag.gap });
   }
 
   function onPointerUp() {
+    const drag = dragNow.current;
     if (drag?.moving) {
       const from = songs.findIndex((s) => s.id === drag.id);
       const to = drag.gap > from ? drag.gap - 1 : drag.gap;
@@ -70,6 +77,7 @@ export function Playlist({ sandbox }: { sandbox: string }) {
   }
 
   function onKeyDown(e: KeyboardEvent<HTMLButtonElement>, song: Song) {
+    const drag = dragNow.current;
     if (e.key === 'Escape' && drag) {
       e.preventDefault();
       setDrag(null);
