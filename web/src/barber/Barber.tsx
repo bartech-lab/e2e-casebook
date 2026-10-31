@@ -17,16 +17,23 @@ export function Barber({ sandbox, name }: { sandbox: string; name: string }) {
   const [now, setNow] = useState(0);
   const offset = useRef(0);
   const holdRef = useRef<Hold | null>(null);
-  holdRef.current = hold;
+  const requests = useRef(0);
+  const changedAt = useRef(0);
+  const keepHold = (next: Hold | null) => {
+    holdRef.current = next;
+    setHold(next);
+  };
 
   const serverNow = () => Date.now() + offset.current;
   const expire = () => {
-    setHold(null);
+    keepHold(null);
     setMessage('Your hold ran out. Choose a time again.');
   };
 
   const load = useCallback(async () => {
+    const started = ++requests.current;
     const r = await json<{ serverNow: number; slots: Slot[] }>(await fetch(`/api/s/${sandbox}/barber/slots?name=${encodeURIComponent(name)}`));
+    if (started < changedAt.current) return;
     offset.current = r.serverNow - Date.now();
     setSlots(r.slots);
     const mine = holdRef.current;
@@ -57,12 +64,13 @@ export function Barber({ sandbox, name }: { sandbox: string; name: string }) {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ name, slot: slot.id }),
     });
+    changedAt.current = ++requests.current;
     if (res.status === 409) {
       setMessage('Someone just took that time.');
     } else {
       const r = await json<{ serverNow: number; expiresAt: number }>(res);
       offset.current = r.serverNow - Date.now();
-      setHold({ slot: slot.id, expiresAt: r.expiresAt });
+      keepHold({ slot: slot.id, expiresAt: r.expiresAt });
     }
     await load();
   }
@@ -74,9 +82,10 @@ export function Barber({ sandbox, name }: { sandbox: string; name: string }) {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ name, slot: hold.slot }),
     });
+    changedAt.current = ++requests.current;
     const label = slots?.find((s) => s.id === hold.slot)?.label;
     if (res.ok) {
-      setHold(null);
+      keepHold(null);
       setMessage(`Booked: ${label} with Sam.`);
     } else expire();
     await load();
