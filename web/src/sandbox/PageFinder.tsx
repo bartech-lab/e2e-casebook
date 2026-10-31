@@ -66,7 +66,8 @@ export function PageFinder({ base }: { base: string }) {
               />
             </label>
             <p className="muted page-finder-count" aria-live="polite">
-              {results.length} of {ENTRIES.length} pages
+              {results.length} {results.length === 1 ? 'page' : 'pages'} ·{' '}
+              {results.reduce((n, e) => n + e.cases.length, 0)} cases
             </p>
             <ul className="page-finder-results">
               {results.map((e) => (
