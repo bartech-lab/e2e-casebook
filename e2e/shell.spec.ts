@@ -36,3 +36,25 @@ test('shell controls are not found by getByLabel', async ({ page, request }) => 
   await join(page);
   await expect(page.getByRole('navigation', { name: 'Sandbox' }).getByLabel(/./)).toHaveCount(0);
 });
+
+test('Jump to a page finds a page by case number and topic, and goes there', async ({ page, request }) => {
+  const { id } = (await (await request.post('/api/sandboxes')).json()) as { id: string };
+  await page.goto(`/s/${id}/notes`);
+  await join(page);
+  const nav = page.getByRole('navigation', { name: 'Sandbox' });
+  await page.getByRole('button', { name: 'Jump to a page' }).click();
+  const finder = page.getByRole('dialog', { name: 'Jump to a page' });
+  await expect(finder.getByLabel('Page, case or topic')).toBeFocused();
+  await finder.getByLabel('Page, case or topic').fill('92');
+  await expect(finder.getByRole('link')).toHaveCount(1);
+  await finder.getByLabel('Page, case or topic').press('Enter');
+  await expect(finder).toBeHidden();
+  await expect(page).toHaveURL(new RegExp(`/s/${id}/product-tabs`));
+  const linksBefore = await nav.getByRole('link').count();
+  await page.getByRole('button', { name: 'Jump to a page' }).click();
+  await finder.getByLabel('Page, case or topic').fill('offline');
+  await expect(finder.getByRole('link').first()).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(finder).toBeHidden();
+  expect(await nav.getByRole('link').count()).toBe(linksBefore);
+});
