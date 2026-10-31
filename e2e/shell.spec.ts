@@ -37,22 +37,25 @@ test('shell controls are not found by getByLabel', async ({ page, request }) => 
   await expect(page.getByRole('navigation', { name: 'Sandbox' }).getByLabel(/./)).toHaveCount(0);
 });
 
-test('Jump to a page finds a page by case number and topic, and goes there', async ({ page, request }) => {
+test('Jump to a case finds a case by number and topic, and goes there', async ({ page, request }) => {
   const { id } = (await (await request.post('/api/sandboxes')).json()) as { id: string };
   await page.goto(`/s/${id}/notes`);
   await join(page);
   const nav = page.getByRole('navigation', { name: 'Sandbox' });
-  await page.getByRole('button', { name: 'Jump to a page' }).click();
-  const finder = page.getByRole('dialog', { name: 'Jump to a page' });
-  await expect(finder.getByLabel('Page, case or topic')).toBeFocused();
-  await finder.getByLabel('Page, case or topic').fill('92');
+  await page.getByRole('button', { name: 'Jump to a case' }).click();
+  const finder = page.getByRole('dialog', { name: 'Jump to a case' });
+  await expect(finder.getByLabel('Case, number or topic')).toBeFocused();
+  await finder.getByLabel('Case, number or topic').fill('92');
   await expect(finder.getByRole('link')).toHaveCount(1);
-  await finder.getByLabel('Page, case or topic').press('Enter');
+  await finder.getByLabel('Case, number or topic').press('Enter');
   await expect(finder).toBeHidden();
   await expect(page).toHaveURL(new RegExp(`/s/${id}/product-tabs`));
   const linksBefore = await nav.getByRole('link').count();
-  await page.getByRole('button', { name: 'Jump to a page' }).click();
-  await finder.getByLabel('Page, case or topic').fill('offline');
+  await page.getByRole('button', { name: 'Jump to a case' }).click();
+  await finder.getByLabel('Case, number or topic').fill('board');
+  await expect(finder.getByRole('link', { name: /Concurrent edit/ })).toBeVisible();
+  await expect(finder.getByRole('link', { name: /Playlist/ })).toHaveCount(0);
+  await finder.getByLabel('Case, number or topic').fill('offline');
   await expect(finder.getByRole('link').first()).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(finder).toBeHidden();

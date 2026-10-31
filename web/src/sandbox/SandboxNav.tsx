@@ -5,7 +5,7 @@ import { NotificationsBadge } from '../settings/NotificationsBadge.tsx';
 import { ThemeToggle } from '../ThemeToggle.tsx';
 import { LogoMark, themeMeta } from '../themeMeta.tsx';
 import { PAGES } from './pages.ts';
-import { PageFinder } from './PageFinder.tsx';
+import { CaseFinder } from './CaseFinder.tsx';
 
 const MORE = 'More pages';
 const GROUPS = [...THEMES, MORE]
@@ -40,7 +40,7 @@ export function SandboxNav({ sandbox, page, name }: { sandbox: string; page: str
           <ThemeToggle />
           <span>Name: {name}</span> <NotificationsBadge sandbox={sandbox} />
         </div>
-        <PageFinder base={base} />
+        <CaseFinder base={base} />
         {cases.length > 0 && (
           <div className="case-strip">
             {cases.map((c) => (
