@@ -258,7 +258,7 @@ private copy of the app; open its URL in a second window to be the second user.
 
 ## Stack
 
-Node 24 runs TypeScript directly. Fastify serves the API, the WebSocket, and the React build from
+Node 24 or newer runs TypeScript directly; CI uses the newest Node release. Fastify serves the API, the WebSocket, and the React build from
 one process; data lives in an in-memory SQLite database, so a restart is a full reset. The client
 is React 19 with Vite and TanStack Query.
 
