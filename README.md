@@ -19,7 +19,7 @@ AI agents writing tests for the same cases. The other cases stay unsolved.
 
 ## Start here
 
-202 cases is a lot. These twelve show the range:
+200+ cases is a lot. These twelve show the range:
 
 | Case | Why it is hard to test |
 |---|---|

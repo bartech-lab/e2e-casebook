@@ -9,6 +9,7 @@ import { BENCHMARK_URL, CASES, REPO_URL, SOLUTIONS_URL, THEMES, docUrl, solution
 
 const ALL = 'All cases';
 const SOLVED = 'With solution';
+const CASES_SHOWN = `${Math.floor(CASES.length / 100) * 100}+`;
 const solvedCount = CASES.filter((c) => c.solution).length;
 const solvedIn = (theme: string) => CASES.filter((c) => c.theme === theme && c.solution).length;
 
@@ -88,7 +89,7 @@ export function Landing() {
         <p className="eyebrow">
           <Sparkles size={15} aria-hidden="true" /> End-to-end testing practice, scored
         </p>
-        <h1>{CASES.length} features built to break the obvious test</h1>
+        <h1>{CASES_SHOWN} features built to break the obvious test</h1>
         <p className="lead">
           A realistic web app where every feature hides one detail the first test you would write misses: a race, a
           time zone, a reconnect, a focus trap. Practise on it, then see which approaches really catch the bugs.
@@ -105,7 +106,7 @@ export function Landing() {
         <dl className="stats">
           <div>
             <dt>Cases</dt>
-            <dd>{CASES.length}</dd>
+            <dd>{CASES_SHOWN}</dd>
           </div>
           <div>
             <dt>Topics</dt>
