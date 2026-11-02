@@ -16,7 +16,9 @@ export function TeamChat({ sandbox }: { sandbox: string }) {
 
   const toBottom = () => {
     const el = box.current;
-    if (el) el.scrollTop = el.scrollHeight;
+    if (!el) return;
+    el.scrollTop = el.scrollHeight;
+    lastTop.current = el.scrollTop;
   };
 
   useEffect(() => {
