@@ -54,7 +54,7 @@ test('meetings: accepts current and legacy IANA names, rejects offsets', async (
     await app.close();
   });
   const sb = (await app.inject({ method: 'POST', url: '/api/sandboxes' })).json().id as string;
-  const add = (zone: string) =>
+  const add = (zone: unknown) =>
     app.inject({ method: 'POST', url: `/api/s/${sb}/meetings`, payload: { title: 'Call', date: '2026-10-05', time: '09:00', zone } });
   for (const [zone, start] of [
     ['Asia/Kolkata', '2026-10-05T03:30:00.000Z'],
@@ -67,5 +67,5 @@ test('meetings: accepts current and legacy IANA names, rejects offsets', async (
     assert.equal(res.json().zone, zone);
     assert.deepEqual(res.json().starts, [start]);
   }
-  for (const bad of ['+01:00', 'Mars/Base', '']) assert.equal((await add(bad)).statusCode, 400, bad);
+  for (const bad of ['+01:00', '-05:00', 'Mars/Base', '', ['Europe/Warsaw']]) assert.equal((await add(bad)).statusCode, 400, String(bad));
 });
