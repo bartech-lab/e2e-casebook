@@ -51,6 +51,6 @@ jobs:
       - run: docker build -t e2e-casebook .
       - run: |
           docker run -d --name app -p 3000:3000 -e TEST_HOOKS=1 -e PORT=3000 e2e-casebook
-          for i in $(seq 1 30); do curl -fs http://localhost:3000/api/health && exit 0; sleep 1; done
+          for _ in $(seq 1 30); do curl -fs http://localhost:3000/api/health && exit 0; sleep 1; done
           docker logs app
           exit 1
