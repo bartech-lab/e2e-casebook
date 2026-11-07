@@ -1,5 +1,5 @@
 import fc from 'fast-check';
-import { expect, join, test } from '../fixtures.ts';
+import { expect, join, test, failsAsShipped } from '../fixtures.ts';
 import type { Page } from '@playwright/test';
 
 const PRODUCTS = { Notebook: 1250, Pen: 399, Backpack: 8900 } as const;
@@ -39,7 +39,8 @@ async function expectSummary(page: Page, cart: Map<Product, number>, code: boole
   await expect(summary(page, 'Total')).toHaveText(pln(q.total));
 }
 
-test('random cart sessions match a model of the pricing promises @red', async ({ page, sandbox }) => {
+test('random cart sessions match a model of the pricing promises', async ({ page, sandbox }) => {
+  failsAsShipped('The shipped app charges VAT before the discount; the scorer fixes it first.');
   await join(page, sandbox, 'alice', 'shop');
   await fc.assert(
     fc.asyncProperty(fc.array(step, { minLength: 1, maxLength: 10 }), async (steps) => {

@@ -78,6 +78,8 @@ export const test = base.extend<{ sandbox: Sandbox; shared: Sandbox; newContext:
 
 export { expect };
 
+export const failsAsShipped = (reason: string) => test.fail(!(process.env.SCORE || process.env.RED), reason);
+
 export async function joinChat(page: Page, sandbox: Sandbox, name: string) {
   await page.goto(sandbox.url);
   await page.getByLabel('Your name').fill(name);

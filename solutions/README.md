@@ -52,6 +52,8 @@ npx playwright test            # BASE_URL defaults to http://localhost:3000
 
 Specs tagged `@naive` show a broken approach on purpose and are skipped; run them with `NAIVE=1`.
 
+Specs that call `failsAsShipped()` check something the shipped app breaks on purpose, or show a decoy approach. Plain runs expect them to fail, and turn red if one passes. `RED=1` and the scorer run them as normal tests.
+
 ## Score
 
 Each case with a `bugs.ts` lists its planted bugs as exact text edits to the app:

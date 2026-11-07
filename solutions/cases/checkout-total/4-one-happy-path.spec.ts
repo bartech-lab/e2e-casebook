@@ -1,7 +1,8 @@
-import { expect, test } from '../fixtures.ts';
+import { expect, test, failsAsShipped } from '../fixtures.ts';
 import { add, applyCode, openShop, placeOrder, summary } from './helpers.ts';
 
-test('a backpack with SAVE10 is charged the discounted total @red', async ({ page, sandbox }) => {
+test('a backpack with SAVE10 is charged the discounted total', async ({ page, sandbox }) => {
+  failsAsShipped('The shipped app charges VAT before the discount; the scorer fixes it first.');
   await openShop(page, sandbox);
   await add(page, 'Backpack');
   await applyCode(page, 'SAVE10');
