@@ -25,7 +25,8 @@ export function TeamChat({ sandbox }: { sandbox: string }) {
     let live = true;
     const poll = async () => {
       try {
-        const { messages: fresh } = await json<{ messages: Message[] }>(await fetch(`/api/s/${sandbox}/team-chat?after=${lastId.current}`));
+        const { messages: polled } = await json<{ messages: Message[] }>(await fetch(`/api/s/${sandbox}/team-chat?after=${lastId.current}`));
+        const fresh = polled.filter((m) => m.id > lastId.current);
         if (!live || fresh.length === 0) return;
         lastId.current = fresh.at(-1)!.id;
         setMessages((cur) => [...cur, ...fresh]);
