@@ -1,4 +1,5 @@
-import { expect, test, failsAsShipped } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { failsAsShipped } from '../common.ts';
 
 test('quotes and the order follow the pricing promise', async ({ request, sandbox }) => {
   failsAsShipped('The shipped app charges VAT before the discount; the scorer fixes it first.');

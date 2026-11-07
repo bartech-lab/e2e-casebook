@@ -1,4 +1,5 @@
-import { expect, joinChat, messages, send, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { joinChat, messages, send } from '../common.ts';
 
 test('each user sees the other user’s messages in send order', async ({ newContext, sandbox }) => {
   const alice = await (await newContext()).newPage();

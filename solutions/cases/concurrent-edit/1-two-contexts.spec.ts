@@ -1,4 +1,5 @@
-import { expect, join, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { join } from '../common.ts';
 
 const title = (page: import('@playwright/test').Page) => page.getByLabel('Title');
 

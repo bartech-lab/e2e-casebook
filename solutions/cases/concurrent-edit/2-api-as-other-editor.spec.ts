@@ -1,4 +1,5 @@
-import { expect, join, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { join } from '../common.ts';
 
 test('a change made through the API turns my save into a conflict', async ({ page, sandbox }) => {
   await join(page, sandbox, 'bob', 'cards/1');

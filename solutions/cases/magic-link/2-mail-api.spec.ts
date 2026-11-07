@@ -1,4 +1,5 @@
-import { expect, join, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { join } from '../common.ts';
 
 test('request the link in the page, read it from the mail API', async ({ page, request, sandbox }) => {
   await join(page, sandbox, 'bob', 'account');

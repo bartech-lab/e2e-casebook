@@ -1,5 +1,6 @@
 import fc from 'fast-check';
-import { column, expect, join, moveCard, test, type Card } from '../fixtures.ts';
+import { expect, test, type Card } from '../fixtures.ts';
+import { column, join, moveCard } from '../common.ts';
 
 type Status = 'todo' | 'doing' | 'done';
 type Outcome = 'fast' | 'slow' | 'fail';

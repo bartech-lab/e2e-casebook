@@ -1,5 +1,5 @@
 import { expect, type Page } from '@playwright/test';
-import { column } from '../fixtures.ts';
+import { column } from '../common.ts';
 
 export async function createCardInline(page: Page, title: string) {
   await page.getByLabel('New card title').fill(title);

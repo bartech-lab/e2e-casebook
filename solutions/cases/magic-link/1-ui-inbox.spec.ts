@@ -1,4 +1,5 @@
-import { expect, join, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { join } from '../common.ts';
 
 test('sign in through the test inbox page; the link works once', async ({ page, sandbox }) => {
   await join(page, sandbox, 'bob', 'account');

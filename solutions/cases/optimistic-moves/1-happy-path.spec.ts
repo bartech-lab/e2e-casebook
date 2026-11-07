@@ -1,4 +1,5 @@
-import { column, expect, join, moveCard, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { column, join, moveCard } from '../common.ts';
 
 test('a moved card stays in its new column after a reload', async ({ page, sandbox }) => {
   await join(page, sandbox, 'alice', 'board');

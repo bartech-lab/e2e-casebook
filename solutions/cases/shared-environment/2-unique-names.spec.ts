@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
-import { column, expect, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { column } from '../common.ts';
 import { createCard, openBoard } from './helpers.ts';
 
 test('create a uniquely named card in the shared sandbox and find only it', async ({ page, shared }, testInfo) => {

@@ -1,4 +1,5 @@
-import { column, expect, join, moveCard, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { column, join, moveCard } from '../common.ts';
 
 test('a move the network rejects goes back, with one error', async ({ page, sandbox }) => {
   await page.route(/\/cards\/1$/, (route) =>

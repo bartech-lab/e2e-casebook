@@ -1,4 +1,5 @@
-import { expect, join, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { join } from '../common.ts';
 import { saveDisplayName, toast } from './helpers.ts';
 
 test('wait for network idle before checking the toast @naive', async ({ page, sandbox }) => {

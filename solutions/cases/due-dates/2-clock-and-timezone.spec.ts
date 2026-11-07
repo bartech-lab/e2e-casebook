@@ -1,4 +1,5 @@
-import { expect, join, test, type Sandbox } from '../fixtures.ts';
+import { expect, test, type Sandbox } from '../fixtures.ts';
+import { join } from '../common.ts';
 import type { Page } from '@playwright/test';
 
 async function boardWith(page: Page, sandbox: Sandbox, dueDate: string) {

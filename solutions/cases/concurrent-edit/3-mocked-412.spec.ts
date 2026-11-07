@@ -1,4 +1,5 @@
-import { expect, join, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { join } from '../common.ts';
 
 test('the client shows a mocked 412 and retries with the version from it', async ({ page, sandbox }) => {
   const ifMatch: (string | undefined)[] = [];

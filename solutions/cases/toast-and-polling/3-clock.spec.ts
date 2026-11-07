@@ -1,4 +1,5 @@
-import { expect, join, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { join } from '../common.ts';
 import { saveDisplayName, toast } from './helpers.ts';
 
 test('the toast stays for 2 seconds of page time, then goes', async ({ page, sandbox }) => {

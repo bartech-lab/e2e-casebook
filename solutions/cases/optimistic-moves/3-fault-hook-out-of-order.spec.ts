@@ -1,4 +1,5 @@
-import { column, expect, join, moveCard, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { column, join, moveCard } from '../common.ts';
 
 test('a slow failure rolls back only its own card', async ({ page, sandbox }) => {
   await sandbox.fault({ http: [{ method: 'PATCH', path: 'cards/1', status: 500, delayMs: 800 }] });

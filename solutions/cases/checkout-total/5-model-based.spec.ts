@@ -1,5 +1,6 @@
 import fc from 'fast-check';
-import { expect, join, test, failsAsShipped } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { join, failsAsShipped } from '../common.ts';
 import type { Page } from '@playwright/test';
 
 const PRODUCTS = { Notebook: 1250, Pen: 399, Backpack: 8900 } as const;

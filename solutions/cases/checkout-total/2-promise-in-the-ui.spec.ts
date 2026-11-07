@@ -1,4 +1,5 @@
-import { expect, test, failsAsShipped } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { failsAsShipped } from '../common.ts';
 import { add, applyCode, openShop, placeOrder, summary } from './helpers.ts';
 
 test('VAT on 12.50 PLN rounds half up', async ({ page, sandbox }) => {

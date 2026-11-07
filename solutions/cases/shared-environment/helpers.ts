@@ -1,5 +1,6 @@
 import { expect, type Page } from '@playwright/test';
-import { join, type Sandbox } from '../fixtures.ts';
+import { type Sandbox } from '../fixtures.ts';
+import { join } from '../common.ts';
 
 export async function openBoard(page: Page, sandbox: Sandbox) {
   await page.addInitScript(() => localStorage.setItem('variant:createCard', 'inline'));

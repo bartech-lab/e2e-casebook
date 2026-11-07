@@ -1,4 +1,5 @@
-import { join, test } from '../fixtures.ts';
+import { test } from '../fixtures.ts';
+import { join } from '../common.ts';
 import { createCardInDialog, createCardInline, expectCreated } from './helpers.ts';
 
 test('create a card with whichever variant this visitor is assigned', async ({ page, sandbox }) => {

@@ -1,5 +1,6 @@
 import fc from 'fast-check';
-import { expect, join, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { join } from '../common.ts';
 
 type Step = 'bobTypes' | 'aliceSaves' | 'bobSaves' | 'keepMine' | 'useTheirs';
 

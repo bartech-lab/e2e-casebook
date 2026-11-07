@@ -1,4 +1,5 @@
-import { expect, join, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { join } from '../common.ts';
 import { saveDisplayName, savedDisplayName, toast } from './helpers.ts';
 
 test('the toast appears after a save, and the value is stored', async ({ page, request, sandbox }) => {

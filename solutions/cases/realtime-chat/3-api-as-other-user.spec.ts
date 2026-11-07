@@ -1,4 +1,5 @@
-import { expect, joinChat, messages, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { joinChat, messages } from '../common.ts';
 
 test('a message posted through the API by another user reaches the open page', async ({ page, sandbox }) => {
   await joinChat(page, sandbox, 'bob');

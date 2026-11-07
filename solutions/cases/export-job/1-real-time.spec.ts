@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
-import { expect, join, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { join } from '../common.ts';
 
 test('an export with real timing finishes and downloads the board', async ({ page, sandbox }) => {
   await join(page, sandbox, 'alice', 'exports');

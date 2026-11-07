@@ -1,4 +1,5 @@
-import { expect, join, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { join } from '../common.ts';
 
 test('a failed export can be retried as a new export', async ({ page, sandbox }) => {
   await sandbox.fault({ exports: { stepMs: 30, failAtStep: 3 } });

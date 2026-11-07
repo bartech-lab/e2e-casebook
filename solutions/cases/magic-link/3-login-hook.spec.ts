@@ -1,4 +1,5 @@
-import { expect, join, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { join } from '../common.ts';
 
 test('sign in through the login hook and a cookie, without mail', async ({ page, request, sandbox, baseURL }) => {
   const res = await request.post(`/__test__/s/${sandbox.id}/login`, { data: { email: 'bob@example.com' } });

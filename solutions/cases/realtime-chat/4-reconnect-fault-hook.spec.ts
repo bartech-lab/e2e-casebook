@@ -1,4 +1,5 @@
-import { expect, joinChat, messages, send, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { joinChat, messages, send } from '../common.ts';
 
 test('after the server drops the socket, the page reconnects and replays what it missed', async ({
   newContext,

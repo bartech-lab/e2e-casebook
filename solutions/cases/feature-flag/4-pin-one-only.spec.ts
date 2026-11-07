@@ -1,4 +1,5 @@
-import { expect, join, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { join } from '../common.ts';
 import { createCardInline, expectCreated } from './helpers.ts';
 
 test('create a card with the inline variant only (the one most users see)', async ({ page, request, sandbox }) => {

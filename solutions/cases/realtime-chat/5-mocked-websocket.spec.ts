@@ -1,4 +1,5 @@
-import { expect, joinChat, messages, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { joinChat, messages } from '../common.ts';
 
 const msg = (seq: number, text: string) => JSON.stringify({ type: 'msg', seq, name: 'alice', text });
 

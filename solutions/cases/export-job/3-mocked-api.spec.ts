@@ -1,4 +1,5 @@
-import { expect, join, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { join } from '../common.ts';
 
 const job = (status: string, progress: number) => ({ id: 1, status, progress, error: status === 'failed' ? 'boom' : null, retryOf: null });
 

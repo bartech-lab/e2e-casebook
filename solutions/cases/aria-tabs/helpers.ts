@@ -1,4 +1,5 @@
-import { expect, join, type Sandbox } from '../fixtures.ts';
+import { expect, type Sandbox } from '../fixtures.ts';
+import { join } from '../common.ts';
 import type { Page } from '@playwright/test';
 
 export async function openTabs(page: Page, sandbox: Sandbox) {

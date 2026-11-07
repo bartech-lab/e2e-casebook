@@ -1,4 +1,5 @@
-import { expect, join, test } from '../fixtures.ts';
+import { expect, test } from '../fixtures.ts';
+import { join } from '../common.ts';
 import { createCardInDialog, createCardInline, expectCreated } from './helpers.ts';
 
 const variants = ['inline', 'dialog'] as const;
