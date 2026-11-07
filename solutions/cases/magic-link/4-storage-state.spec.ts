@@ -21,8 +21,8 @@ test.beforeAll(async ({ browser, baseURL }, testInfo) => {
 });
 
 for (const n of [1, 2, 3]) {
-  test(`test ${n} reuses the saved sign-in`, async ({ browser }) => {
-    const context = await browser.newContext({ storageState: statePath });
+  test(`test ${n} reuses the saved sign-in`, async ({ newContext }) => {
+    const context = await newContext({ storageState: statePath });
     const tab = await context.newPage();
     await tab.goto(`/s/${sandboxId}/account`);
     // storageState keeps cookies and localStorage, not sessionStorage, so the name prompt returns.
