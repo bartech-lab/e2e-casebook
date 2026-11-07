@@ -275,4 +275,4 @@ npm run build && npm run test:smoke   # opens every page in Chromium; axe scan o
 
 ## License
 
-MIT
+MIT. Made by [bartech-lab](https://github.com/bartech-lab).

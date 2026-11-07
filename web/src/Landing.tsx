@@ -217,7 +217,7 @@ export function Landing() {
 
       <footer className="site-footer">
         <span>
-          Built by <a href="https://www.linkedin.com/in/bkow/">Bartosz Kowalski</a> · MIT licence
+          Made by <a href="https://github.com/bartech-lab">bartech-lab</a> (<a href="https://www.linkedin.com/in/bkow/">Bartosz Kowalski</a>) · MIT licence
         </span>
       </footer>
     </>
