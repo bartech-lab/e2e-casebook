@@ -10,14 +10,14 @@ export function Bio({ sandbox }: { sandbox: string }) {
   const url = `/api/s/${sandbox}/bio`;
   const saved = useQuery({ queryKey: key, queryFn: async () => json<{ html: string }>(await fetch(url)) });
   const editor = useRef<HTMLDivElement>(null);
-  const loaded = useRef(false);
   const [active, setActive] = useState<Record<Format, boolean>>({ bold: false, italic: false });
   const [status, setStatus] = useState('');
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (saved.data && editor.current && !loaded.current) {
+    if (saved.data && editor.current && !ready) {
       editor.current.innerHTML = saved.data.html;
-      loaded.current = true;
+      setReady(true);
     }
   }, [saved.data]);
 
@@ -76,7 +76,8 @@ export function Bio({ sandbox }: { sandbox: string }) {
       <div
         ref={editor}
         className="rich-editor"
-        contentEditable
+        contentEditable={ready || saved.isError}
+        aria-readonly={!(ready || saved.isError)}
         suppressContentEditableWarning
         role="textbox"
         aria-multiline="true"
