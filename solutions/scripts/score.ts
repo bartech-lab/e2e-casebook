@@ -7,6 +7,9 @@ import { join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { applyEdits, approachOf, failedApproaches, invert, impossibleVerdict, median, overlay, runOf, verdict, type Bug, type Edit, type JsonReport, type Tally } from './score-lib.ts';
 
+// playwright.config.ts runs @red specs only while scoring.
+process.env.SCORE = '1';
+
 const root = resolve(import.meta.dirname, '..');
 const { values, positionals } = parseArgs({
   allowPositionals: true,

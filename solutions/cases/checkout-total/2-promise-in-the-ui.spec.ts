@@ -8,7 +8,7 @@ test('VAT on 12.50 PLN rounds half up', async ({ page, sandbox }) => {
   await expect(summary(page, 'Total')).toHaveText('15.38 PLN');
 });
 
-test('a code in lower case with spaces is taken off before VAT, and the order charges the total shown', async ({ page, sandbox }) => {
+test('a code in lower case with spaces is taken off before VAT, and the order charges the total shown @red', async ({ page, sandbox }) => {
   await openShop(page, sandbox);
   await add(page, 'Notebook');
   await applyCode(page, '  save10 ');
@@ -18,7 +18,7 @@ test('a code in lower case with spaces is taken off before VAT, and the order ch
   await expect(await placeOrder(page)).toContainText('Charged 3.08 PLN');
 });
 
-test('the discount never takes the subtotal below zero', async ({ page, sandbox }) => {
+test('the discount never takes the subtotal below zero @red', async ({ page, sandbox }) => {
   await openShop(page, sandbox);
   await add(page, 'Pen');
   await applyCode(page, 'SAVE10');

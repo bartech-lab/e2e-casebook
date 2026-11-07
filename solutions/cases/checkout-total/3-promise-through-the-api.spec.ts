@@ -1,6 +1,6 @@
 import { expect, test } from '../fixtures.ts';
 
-test('quotes and the order follow the pricing promise', async ({ request, sandbox }) => {
+test('quotes and the order follow the pricing promise @red', async ({ request, sandbox }) => {
   const cart = (path: string, data: unknown) => request.put(`/api/s/${sandbox.id}/cart/${path}`, { data });
   expect((await (await cart('items/notebook', { qty: 1 })).json()).quote).toMatchObject({ vat: 288, total: 1538 });
   const coded = await cart('code', { code: '  save10 ' });

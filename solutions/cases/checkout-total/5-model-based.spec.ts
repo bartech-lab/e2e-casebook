@@ -39,7 +39,7 @@ async function expectSummary(page: Page, cart: Map<Product, number>, code: boole
   await expect(summary(page, 'Total')).toHaveText(pln(q.total));
 }
 
-test('random cart sessions match a model of the pricing promises', async ({ page, sandbox }) => {
+test('random cart sessions match a model of the pricing promises @red', async ({ page, sandbox }) => {
   await join(page, sandbox, 'alice', 'shop');
   await fc.assert(
     fc.asyncProperty(fc.array(step, { minLength: 1, maxLength: 10 }), async (steps) => {
