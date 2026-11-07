@@ -1,11 +1,11 @@
 import { expect, joinChat, messages, send, test } from '../fixtures.ts';
 
 test('after the server drops the socket, the page reconnects and replays what it missed', async ({
-  browser,
+  newContext,
   sandbox,
 }) => {
-  const alice = await (await browser.newContext()).newPage();
-  const bob = await (await browser.newContext()).newPage();
+  const alice = await (await newContext()).newPage();
+  const bob = await (await newContext()).newPage();
   await bob.clock.install();
   await joinChat(alice, sandbox, 'alice');
   await joinChat(bob, sandbox, 'bob');

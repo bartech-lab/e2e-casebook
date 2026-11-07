@@ -10,7 +10,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
-  workers: process.env.CI ? 4 : undefined,
+  workers: 4,
   reporter: process.env.CI ? [['list'], ['html', { open: 'never' }]] : 'list',
   use: { baseURL, trace: 'retain-on-failure' },
   projects: (process.env.BROWSERS ?? 'chromium').split(',').map((name) => ({

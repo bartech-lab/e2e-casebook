@@ -1,4 +1,11 @@
-import { test as base, expect, type APIRequestContext, type Page } from '@playwright/test';
+import {
+  test as base,
+  expect,
+  type APIRequestContext,
+  type BrowserContext,
+  type BrowserContextOptions,
+  type Page,
+} from '@playwright/test';
 
 export type Card = { id: number; title: string; description: string; status: string; version: number; updatedBy: string };
 
@@ -46,7 +53,9 @@ function makeSandbox(request: APIRequestContext, id: string): Sandbox {
     };
 }
 
-export const test = base.extend<{ sandbox: Sandbox; shared: Sandbox }>({
+export type NewContext = (options?: BrowserContextOptions) => Promise<BrowserContext>;
+
+export const test = base.extend<{ sandbox: Sandbox; shared: Sandbox; newContext: NewContext }>({
   sandbox: async ({ request }, use) => {
     const res = await request.post('/api/sandboxes');
     await ok(res);
@@ -55,6 +64,15 @@ export const test = base.extend<{ sandbox: Sandbox; shared: Sandbox }>({
   },
   shared: async ({ request }, use) => {
     await use(makeSandbox(request, sharedSandbox()));
+  },
+  newContext: async ({ browser }, use) => {
+    const contexts: BrowserContext[] = [];
+    await use(async (options) => {
+      const context = await browser.newContext(options);
+      contexts.push(context);
+      return context;
+    });
+    await Promise.all(contexts.map((context) => context.close()));
   },
 });
 

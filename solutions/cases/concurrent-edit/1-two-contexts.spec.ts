@@ -2,9 +2,9 @@ import { expect, join, test } from '../fixtures.ts';
 
 const title = (page: import('@playwright/test').Page) => page.getByLabel('Title');
 
-test('a stale save shows the conflict, and Keep mine wins', async ({ browser, sandbox }) => {
-  const alice = await (await browser.newContext()).newPage();
-  const bob = await (await browser.newContext()).newPage();
+test('a stale save shows the conflict, and Keep mine wins', async ({ newContext, sandbox }) => {
+  const alice = await (await newContext()).newPage();
+  const bob = await (await newContext()).newPage();
   await join(alice, sandbox, 'alice', 'cards/1');
   await join(bob, sandbox, 'bob', 'cards/1');
   await expect(title(bob)).toHaveValue('Write the release notes');
@@ -24,9 +24,9 @@ test('a stale save shows the conflict, and Keep mine wins', async ({ browser, sa
   expect(await sandbox.card(1)).toMatchObject({ title: 'Bob title', version: 3, updatedBy: 'bob' });
 });
 
-test('Use theirs replaces my draft with the newer version', async ({ browser, sandbox }) => {
-  const alice = await (await browser.newContext()).newPage();
-  const bob = await (await browser.newContext()).newPage();
+test('Use theirs replaces my draft with the newer version', async ({ newContext, sandbox }) => {
+  const alice = await (await newContext()).newPage();
+  const bob = await (await newContext()).newPage();
   await join(alice, sandbox, 'alice', 'cards/1');
   await join(bob, sandbox, 'bob', 'cards/1');
   await expect(title(bob)).toHaveValue('Write the release notes');
