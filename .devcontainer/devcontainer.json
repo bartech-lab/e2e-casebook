@@ -6,6 +6,8 @@
   "name": "e2e-casebook",
   "image": "mcr.microsoft.com/playwright:v1.65.1-noble",
   "postCreateCommand": "npm ci && npx playwright install chromium && cd solutions && npm ci && npx playwright install chromium",
+  // An SSH server lets `gh codespace ssh` run a test in a Codespace from a terminal.
+  "features": { "ghcr.io/devcontainers/features/sshd:1": {} },
   "forwardPorts": [3000],
   "portsAttributes": { "3000": { "label": "e2e-casebook app" } },
   "customizations": { "vscode": { "extensions": ["ms-playwright.playwright"] } }
