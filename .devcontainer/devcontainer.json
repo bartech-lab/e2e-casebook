@@ -1,8 +1,8 @@
 {
   // GitHub Codespaces and VS Code dev containers: Node 26 with Playwright's browsers already installed.
   // It runs as the image's root user: pwuser (uid 1001) cannot write a checkout mounted from the host.
-  // Keep the image tag equal to @playwright/test in package-lock.json. solutions/ pins its own Playwright, so its browsers are
-  // installed for it too; each install is a no-op when the image already has that version.
+  // Keep the image tag equal to @playwright/test in package-lock.json and in solutions/package-lock.json (solutions/ has its own
+  // package). Each browser install is then a no-op; it downloads only after one of them is bumped.
   "name": "e2e-casebook",
   "image": "mcr.microsoft.com/playwright:v1.65.1-noble",
   "postCreateCommand": "npm ci && npx playwright install chromium && cd solutions && npm ci && npx playwright install chromium",
