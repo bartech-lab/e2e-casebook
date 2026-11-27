@@ -36,6 +36,9 @@ AI agents writing tests for the same cases. The other cases stay unsolved.
 | [172. Help desk](cases/172-help-desk.md) | A strict Content Security Policy that nothing may break. |
 | [194. Meeting rooms](cases/194-meeting-rooms.md) | Three requests in a row, where each can fail on its own. |
 
+For a guided route, the [learning path](docs/learning-path.md) takes you through the twelve themes in order, with the
+[QA Interview Bank](https://github.com/bartech-lab/qa-interview-bank) questions that explain each technique.
+
 ## Cases
 
 | # | Case | What it is |
