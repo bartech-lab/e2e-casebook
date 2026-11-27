@@ -20,3 +20,18 @@ for (const name of pages) {
     expect(errors).toEqual([]);
   });
 }
+
+test('/?try=<page> opens a new sandbox on that page, and Back does not open another', async ({ page }) => {
+  await page.goto('/?try=chat');
+  await expect(page).toHaveURL(/\/s\/[0-9a-f]+\/chat$/);
+  await expect(page.getByLabel('Your name', { exact: true })).toBeVisible();
+  await page.goBack();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+});
+
+test('/?try= with an unknown page stays on the landing page', async ({ page }) => {
+  await page.goto('/?try=no-such-page');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await expect(page).toHaveURL(/\/\?try=no-such-page$/);
+});

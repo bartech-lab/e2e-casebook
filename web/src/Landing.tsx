@@ -6,6 +6,7 @@ import { createSandbox } from './chat/api.ts';
 import { ThemeToggle } from './ThemeToggle.tsx';
 import { GitHubMark, LogoMark, themeMeta } from './themeMeta.tsx';
 import { BENCHMARK_URL, CASES, REPO_URL, SOLUTIONS_URL, THEMES, docUrl, solutionUrl, type Case } from './cases.ts';
+import { tryPage } from './try.ts';
 
 const ALL = 'All cases';
 const SOLVED = 'With solution';
@@ -18,6 +19,15 @@ export function Landing() {
     mutationFn: async (page: string) => ({ id: (await createSandbox()).id, page }),
     onSuccess: ({ id, page }) => navigate(page ? `/s/${id}/${page}` : `/s/${id}`),
   });
+  // /?try=<page>: open a sandbox on that page at once. The address is replaced first, so Back does not start another one.
+  const tried = useRef(false);
+  useEffect(() => {
+    const page = tryPage(location.search, CASES.map((c) => c.page));
+    if (!page || tried.current) return;
+    tried.current = true;
+    history.replaceState(null, '', '/');
+    start.mutate(page);
+  }, [start]);
   const [filter, setFilter] = useState(SOLVED);
   const [query, setQuery] = useState('');
   const search = useRef<HTMLInputElement>(null);

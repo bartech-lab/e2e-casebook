@@ -252,6 +252,18 @@ docker compose up --build
 Open <http://localhost:3000> to browse the cases by topic, then start a sandbox. A sandbox is a
 private copy of the app; open its URL in a second window to be the second user.
 
+### In GitHub Codespaces
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/bartech-lab/e2e-casebook?quickstart=1)
+
+The dev container has Node and Playwright's browsers ready. In its terminal, start the app with test hooks, then run tests
+against it, for example one solved case:
+
+```sh
+npm run build && TEST_HOOKS=1 npm start &
+cd solutions && npx playwright test cases/search-race   # BASE_URL defaults to http://localhost:3000
+```
+
 ## Test hooks and API
 
 [Test hooks](docs/test-hooks.md) reset, seed and break a sandbox from a test. [API](docs/api.md) lists the endpoints the pages use.

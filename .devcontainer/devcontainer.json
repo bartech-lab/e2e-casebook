@@ -1,0 +1,12 @@
+{
+  // GitHub Codespaces and VS Code dev containers: Node 26 with Playwright's browsers already installed.
+  // It runs as the image's root user: pwuser (uid 1001) cannot write a checkout mounted from the host.
+  // Keep the image tag equal to @playwright/test in package-lock.json. solutions/ pins its own Playwright, so its browsers are
+  // installed for it too; each install is a no-op when the image already has that version.
+  "name": "e2e-casebook",
+  "image": "mcr.microsoft.com/playwright:v1.65.1-noble",
+  "postCreateCommand": "npm ci && npx playwright install chromium && cd solutions && npm ci && npx playwright install chromium",
+  "forwardPorts": [3000],
+  "portsAttributes": { "3000": { "label": "e2e-casebook app" } },
+  "customizations": { "vscode": { "extensions": ["ms-playwright.playwright"] } }
+}
